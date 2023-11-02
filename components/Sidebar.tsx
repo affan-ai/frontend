@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useEffect, useState} from 'react';
+import { UserAuth } from '@/app/context/authContext';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
@@ -66,6 +67,24 @@ return (
 }
 
 export default function Sidebar() {
+    const {user, logOut} = UserAuth();
+    const [loading, setLoading] = useState(true);
+
+        const handleSignOut = async() => { 
+        try {
+            await logOut();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        const checkUser = async() => {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            setLoading(false);
+        }
+        checkUser();
+    }, [user]);
 return (
     <Sheet
     className="Sidebar"
@@ -262,6 +281,7 @@ return (
         
     </Box>
     <Divider />
+    {loading ? null : !user ? (
     <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
         <Avatar
         variant="outlined"
@@ -276,6 +296,22 @@ return (
         <LogoutRoundedIcon />
         </IconButton>
     </Box>
+    ) : (
+    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+        <Avatar
+        variant="outlined"
+        size="sm"
+        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+        />
+        <Box sx={{ minWidth: 0, flex: 1 }}>
+        <Typography level="title-sm">{user.displayName}</Typography>
+        <Typography level="body-xs">{user.email}</Typography>
+        </Box>
+        <IconButton size="sm" variant="plain" color="neutral">
+        <LogoutRoundedIcon onClick={handleSignOut} />
+        </IconButton>
+    </Box>
+    )}
     </Sheet>
 );
 }

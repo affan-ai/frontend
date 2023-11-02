@@ -4,14 +4,13 @@ import axios from 'axios';
 import { auth } from '../app/firebase';
 import Link from 'next/link';
 import UserInfo from './UserInfo';
-import Image from 'next/image';
 import TimeAgo from 'react-timeago';
 import { UserAuth} from '../app/context/authContext';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Pagination from '@mui/material/Pagination';
-
+import { ThemeProvider, createTheme } from '@mui/material';
+import Pagination from './Pagination';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 5000;
@@ -55,8 +54,9 @@ const ForumComponent: React.FC = () => {
     title: "",
     images: [],
     userId: '',
-  });
-  const [currentPage, setCurrentPage] = useState(0);
+  });  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
       const checkUser = async() => {
@@ -65,8 +65,6 @@ const ForumComponent: React.FC = () => {
       }
       checkUser();
   }, [user])
-
-  const pageSize = 5; 
 
   const fetchData = async () => {
     try {
@@ -81,8 +79,12 @@ const ForumComponent: React.FC = () => {
           return dateB - dateA;
         });
         
-        const paginatedForumData = sortedForumData.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
-        setForumData(paginatedForumData);
+        // Hitung jumlah total halaman
+        const totalPages = Math.ceil(sortedForumData.length / 10);
+
+        // Set data forum dan jumlah total halaman
+        setForumData(sortedForumData);
+        setTotalPages(totalPages);
         setLoading(false);
       } else {
         console.error('Gagal mengambil data:', response.statusText);
@@ -92,16 +94,13 @@ const ForumComponent: React.FC = () => {
     }
   };
 
-  const handlePageChange = (event: React.ChangeEvent<any>, newPage: number) => {
-    setCurrentPage(newPage);
-    fetchData();
-  };
-
   useEffect(() => {
     // Memanggil fetchData untuk mengambil data awal
     fetchData();
-  }, [currentPage]);
+  }, []);
 
+  // Dapatkan data forum untuk halaman saat ini
+  const currentForumData = forumData.slice((currentPage - 1) * 10, currentPage * 10);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -211,7 +210,7 @@ const ForumComponent: React.FC = () => {
       <p>Login dulu bang - Protected Route</p>)}
       
       {/* Tampilkan postingan yang ada */}
-    {forumData.map((item) => (
+    {currentForumData.map((item) => (
       <Box key={item.id} className="p-4 border border-gray-300 rounded-md shadow-md mb-4">
         <Typography variant="h6" className='font-bold text-lg text-gray-800'><UserInfo uid={item.data.userId as string} /></Typography>
         <Typography variant="subtitle1" className='text-sm text-gray-500'><TimeAgo date={new Date(item.data.createdAt._seconds * 1000)} /></Typography>
@@ -221,14 +220,12 @@ const ForumComponent: React.FC = () => {
         {/* Tambahkan elemen lain sesuai kebutuhan */}
       </Box>
     ))}
-        {/* Tambahkan pagination */}
-        <Pagination
-        count={Math.ceil(forumData.length / pageSize)}
-        variant="outlined"
-        shape="rounded"
-        page={currentPage}
-        onChange={handlePageChange}
-        />
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 };
