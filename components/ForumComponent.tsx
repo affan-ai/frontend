@@ -222,13 +222,13 @@ const ForumComponent: React.FC = () => {
       </Box>
     ))}
         {/* Tambahkan pagination */}
-        <Pagination
+        {/* <Pagination
         count={Math.ceil(forumData.length / pageSize)}
         variant="outlined"
         shape="rounded"
         page={currentPage}
         onChange={handlePageChange}
-        />
+        /> */}
     </div>
   );
 };
