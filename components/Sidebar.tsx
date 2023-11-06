@@ -18,7 +18,7 @@ import Typography from '@mui/joy/Typography';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import TerminalIcon from '@mui/icons-material/Terminal';
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
@@ -30,6 +30,8 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import SmsIcon from '@mui/icons-material/Sms';
 
 import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '@/components/utils';
@@ -141,11 +143,11 @@ return (
         onClick={() => closeSidebar()}
     />
     <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <IconButton variant="soft" color="primary" size="sm">
+        <IconButton variant="soft" color="primary" size="lg">
         <BrightnessAutoRoundedIcon />
         </IconButton>
-        <Typography level="title-lg">Acme Co.</Typography>
-        <ColorSchemeToggle sx={{ ml: 'auto' }} />
+        <Typography level="title-lg">RWikiStat</Typography>
+        {/* <ColorSchemeToggle sx={{ ml: 'auto' }} /> */}
     </Box>
     <Box
         sx={{
@@ -162,20 +164,23 @@ return (
         <List
         size="sm"
         sx={{
-            gap: 1,
+            gap: 0.3,
             '--List-nestedInsetStart': '30px',
             '--ListItem-radius': (theme) => theme.vars.radius.sm,
+            marginTop: 3,
         }}
         >
         <ListItem>
             <ListItemButton
             role="menuitem"
             component="a"
-            href="/home"
+            href="/compiler"
             >
-            <HomeRoundedIcon />
+            <IconButton size="md">
+                <TerminalIcon />
+            </IconButton>
             <ListItemContent>
-                <Typography level="title-sm">Home</Typography>
+                <Typography level="title-sm">R Compiler</Typography>
             </ListItemContent>
             </ListItemButton>
         </ListItem>
@@ -186,7 +191,9 @@ return (
             component="a"
             href="/modul"
             >
-            <DashboardRoundedIcon />
+            <IconButton>
+                <LibraryBooksIcon />
+            </IconButton>
             <ListItemContent>
                 <Typography level="title-sm">Modul</Typography>
             </ListItemContent>
@@ -197,22 +204,11 @@ return (
             <ListItemButton
             role="menuitem"
             component="a"
-            href="/compiler"
-            >
-            <ShoppingCartRoundedIcon />
-            <ListItemContent>
-                <Typography level="title-sm">Compiler</Typography>
-            </ListItemContent>
-            </ListItemButton>
-        </ListItem>
-
-        <ListItem>
-            <ListItemButton
-            role="menuitem"
-            component="a"
             href="/forum"
             >
-            <QuestionAnswerRoundedIcon />
+            <IconButton>
+                <QuestionAnswerRoundedIcon />
+            </IconButton>
             <ListItemContent>
                 <Typography level="title-sm">Forum</Typography>
             </ListItemContent>
@@ -225,10 +221,25 @@ return (
             component="a"
             href="/chatbot"
             >
-            <ShoppingCartRoundedIcon />
+            <IconButton>
+                <SmsIcon />
+            </IconButton>
             <ListItemContent>
                 <Typography level="title-sm">Chat Bot</Typography>
             </ListItemContent>
+            </ListItemButton>
+        </ListItem>
+
+        <ListItem>
+            <ListItemButton
+            role="menuitem"
+            component="a"
+            href="/setting"
+            >
+            <IconButton>
+                <SettingsRoundedIcon />
+            </IconButton>
+            Settings
             </ListItemButton>
         </ListItem>
 
@@ -257,26 +268,18 @@ return (
             mb: 2,
         }}
         >
-        <ListItem>
-            <ListItemButton
-            role="menuitem"
-            component="a"
-            href="/profile"
-            >
-            <GroupRoundedIcon />
-            Profile
-            </ListItemButton>
-        </ListItem>
-        <ListItem>
+        {/* <ListItem>
             <ListItemButton
             role="menuitem"
             component="a"
             href="/setting"
             >
-            <SettingsRoundedIcon />
+            <IconButton>
+                <SettingsRoundedIcon />
+            </IconButton>
             Settings
             </ListItemButton>
-        </ListItem>
+        </ListItem> */}
         </List>
         
     </Box>

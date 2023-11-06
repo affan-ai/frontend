@@ -52,7 +52,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
   
       // Set pengguna di aplikasi Anda, jika diperlukan
       setUser(signedInUser);
-      window.location.href = '/home';
+      window.location.href = '/compiler';
     } catch (error) {
       const authError = error as Error;
       console.error('Gagal masuk dengan Google:', authError.message);

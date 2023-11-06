@@ -154,7 +154,7 @@ const ChatBot = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-between h-screen rounded overflow-hidden shadow-lg">
+  <div className="flex flex-col justify-between items-center h-screen overflow-hidden  ">
   <div className="flex flex-col overflow-y-auto p-4">
     {loading ? <p className="text-center">Loading...</p> : (
       <ul className="flex flex-col">
@@ -169,7 +169,7 @@ const ChatBot = () => {
       </ul>
     )}
   </div>
-  <form className="flex items-center justify-between p-4" onSubmit={handleSubmit}>
+  {/* <form className=" flex items-center justify-between p-4" onSubmit={handleSubmit}>
     <input
       type="text"
       placeholder="Masukkan pesan Anda"
@@ -180,7 +180,23 @@ const ChatBot = () => {
     <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
     <SendIcon/>
     </button>
-  </form>
+  </form> */}
+  
+  <div className="fixed w-3/4 bottom-0 bg-gray-50 mb-8 rounded-xl shadow-xl">
+    <form className="max-w-screen-lg m-auto w-full p-4 flex space-x-4 justify-center items-center">
+      <input
+      value={message}
+      onChange={(event) => setMessage(event.target.value)}
+      type="text"
+      autoComplete="off"
+      className="border rounded-md p-2 flex-1 border-gray-300"
+      x-model="newMessage"
+      placeholder="Masukkan pesan Anda..."
+      />
+      <button className="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit">Send</button>
+    </form>
+  </div>
+
 </div>
 
   );
