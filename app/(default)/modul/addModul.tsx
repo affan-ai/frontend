@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-Modal.setAppElement('#root'); // Atur elemen yang akan diakses oleh modal
+ // Atur elemen yang akan diakses oleh modal
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 5000;

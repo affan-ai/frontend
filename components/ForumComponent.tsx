@@ -11,6 +11,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material';
 import Pagination from './Pagination';
+import Image from 'next/image';
+import { BiSolidLike, BiLike, BiSolidCommentDetail, BiCommentDetail, BiBookmark } from "react-icons/bi";
+import FeatureButton from "./FeatureButton";
+import { Dialog } from "@headlessui/react";
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 5000;
@@ -45,6 +49,7 @@ interface NewPost {
 }
 
 const ForumComponent: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const {user} = UserAuth();
   const [forumData, setForumData] = useState<ForumData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -54,7 +59,8 @@ const ForumComponent: React.FC = () => {
     title: "",
     images: [],
     userId: '',
-  });  
+  }); 
+
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -66,26 +72,19 @@ const ForumComponent: React.FC = () => {
       checkUser();
   }, [user])
 
-  const fetchData = async () => {
+  const fetchData = async (page: number | undefined) => {
     try {
-      const response = await axios.get<ForumData[]>(`${API_HOST}:${API_PORT}/api/forum`);
-      if (response.status === 200) {
-        const sortedForumData = response.data.sort((a, b) => {
-          // Ubah _seconds dan _nanoseconds menjadi tipe Date
-          const dateA = new Date(a.data.createdAt._seconds * 1000 + a.data.createdAt._nanoseconds / 1000000).getTime();
-          const dateB = new Date(b.data.createdAt._seconds * 1000 + b.data.createdAt._nanoseconds / 1000000).getTime();
-        
-          // Urutkan data berdasarkan createdAt dari yang terbaru ke yang terlama
-          return dateB - dateA;
-        });
-        
-        // Hitung jumlah total halaman
-        const totalPages = Math.ceil(sortedForumData.length / 10);
+      // Ubah URL endpoint untuk menambahkan parameter page
+      const url = `${API_HOST}:${API_PORT}/api/forum/page?page=${page}`;
 
-        // Set data forum dan jumlah total halaman
-        setForumData(sortedForumData);
+      const response = await axios.get(url);
+      if (response.status === 200) {
+        const { forumData, currentPage, totalPages } = response.data;
+
+        // Set data forum, nomor halaman saat ini, dan jumlah total halaman
+        setForumData(forumData);
+        setCurrentPage(currentPage);
         setTotalPages(totalPages);
-        setLoading(false);
       } else {
         console.error('Gagal mengambil data:', response.statusText);
       }
@@ -96,11 +95,17 @@ const ForumComponent: React.FC = () => {
 
   useEffect(() => {
     // Memanggil fetchData untuk mengambil data awal
-    fetchData();
-  }, []);
+    fetchData(currentPage);
+  }, [currentPage]);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   // Dapatkan data forum untuk halaman saat ini
-  const currentForumData = forumData.slice((currentPage - 1) * 10, currentPage * 10);
+  const currentForumData = forumData;
+
+
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -141,7 +146,7 @@ const ForumComponent: React.FC = () => {
 
       if (response.status === 200) {
         // Refresh data setelah berhasil menambahkan postingan
-        fetchData();
+        fetchData(currentPage);
         // Reset formulir setelah berhasil menambahkan postingan
         setNewPost({
           topics: '',
@@ -166,10 +171,10 @@ const ForumComponent: React.FC = () => {
     return <p>Error: {error.message}</p>;
   }
 
+
   return (
-    <div>
-      <h1>Data dari API</h1>
-      { loading ? <p>Loading...</p> : user ? (<div className="mb-4">
+    <div className='w-3/4 items-center justify-center mx-auto'>
+      <div className="mb-4">
         <h2>Tambah Postingan Baru</h2>
         <form onSubmit={handleSubmit}>
         <div className="mb-2">
@@ -206,19 +211,148 @@ const ForumComponent: React.FC = () => {
             </button>
           </div>
         </form>
-      </div>) : (
-      <p>Login dulu bang - Protected Route</p>)}
+      </div>
+
+
+          <div className="p-4 md:p-6 shadow-md bg-white rounded-lg">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+              <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
+              </div>
+              <div
+                className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full cursor-pointer"
+                onClick={() => setIsOpen(true)}
+              >
+                <h3 className=" text-gray-500">
+                  Tanyakan Sesuatu di Forum Diskusi ini...
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          {/* create post dialog  */}
+      <Dialog
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        className="fixed z-auto inset-0 overflow-y-auto"
+      >
+        <div className="flex items-center justify-center min-h-screen">
+          {/* dialog overlay  */}
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-20" />
+          {/* dialog card  */}
+          <div className="relative bg-white w-96 rounded-lg">
+            {/* dialog header  */}
+            <div className="flex justify-center relative border-b">
+              {/* dialog title  */}
+              <Dialog.Title className=" py-4 text-xl font-bold">
+                Create Post
+              </Dialog.Title>
+              {/* dialog close icon button  */}
+              <div className="absolute right-0 p-2">
+                <button
+                  className="bg-gray-200 p-2 hover:bg-gray-300 rounded-full text-gray-500"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            {/* dialog body  */}
+            <Dialog.Description>
+              {/* post author profile */}
+              <div className="my-2 px-4 flex items-center space-x-2">
+              <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
+
+                <div>
+                  <h6 className="font-bold text-sm">Harsh Mangalam</h6>
+                </div>
+              </div>
+
+              {/* create post interface */}
+              <div className="px-4 py-2">
+                <div className="mb-4">
+                  <textarea
+                    className="w-full placeholder-gray-700 text-xl focus:outline-none"
+                    // rows="6"
+                    placeholder="What`s on your mind Harsh ?"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span>
+                      <i
+                        className="bg-no-repeat inline-block bg-auto w-6 h-6 "
+                        style={{
+                          backgroundImage: `url("https://static.xx.fbcdn.net/rsrc.php/v3/ys/r/52gJ5vOc-Eq.png")`,
+                          backgroundPosition: "0px -207px",
+                        }}
+                      ></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="my-2 px-4">
+                <button className="text-center w-full py-2 rounded-lg bg-blue-500 text-white" disabled>
+                  Post
+                </button>
+              </div>
+            </Dialog.Description>
+          </div>
+        </div>
+      </Dialog>
       
       {/* Tampilkan postingan yang ada */}
     {currentForumData.map((item) => (
-      <Box key={item.id} className="p-4 border border-gray-300 rounded-md shadow-md mb-4">
-        <Typography variant="h6" className='font-bold text-lg text-gray-800'><UserInfo uid={item.data.userId as string} /></Typography>
-        <Typography variant="subtitle1" className='text-sm text-gray-500'><TimeAgo date={new Date(item.data.createdAt._seconds * 1000)} /></Typography>
-        <Typography variant="h4" className='text-3xl text-blue-600'><Link href={`/forum/${item.id}`} >{item.data.title}</Link></Typography>
-        <Typography variant="h5" className='text-2xl text-black-600'>{item.data.topics}</Typography>
-
-        {/* Tambahkan elemen lain sesuai kebutuhan */}
-      </Box>
+      <div key={item.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
+      <div className="flex">
+        <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
+        <div className="items-center justify-between">
+        <p className="text-lg font-semibold text-gray-900 -mt-1"><UserInfo uid={item.data.userId as string} /></p>
+          <p className="text-gray-700 text-sm"><TimeAgo date={new Date(item.data.createdAt._seconds * 1000)} /></p>
+        </div>
+      </div>
+      <Link href={`/forum/${item.id}`}>
+        <div className="my-3">
+          <p className="text-gray-700 text-xl font-bold">{item.data.title}</p>
+          <p className="text-gray-700">{item.data.topics}</p>
+        </div>
+      </Link>
+      <hr />
+         <div className=" mt-3 flex items-center">
+            <div className="flex 2 text-gray-700 text-sm mr-3">
+              <BiLike
+              size='20'
+              />
+               <span>12</span>
+            </div>
+            <div className="flex  text-gray-700 text-sm mr-3">
+              <BiCommentDetail
+              size='20'
+              />
+               <span>8</span>
+            </div>
+            <div className="flex  text-gray-700 text-sm mr-3">
+              <BiBookmark
+              size='20'
+              />
+            </div>
+         </div>
+   </div>
+      
     ))}
 
       <Pagination
@@ -226,6 +360,8 @@ const ForumComponent: React.FC = () => {
         totalPages={totalPages}
         onPageChange={(page) => setCurrentPage(page)}
       />
+      
+        
     </div>
   );
 };

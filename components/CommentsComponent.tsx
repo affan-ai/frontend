@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import TimeAgo from 'react-timeago';
 import { UserAuth} from '../app/context/authContext';
+import { BiSolidLike, BiLike, BiSolidCommentDetail, BiCommentDetail, BiBookmark } from "react-icons/bi";
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 5000;
@@ -117,31 +118,59 @@ export default function DetailPage() {
       
 
       return (
-        <div className='p-4'>
+        <div className='p-4 w-3/4 items-center justify-center mx-auto'>
+
           {detailForum ? (
-            <div className="p-4 border border-gray-300 rounded-md shadow-md mb-4">
-              <h1>Halaman Detail Modul</h1>
-              <p className='font-bold text-lg text-gray-800'><p><UserInfo uid={detailForum.data.userId as string} /></p></p>
-              <p className='text-2xl text-blue-600'>{detailForum.data.title}</p>
-              <p className='text-2xl text-black-600'>{detailForum.data.topics}</p>
-              <p className='text-2xl text-green-600'>
-                {detailForum.data.images.map((image: string | StaticImport, index: React.Key | null | undefined) => (
-                <Image key={index} src={image} width={100}
-                height={100} alt={`Gambar ${index}`} />
-                ))}</p>
-              <TimeAgo className='text-sm text-gray-500' date={new Date(detailForum.data.createdAt._seconds * 1000)} />
-              {/* Tampilkan data lain sesuai kebutuhan */}
-                  { user ? (<form onSubmit={(e) => handleCommentSubmit(e, detailForum.id)}>
+            <div className="items-start px-4 py-6 my-5 shadow-md rounded-lg border">
+                <div className="flex">
+                  <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
+                  <div className="items-center justify-between">
+                  <p className="text-lg font-semibold text-gray-900 -mt-1"><UserInfo uid={detailForum.data.userId as string} /></p>
+                    <p className="text-gray-700 text-sm"> <TimeAgo className='text-sm text-gray-500' date={new Date(detailForum.data.createdAt._seconds * 1000)} /></p>
+                  </div>
+                </div>
+                  <div className="my-3">
+                    <p className="text-gray-700 text-xl font-bold">{detailForum.data.title}</p>
+                    <p className="text-gray-700">{detailForum.data.topics}</p>
+                    {detailForum.data.images.map((image: string | StaticImport, index: React.Key | null | undefined) => (
+                    <Image key={index} src={image} width={1000}
+                    height={1000} alt={`Gambar ${index}`} />
+                    ))}
+                  </div>
+                <hr />
+                  <div className=" mt-3 flex items-center">
+                      <div className="flex 2 text-gray-700 text-sm mr-3">
+                        <BiLike
+                        size='20'
+                        />
+                        <span>12</span>
+                      </div>
+                      <div className="flex  text-gray-700 text-sm mr-3">
+                        <BiCommentDetail
+                        size='20'
+                        />
+                        <span>8</span>
+                      </div>
+                      <div className="flex  text-gray-700 text-sm mr-3">
+                        <BiBookmark
+                        size='20'
+                        />
+                      </div>
+                  </div>
+                <hr className='mt-3' />
+                  { user ? (<form className=" w-full p-4 flex space-x-4" onSubmit={(e) => handleCommentSubmit(e, detailForum.id)}>
                     <input
                     type="text"
                     name="text"
+                    autoComplete="off"
+                    className="border rounded-md p-2 flex-1 border-gray-300"
                     placeholder="Tambahkan komentar"
                     value={commentInput.text}
                     onChange={handleCommentInputChange}
                     required
                     />
-                    <button type="submit">Kirim Komentar</button>
-                </form>):
+                    <button type="submit" className="bg-gray-800 text-white px-4 py-2 rounded-md text-sm">Kirim Komentar</button>
+                </form>):  
                 (<p>Login dulu bang - Protected Route</p>)}
               {/* Formulir komentar */}
                 
@@ -151,14 +180,20 @@ export default function DetailPage() {
           )}
       
           {comments.length > 0 ? (
-            <div>
-              <h2>Komentar:</h2>
+            <div className=' items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border'>
               {comments.map((comment: any) => (
-                <div className="p-4 border border-gray-300 rounded-md shadow-md mb-4" key={comment.id}>
-                  <p>{comment.data.text}</p>
-                  <p><UserInfo uid={comment.data.userId as string} /></p>
-                  <TimeAgo className='text-sm text-gray-500' date={new Date(comment.data.createdAt._seconds * 1000)} />
-                  {/* Tampilkan data komentar lain sesuai kebutuhan */}
+                <div key={comment.id} className=' my-3'>
+                  <div className="flex">
+                    <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
+                    <div className="items-center justify-between mt-2">
+                      <p className="text-base font-semibold text-gray-900 -mt-1"><UserInfo uid={comment.data.userId as string} /></p>
+                      <p className="text-gray-700 text-sm"><TimeAgo className='text-sm text-gray-500' date={new Date(comment.data.createdAt._seconds * 1000)} /></p>
+                    </div>
+                  </div>
+                    <div className="my-3">
+                      <p className="text-gray-700">{comment.data.text}</p>
+                    </div>
+                    <hr />
                 </div>
               ))}
             </div>
@@ -167,3 +202,10 @@ export default function DetailPage() {
       );
       
 }
+
+              // <div className="p-4 border border-gray-300 rounded-md shadow-md mb-4" key={comment.id}>
+              //     <p>{comment.data.text}</p>
+              //     <p><UserInfo uid={comment.data.userId as string} /></p>
+              //     <TimeAgo className='text-sm text-gray-500' date={new Date(comment.data.createdAt._seconds * 1000)} />
+              //     {/* Tampilkan data komentar lain sesuai kebutuhan */}
+              //   </div>

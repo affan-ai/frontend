@@ -154,21 +154,62 @@ const ChatBot = () => {
   }, []);
 
   return (
-  <div className="flex flex-col justify-between items-center h-screen overflow-hidden  ">
-  <div className="flex flex-col overflow-y-auto p-4">
+  <div className="flex flex-col justify-between items-center h-screen overflow-hidden ">
+
+  {/* <div className="flex flex-col overflow-y-auto p-4">
     {loading ? <p className="text-center">Loading...</p> : (
-      <ul className="flex flex-col">
+      <div className="flex flex-col gap-7">
         {chats.map((chat, index) => (
-          <li key={index} className="flex items-center p-2 mb-2">
-            <div className="flex-1">
-              <p className="text-sm p-2">{chat.data.content}</p>
-              <p className="bg-gray-200 text-xs px-3 py-3">{chat.data.response}</p>
+          <li key={index} className=" grid grid-cols-2 items-center gap-10 bg-gray-300">
+            <div className="text-sm py-3 px-5  bg-green-200 border-green-200 self-end  rounded-r-xl ">
+              {chat.data.content}
+            </div>
+            <div className="text-xs px-3 py-3  bg-blue-100 border-blue-100 self-start rounded-l-xl">
+              {chat.data.response}
             </div>
           </li>
         ))}
-      </ul>
+      </div>
+    )}
+  </div> */}
+
+  <div className="flex flex-col overflow-y-auto p-4">
+    {loading ? <p className="text-center">Loading...</p> : (
+      <div className="flex flex-col gap-7">
+        {chats.map((chat, index) => (
+          <div key={index} className="mb-10">
+            <div className="flex justify-end mb-3">
+                <div className="bg-green-100 text-black font-medium px-8 py-3 rounded-l-2xl  text-end">
+                  {chat.data.content}
+                </div>
+            </div>
+            <div className="flex">
+                <div className="bg-green-300 text-black  px-8 py-3 rounded-r-2xl  ">
+                  {chat.data.response}
+                </div>
+            </div>
+          </div>
+        ))}
+      </div>
     )}
   </div>
+
+
+        {/* <ul className="flex flex-col gap-7">
+        {chats.map((chat, index) => (
+          <li key={index} className=" grid grid-cols-2 items-center gap-10 bg-gray-300">
+            <div className="text-sm py-3 px-5  bg-green-200 border-green-200 self-end  rounded-r-xl ">
+              {chat.data.content}
+            </div>
+            <div className="text-xs px-3 py-3  bg-blue-100 border-blue-100 self-start rounded-l-xl">
+              {chat.data.response}
+            </div>
+          </li>
+        ))}
+      </ul> */}
+  
+  
+
   {/* <form className=" flex items-center justify-between p-4" onSubmit={handleSubmit}>
     <input
       type="text"
@@ -182,18 +223,20 @@ const ChatBot = () => {
     </button>
   </form> */}
   
-  <div className="fixed w-3/4 bottom-0 bg-gray-50 mb-8 rounded-xl shadow-xl">
-    <form className="max-w-screen-lg m-auto w-full p-4 flex space-x-4 justify-center items-center">
+  <div className=" w-full bottom-0 bg-gray-50">
+    <form className="max-w-screen-lg m-auto w-full p-4 flex space-x-4 justify-center items-center" onSubmit={handleSubmit}>
       <input
       value={message}
       onChange={(event) => setMessage(event.target.value)}
       type="text"
       autoComplete="off"
       className="border rounded-md p-2 flex-1 border-gray-300"
-      x-model="newMessage"
+      // x-model="newMessage"
       placeholder="Masukkan pesan Anda..."
       />
-      <button className="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit">Send</button>
+      <button className="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit">
+        Send
+        </button>
     </form>
   </div>
 

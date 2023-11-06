@@ -8,14 +8,14 @@ const OutputWindow = ({ outputDetails }) => {
       // compilation error
       return (
         <pre className="px-2 py-1 font-normal text-xs text-red-500">
-          {atob(outputDetails?.compile_output)}
+          {outputDetails?.compile_output}
         </pre>
       );
     } else if (statusId === 3) {
       return (
         <pre className="px-2 py-1 font-normal text-xs text-green-500">
-          {atob(outputDetails.stdout) !== null
-            ? `${atob(outputDetails.stdout)}`
+          {outputDetails.stdout !== null
+            ? `${outputDetails.stdout}`
             : null}
         </pre>
       );
@@ -28,7 +28,7 @@ const OutputWindow = ({ outputDetails }) => {
     } else {
       return (
         <pre className="px-2 py-1 font-normal text-xs text-red-500">
-          {atob(outputDetails?.stderr)}
+          {outputDetails?.stderr}
         </pre>
       );
     }
