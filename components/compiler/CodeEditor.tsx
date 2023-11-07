@@ -15,7 +15,7 @@ import ThemeDropdown from "./ThemeDropdown";
 
 
 const CodeEditor = () => { 
-const [code, setCode] = useState('');
+const [code, setCode] = useState('#Write Your R Code Here');
 const [customInput, setCustomInput] = useState("");
 const [outputDetails, setOutputDetails] = useState('');
 const [processing, setProcessing] = useState(null);
@@ -198,8 +198,8 @@ return (
             </h1>
             </div>
         {/* <OutputWindow outputDetails={outputDetails} /> */}
-        <div className="w-full h-56 bg-[#1e293b] text-white font-normal text-sm overflow-y-auto">
-            <pre>{response}</pre>
+        <div className="w-full h-56 bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
+            <pre className="p-5">{response}</pre>
         </div>
         <div className="flex flex-col items-end">
         </div>

@@ -25,7 +25,7 @@ import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import SupportRoundedIcon from '@mui/icons-material/SupportRounded';
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
@@ -234,13 +234,13 @@ return (
             <ListItemButton
             role="menuitem"
             component="a"
-            href="/setting"
+            href="/profile"
             >
             <IconButton>
-                <SettingsRoundedIcon />
+                <AccountCircleIcon  />
             </IconButton>
             <ListItemContent>
-                <Typography level="title-sm">Settings</Typography>
+                <Typography level="title-sm">Profile</Typography>
             </ListItemContent>
             
             </ListItemButton>

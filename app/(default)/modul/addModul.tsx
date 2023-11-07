@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
  // Atur elemen yang akan diakses oleh modal
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_PORT = 3001;
 
 function AddModul() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
