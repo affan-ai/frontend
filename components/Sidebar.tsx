@@ -239,7 +239,10 @@ return (
             <IconButton>
                 <SettingsRoundedIcon />
             </IconButton>
-            Settings
+            <ListItemContent>
+                <Typography level="title-sm">Settings</Typography>
+            </ListItemContent>
+            
             </ListItemButton>
         </ListItem>
 
