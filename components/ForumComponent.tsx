@@ -18,7 +18,7 @@ import { Dialog } from "@headlessui/react";
 import LikeButton from './LikeButton';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_PORT = 3001;
 
 
 interface ForumData {
@@ -175,7 +175,7 @@ const ForumComponent: React.FC = () => {
 
 
   return (
-    <div className='w-3/4 items-center justify-center mx-auto'>
+    <div className='w-full md:w-3/4 items-center justify-center mx-auto'>
       <div className="mb-4">
         <h2>Tambah Postingan Baru</h2>
         <form onSubmit={handleSubmit}>
