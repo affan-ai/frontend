@@ -15,6 +15,7 @@ import Image from 'next/image';
 import { BiSolidLike, BiLike, BiSolidCommentDetail, BiCommentDetail, BiBookmark } from "react-icons/bi";
 import FeatureButton from "./FeatureButton";
 import { Dialog } from "@headlessui/react";
+import LikeButton from './LikeButton';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 5000;
@@ -27,11 +28,13 @@ interface ForumData {
     topics: string;
     title:string;
     images: string[];
+    likes: number;
     createdAt: {
       _seconds: number;
       _nanoseconds: number;
     };
   };
+  commentCount: number;
 }
 
 interface UserData {
@@ -63,6 +66,7 @@ const ForumComponent: React.FC = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
       const checkUser = async() => {
@@ -159,8 +163,6 @@ const ForumComponent: React.FC = () => {
       console.error('Gagal menambahkan postingan:', error);
     }
   };
-
-
 
 
   // if (loading) {
@@ -334,16 +336,14 @@ const ForumComponent: React.FC = () => {
       <hr />
          <div className=" mt-3 flex items-center">
             <div className="flex 2 text-gray-700 text-sm mr-3">
-              <BiLike
-              size='20'
-              />
-               <span>12</span>
+            <LikeButton itemId={item.id} />
+              <span>{item.data.likes}</span>
             </div>
             <div className="flex  text-gray-700 text-sm mr-3">
               <BiCommentDetail
               size='20'
               />
-               <span>8</span>
+               <span>{item.commentCount}</span>
             </div>
             <div className="flex  text-gray-700 text-sm mr-3">
               <BiBookmark

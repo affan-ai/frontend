@@ -10,6 +10,7 @@ import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import TimeAgo from 'react-timeago';
 import { UserAuth} from '../app/context/authContext';
 import { BiSolidLike, BiLike, BiSolidCommentDetail, BiCommentDetail, BiBookmark } from "react-icons/bi";
+import LikeButton from './LikeButton';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 5000;
@@ -140,16 +141,14 @@ export default function DetailPage() {
                 <hr />
                   <div className=" mt-3 flex items-center">
                       <div className="flex 2 text-gray-700 text-sm mr-3">
-                        <BiLike
-                        size='20'
-                        />
-                        <span>12</span>
+                      <LikeButton itemId={detailForum.id} />
+                        <span>{detailForum.data.likes}</span>
                       </div>
                       <div className="flex  text-gray-700 text-sm mr-3">
                         <BiCommentDetail
                         size='20'
                         />
-                        <span>8</span>
+                        <span>{detailForum.commentCount}</span>
                       </div>
                       <div className="flex  text-gray-700 text-sm mr-3">
                         <BiBookmark
