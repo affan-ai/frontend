@@ -20,7 +20,10 @@ const page = () => {
         {loading ? (
             <Spinner />
         ) : user ? (
-            <p>welcome, {user.displayName} You Are Logged in to the Profile Page - a protected route</p>
+
+
+            
+            <p>welcome, {user.displayName} You Are Logged in to the Profile Page - a protected route aswww</p>
         ) : (
         <p>Login dulu bang - Protected Route</p>
         )}        

@@ -6,16 +6,21 @@ import Link from 'next/link';
 import UserInfo from './UserInfo';
 import TimeAgo from 'react-timeago';
 import { UserAuth} from '../app/context/authContext';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { ThemeProvider, createTheme } from '@mui/material';
 import Pagination from './Pagination';
 import Image from 'next/image';
 import { BiSolidLike, BiLike, BiSolidCommentDetail, BiCommentDetail, BiBookmark } from "react-icons/bi";
 import FeatureButton from "./FeatureButton";
 import { Dialog } from "@headlessui/react";
 import LikeButton from './LikeButton';
+import ModalClose from '@mui/joy/ModalClose';
+import Typography from '@mui/joy/Typography';
+import Sheet from '@mui/joy/Sheet';
+import Modal from '@mui/joy/Modal';
+import DialogTitle from '@mui/joy/DialogTitle';
+import DialogContent from '@mui/joy/DialogContent';
+import DialogActions from '@mui/joy/DialogActions';
+import ModalDialog from '@mui/joy/ModalDialog';
+import Divider from '@mui/joy/Divider';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 3001;
@@ -52,7 +57,7 @@ interface NewPost {
 }
 
 const ForumComponent: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = React.useState<boolean>(false);
   const {user} = UserAuth();
   const [forumData, setForumData] = useState<ForumData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -176,7 +181,7 @@ const ForumComponent: React.FC = () => {
 
   return (
     <div className='w-full md:w-3/4 items-center justify-center mx-auto'>
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <h2>Tambah Postingan Baru</h2>
         <form onSubmit={handleSubmit}>
         <div className="mb-2">
@@ -213,109 +218,147 @@ const ForumComponent: React.FC = () => {
             </button>
           </div>
         </form>
-      </div>
+      </div> */}
 
-
-          <div className="p-4 md:p-6 shadow-md bg-white rounded-lg">
+          <div className="p-4 md:p-6 shadow-md bg-white rounded-lg border">
             <div className="flex items-center space-x-4">
               <div className="flex-shrink-0">
               <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
               </div>
               <div
-                className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full cursor-pointer"
-                onClick={() => setIsOpen(true)}
+                className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer"
+                onClick={() => setOpen(true)}
               >
-                <h3 className=" text-gray-500">
+                <h3 className=" text-base text-gray-500">
                   Tanyakan Sesuatu di Forum Diskusi ini...
                 </h3>
               </div>
             </div>
           </div>
 
-          {/* create post dialog  */}
-      <Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        className="fixed z-auto inset-0 overflow-y-auto"
-      >
-        <div className="flex items-center justify-center min-h-screen">
-          {/* dialog overlay  */}
-          <Dialog.Overlay className="fixed inset-0 bg-black opacity-20" />
-          {/* dialog card  */}
-          <div className="relative bg-white w-96 rounded-lg">
-            {/* dialog header  */}
-            <div className="flex justify-center relative border-b">
-              {/* dialog title  */}
-              <Dialog.Title className=" py-4 text-xl font-bold">
-                Create Post
-              </Dialog.Title>
-              {/* dialog close icon button  */}
-              <div className="absolute right-0 p-2">
-                <button
-                  className="bg-gray-200 p-2 hover:bg-gray-300 rounded-full text-gray-500"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
+          <React.Fragment>
+            <Modal
+              open={open}
+              onClose={() => setOpen(false)}
+              sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 999999, p: 2}}
+            >
+              <Sheet
+                variant="plain"
+                sx={{
+                  width: 700,
+                  borderRadius: 'md',
+                  p: 3,
+                  boxShadow: 'lg',
+                }}
+              >
+                <ModalClose variant="plain" sx={{ m: 1 }} />
+                <div className="px-4 py-2 mt-10">
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-5">
+                    <label
+                      className=" block text-base font-medium text-black"
+                    >
+                      Judul Topik
+                    </label>
+                    <label
+                      className="block text-xs font-medium text-gray-400"
+                    >
+                      Tolong berikan informasi yang spesifik dan dengan konteks yang jelas.
+                    </label>
+                    <input
+                      type="text"
+                      name="title"
+                      value={newPost.title}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="contoh : Apa itu bahasa pemrograman R?"
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white  p-3 text-sm text-gray-800 outline-none "
                     />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            {/* dialog body  */}
-            <Dialog.Description>
-              {/* post author profile */}
-              <div className="my-2 px-4 flex items-center space-x-2">
-              <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
-
-                <div>
-                  <h6 className="font-bold text-sm">Harsh Mangalam</h6>
-                </div>
-              </div>
-
-              {/* create post interface */}
-              <div className="px-4 py-2">
-                <div className="mb-4">
-                  <textarea
-                    className="w-full placeholder-gray-700 text-xl focus:outline-none"
-                    // rows="6"
-                    placeholder="What`s on your mind Harsh ?"
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span>
-                      <i
-                        className="bg-no-repeat inline-block bg-auto w-6 h-6 "
-                        style={{
-                          backgroundImage: `url("https://static.xx.fbcdn.net/rsrc.php/v3/ys/r/52gJ5vOc-Eq.png")`,
-                          backgroundPosition: "0px -207px",
-                        }}
-                      ></i>
-                    </span>
                   </div>
+
+                  <div className="mb-5">
+                    <label
+                      className=" block text-base font-medium text-black"
+                    >
+                      Deskripsi Penjelasan
+                    </label>
+                    <label
+                      className="block text-xs font-medium text-gray-400"
+                    >
+                      Jelaskan masalah anda sesuai dengan judul
+                    </label>
+                      <div className="mb-4 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+                          <div className="flex justify-between items-center py-2 px-3 border-b dark:border-gray-600">
+                              <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
+                                  <div className="flex items-center space-x-1 sm:pr-4">
+                                      <button type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
+                                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"></path></svg>
+                                      </button>
+                                      <button type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
+                                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                                      </button>
+                                      <button type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>
+                                      </button>
+                                      <button type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                      </button>
+                                      <button type="button" className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path></svg>
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                          <div className="py-2 px-4 bg-white rounded-b-lg ">
+                              <label htmlFor="editor" className="sr-only">Publish post</label>
+                              <textarea
+                              id="editor"
+                              className="block px-0 w-full text-sm text-gray-800 bg-white border-0  focus:ring-0 md:h-40"
+                              name="topics"
+                              placeholder="Topik"
+                              value={newPost.topics}
+                              // onChange={handleInputChange}
+                              required
+                              />
+                          </div>
+                        </div>
+                        </div>
+                        <div className="mb-5">
+                          <label
+                            className=" block text-base font-medium text-black"
+                          >
+                            Tambahkan Foto
+                          </label>
+                          <label
+                            className="block text-xs font-medium text-gray-400"
+                          >
+                            Masukan foto pendukung jika ada
+                          </label>
+                          <input
+                          type="file"
+                          name="images"
+                          multiple
+                          onChange={handleImageChange}
+                          className="block w-full text-sm text-gray-900  rounded-md cursor-pointer bg-gray-50  focus:outline-none border " />
+                        </div>
+                        <button
+                          type="submit"
+                          className="mt-7 hover:shadow-form w-full rounded-md bg-[#00726B] py-2 px-8 text-center text-base font-semibold text-white outline-none"
+                        >
+                          Tanyakan 
+                        </button>
+                  </form>
                 </div>
-              </div>
-              <div className="my-2 px-4">
-                <button className="text-center w-full py-2 rounded-lg bg-blue-500 text-white" disabled>
-                  Post
-                </button>
-              </div>
-            </Dialog.Description>
-          </div>
-        </div>
-      </Dialog>
+              
+
+
+              </Sheet>
+            </Modal>
+          </React.Fragment>
+
+
+
+    
       
       {/* Tampilkan postingan yang ada */}
     {currentForumData.map((item) => (
