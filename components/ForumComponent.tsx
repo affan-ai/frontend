@@ -82,10 +82,7 @@ const ForumComponent: React.FC = () => {
 
   const fetchData = async (page: number | undefined) => {
     try {
-      // const userId = "3RKnc9mpecXesi5dPHVYUOBFxfB2";
-      // Ubah URL endpoint untuk menambahkan parameter page
       const url = `${API_HOST}:${API_PORT}/api/forum/page?page=${page}`;
-      // const url = `${API_HOST}:${API_PORT}/api/forum/bookmarks/${userId}?page=${page}`;
 
       const response = await axios.get(url);
       if (response.status === 200) {
@@ -127,6 +124,15 @@ const ForumComponent: React.FC = () => {
     
   };
 
+  const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+      setNewPost({
+        ...newPost,
+        [name]: value,
+      });
+    
+  };
+
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setNewPost({
@@ -158,6 +164,7 @@ const ForumComponent: React.FC = () => {
       if (response.status === 200) {
         // Refresh data setelah berhasil menambahkan postingan
         fetchData(currentPage);
+        setOpen(false);
         // Reset formulir setelah berhasil menambahkan postingan
         setNewPost({
           topics: '',
@@ -183,45 +190,6 @@ const ForumComponent: React.FC = () => {
 
   return (
     <div className='w-full md:w-3/4 items-center justify-center mx-auto'>
-      {/* <div className="mb-4">
-        <h2>Tambah Postingan Baru</h2>
-        <form onSubmit={handleSubmit}>
-        <div className="mb-2">
-            <input
-              type="text"
-              name="title"
-              placeholder="Title"
-              value={newPost.title}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="mb-2">
-            <input
-              type="text"
-              name="topics"
-              placeholder="Topik"
-              value={newPost.topics}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="mb-2">
-            <input
-              type="file"
-              name="images"
-              multiple
-              onChange={handleImageChange}
-            />
-          </div>
-          <div className="mb-2">
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
-              Tambahkan Postingan
-            </button>
-          </div>
-        </form>
-      </div> */}
-
           <div className="p-4 md:p-6 shadow-md bg-white rounded-lg border">
             <div className="flex items-center space-x-4">
               <div className="flex-shrink-0">
@@ -319,7 +287,7 @@ const ForumComponent: React.FC = () => {
                               name="topics"
                               placeholder="Topik"
                               value={newPost.topics}
-                              // onChange={handleInputChange}
+                              onChange={handleTextareaChange}
                               required
                               />
                           </div>

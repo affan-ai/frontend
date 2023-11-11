@@ -39,6 +39,7 @@ const fetchData = async () => {
     const response = await axios.get(`${API_HOST}:${API_PORT}/api/modul`);
     if (response.status === 200) {
       setTestData(response.data);
+      console.log(response.data)
     } else {
       console.error('Gagal mengambil data:', response.statusText);
     }
@@ -48,7 +49,7 @@ const fetchData = async () => {
 };
 
 useEffect(() => {
-  fetchData();
+    fetchData();
 }, []);
 
   const handleOpen = (id:number) => {

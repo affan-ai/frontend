@@ -51,6 +51,7 @@ const page = () => {
                 const response = await axios.get(`${API_HOST}:${API_PORT}/api/forum/bookmarks/${userId}`);
                 if (response.status === 200) {
                     setBookmarks(response.data);
+                    console.log(response.data)
                 } else {
                     console.error('Gagal mendapatkan postingan yang dibookmark:', response.statusText);
                 }
