@@ -4,7 +4,7 @@ import { auth } from '../app/firebase';
 import { BiBookmark, BiSolidBookmark } from "react-icons/bi";
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 3001;
+const API_PORT = 5000;
 
 const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
   const [isBookmarked, setIsBookmarked] = useState(true);
