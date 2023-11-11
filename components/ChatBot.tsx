@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent, useRef } from "react";
 import axios from "axios";
 import { auth } from '../app/firebase';
 import { UserAuth} from '../app/context/authContext';
@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 
 const API_HOST = "http://localhost"; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_PORT = 3001;
 
 interface ChatData {
   id: string;
@@ -43,6 +43,11 @@ const ChatBot = () => {
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState<ChatData[]>([]);
   const {user} = UserAuth();
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView();
+  }, [chats])
 
   useEffect(() => {
     // Memuat data obrolan saat komponen pertama kali dimuat
@@ -173,7 +178,7 @@ const ChatBot = () => {
     )}
   </div> */}
 
-  <div className="flex flex-col overflow-y-auto p-4">
+  <div className="flex flex-col overflow-y-auto p-4 w-full md:px-28">
     {loading ? <p className="text-center">Loading...</p> : (
       <div className="flex flex-col gap-7">
         {chats.map((chat, index) => (
@@ -192,6 +197,7 @@ const ChatBot = () => {
         ))}
       </div>
     )}
+    <div ref={messageEndRef} />
   </div>
 
 
