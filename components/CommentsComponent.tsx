@@ -13,7 +13,7 @@ import { BiSolidLike, BiLike, BiSolidCommentDetail, BiCommentDetail, BiBookmark 
 import LikeButton from './LikeButton';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_PORT = 3001;
 
 export default function DetailPage() {
     const {user} = UserAuth();
@@ -119,7 +119,7 @@ export default function DetailPage() {
       
 
       return (
-        <div className='p-4 w-3/4 items-center justify-center mx-auto'>
+        <div className='p-4 w-full md:w-3/4 items-center justify-center mx-auto'>
 
           {detailForum ? (
             <div className="items-start px-4 py-6 my-5 shadow-md rounded-lg border">
