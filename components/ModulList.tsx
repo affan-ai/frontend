@@ -16,7 +16,7 @@ import IconButton from '@mui/joy/IconButton';
 
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_PORT = 3001;
 
 function ModulList() {
   // Buat sebuah jenis yang mencerminkan struktur data dari API
@@ -98,7 +98,7 @@ useEffect(() => {
               >
                 <BiX size='24' color='#fff' />
               </IconButton>
-              <Modal open={open === item.id} onClose={handleClose}>
+              <Modal open={open === item.id} onClose={handleClose} sx={{zIndex: 99999}}>
                 <ModalDialog variant="outlined" role="alertdialog">
                   <DialogTitle>
                     <WarningRoundedIcon />
