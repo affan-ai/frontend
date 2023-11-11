@@ -3,12 +3,13 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 3001;
+const API_PORT = 5000;
 
 
 export default function page() {
   const [codeSampel, setCodeSampel] = useState('');
   const [namaModul, setNamaModul] = useState('');
+  const [judulModul, setJudulModul] = useState('');
   const [pdfFile, setPdfFile] = useState<File | null>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +31,7 @@ export default function page() {
     formData.append('pdfFile', pdfFile);
     formData.append('namaModul', namaModul);
     formData.append('codeSampel', codeSampel);
+    formData.append('judulModul', judulModul);
 
     try {
       // Menggunakan fetch untuk mengirim data ke endpoint
@@ -39,7 +41,7 @@ export default function page() {
       });
 
       if (response.ok) {
-        alert('File PDF berhasil diunggah dan data modul berhasil ditambahkan.');
+        window.location.href = '/modul';
       } else {
         alert('Gagal menambahkan modul.');
       }
@@ -60,21 +62,7 @@ export default function page() {
               action=""
               method=""
             >
-              <div className="mb-5">
-                <label
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Masukan Judul Modul
-                </label>
-                <input
-                  type="judulModul"
-                  name="judulModul"
-                  id="judulModul"
-                  placeholder="contoh : Modul 1, Modul 2 dll.."
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
-                />
-              </div>
-              <div className="mb-5">
+            <div className="mb-5">
                 <label
                   className="mb-3 block text-base font-medium text-[#07074D]"
                 >
@@ -86,10 +74,27 @@ export default function page() {
                   id="namaModul"
                   value={namaModul}
                   onChange={(e) => setNamaModul(e.target.value)}
+                  placeholder="contoh : Modul 1, Modul 2 dll.."
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
+                />
+              </div>
+              <div className="mb-5">
+                <label
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Masukan Judul Modul
+                </label>
+                <input
+                  type="judulModul"
+                  name="judulModul"
+                  id="judulModul"
+                  value={judulModul}
+                  onChange={(e) => setJudulModul(e.target.value)}
                   placeholder="contoh : Belajar Dasar Statistik"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
                 />
               </div>
+
 
               <div className="mb-5">
                 <label

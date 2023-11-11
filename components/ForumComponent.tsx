@@ -6,19 +6,14 @@ import Link from 'next/link';
 import UserInfo from './UserInfo';
 import TimeAgo from 'react-timeago';
 import { UserAuth} from '../app/context/authContext';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { ThemeProvider, createTheme } from '@mui/material';
 import Pagination from './Pagination';
-import Image from 'next/image';
-import { BiSolidLike, BiLike, BiSolidCommentDetail, BiCommentDetail, BiBookmark } from "react-icons/bi";
-import FeatureButton from "./FeatureButton";
+import { BiCommentDetail} from "react-icons/bi";
 import { Dialog } from "@headlessui/react";
 import LikeButton from './LikeButton';
+import Bookmark from './Bookmark';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 3001;
+const API_PORT = 5000;
 
 
 interface ForumData {
@@ -78,12 +73,15 @@ const ForumComponent: React.FC = () => {
 
   const fetchData = async (page: number | undefined) => {
     try {
+      // const userId = "3RKnc9mpecXesi5dPHVYUOBFxfB2";
       // Ubah URL endpoint untuk menambahkan parameter page
       const url = `${API_HOST}:${API_PORT}/api/forum/page?page=${page}`;
+      // const url = `${API_HOST}:${API_PORT}/api/forum/bookmarks/${userId}?page=${page}`;
 
       const response = await axios.get(url);
       if (response.status === 200) {
         const { forumData, currentPage, totalPages } = response.data;
+        console.log(forumData);
 
         // Set data forum, nomor halaman saat ini, dan jumlah total halaman
         setForumData(forumData);
@@ -346,9 +344,7 @@ const ForumComponent: React.FC = () => {
                <span>{item.commentCount}</span>
             </div>
             <div className="flex  text-gray-700 text-sm mr-3">
-              <BiBookmark
-              size='20'
-              />
+              <Bookmark itemId={item.id} />
             </div>
          </div>
    </div>

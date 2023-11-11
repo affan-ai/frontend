@@ -17,7 +17,7 @@ import IconButton from '@mui/joy/IconButton';
 
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 3001;
+const API_PORT = 5000;
 
 function ModulList() {
   // Buat sebuah jenis yang mencerminkan struktur data dari API
@@ -26,31 +26,53 @@ interface ModulData {
   data: {
     namaModul: string;
     codeSampel: string;
+    judulModul: string;
   };
 }
   
 
 // Kemudian gunakan jenis ini untuk menentukan jenis state
 const [testData, setTestData] = useState<ModulData[]>([]);
-const [open, setOpen] = React.useState<boolean>(false);
+const [open, setOpen] = React.useState<number | null>(null);
 
-  useEffect(() => {
-    // Mengambil data dari endpoint API dengan axios
-    async function fetchData() {
-      try {
-        const response = await axios.get(`${API_HOST}:${API_PORT}/api/modul`);
-        if (response.status === 200) {
-          setTestData(response.data);
-        } else {
-          console.error('Gagal mengambil data:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Gagal mengambil data:', error);
-      }
+const fetchData = async () => {
+  try {
+    const response = await axios.get(`${API_HOST}:${API_PORT}/api/modul`);
+    if (response.status === 200) {
+      setTestData(response.data);
+    } else {
+      console.error('Gagal mengambil data:', response.statusText);
     }
+  } catch (error) {
+    console.error('Gagal mengambil data:', error);
+  }
+};
 
-    fetchData();
-  }, []);
+useEffect(() => {
+  fetchData();
+}, []);
+
+  const handleOpen = (id:number) => {
+    setOpen(id);
+  };
+
+  const handleClose = () => {
+    setOpen(null);
+  };
+
+  const handleDelete = (id: number) => {
+    // Panggil endpoint dengan menggunakan ID modul
+    axios.delete(`${API_HOST}:${API_PORT}/api/modul/${id}`)
+      .then(response => {
+        console.log(id)
+        setOpen(null);
+        fetchData();
+      })
+      .catch(error => {
+        console.error('Gagal menghapus data:', error);
+        // Handle error secara sesuai kebutuhan Anda
+      });
+  };
 
   return (
     <div className='md:px-7'>
@@ -71,12 +93,12 @@ const [open, setOpen] = React.useState<boolean>(false);
               <IconButton
               color="danger"
               variant="solid"
-              onClick={() => setOpen(true)}
+              onClick={() => handleOpen(item.id)}
               size='md'
               >
                 <BiX size='24' color='#fff' />
               </IconButton>
-              <Modal open={open} onClose={() => setOpen(false)}>
+              <Modal open={open === item.id} onClose={handleClose}>
                 <ModalDialog variant="outlined" role="alertdialog">
                   <DialogTitle>
                     <WarningRoundedIcon />
@@ -87,10 +109,10 @@ const [open, setOpen] = React.useState<boolean>(false);
                     Apa anda yakin ingin menghapus modul?
                   </DialogContent>
                   <DialogActions>
-                    <Button variant="plain" color="danger" onClick={() => alert("Modul Terhapus")}>
+                    <Button variant="plain" color="danger" onClick={() => handleDelete(item.id)}>
                       Hapus
                     </Button>
-                    <Button variant="plain" color="neutral" onClick={() => setOpen(false)}>
+                    <Button variant="plain" color="neutral" onClick={() => setOpen(null)}>
                       Cancel
                     </Button>
                   </DialogActions>
@@ -103,7 +125,7 @@ const [open, setOpen] = React.useState<boolean>(false);
           <Link href={`/modul/${item.id}`} className='absolute bottom-0 z-20 m-0 pb-4 ps-4 transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:translate-x-3 group-hover:scale-110'>
           <div className="">
             <h1 className=" text-2xl md:text-3xl font-bold text-white">{item.data.namaModul}</h1>
-            <h1 className="text-base md:text-xl  text-gray-200">{item.id}</h1>
+            <h1 className="text-base md:text-xl  text-gray-200">{item.data.judulModul}</h1>
           </div>
           </Link>
         </div>
