@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_HOST = "http://localhost";
-const API_PORT = 5000;
+const API_PORT = 3001;
 
 export async function getForumData() {
   const response = await axios.get(`${API_HOST}:${API_PORT}/api/forum`);
