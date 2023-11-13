@@ -6,6 +6,7 @@ const API_PORT = 5000;
 interface UserData {
   uid: string;
   displayName: string;
+  created:string;
   // Tambahkan properti pengguna lainnya sesuai kebutuhan
 }
 
