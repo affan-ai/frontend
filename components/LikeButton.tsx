@@ -4,10 +4,10 @@ import { auth } from '../app/firebase';
 import { BiSolidLike, BiLike } from "react-icons/bi";
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 3001;
+const API_PORT = 5000;
 
 const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
-  const [isLiked, setIsLiked] = useState(true);
+  const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
