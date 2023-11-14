@@ -55,7 +55,7 @@ const LoginForm = () => {
           <div className="flex w-full lg:w-1/2 justify-center items-center mx-auto space-y-8 z-10">
             <div className="w-full px-8 md:px-32 lg:px-24 ">
               <div className='rounded-md shadow-2xl p-7 md:p-14 bg-white'>
-              <form className=" ">
+              <form onSubmit={handleEmailSignIn} className=" ">
                 <h1 className="text-[#00726B] font-bold text-3xl md:text-5xl  ">Selamat Datang Statistikawan</h1>
                 <p className="text-base md:text-xl font-light text-gray-400 mb-8">Hallo 👋 ayo semangat belajar!</p>
                 <div className="flex items-center border-2 mb-8 py-2 px-3 rounded-lg">

@@ -20,6 +20,8 @@ interface AuthContextType {
 interface UserData {
   email: string;
   role: string;
+  displayName: string;
+  photoURL: string;
 }
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
@@ -45,6 +47,8 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
         email: signedInUser.email || '',
         role: 'user', // Ganti ini dengan cara Anda menentukan peran (role) pengguna
         uid: signedInUser.uid,
+        displayName: signedInUser.displayName || '',
+        photoURL: signedInUser.photoURL || '',
       };
   
       // Kirim data pengguna ke endpoint REST API
@@ -90,7 +94,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
       // Panggil handleLoginSuccess di sini jika perlu
       handleLoginSuccess(email, password);
 
-      window.location.href = '/';
+      window.location.href = '/compiler';
     } catch (error) {
       const authError = error as Error;
       console.error('Gagal masuk dengan email dan password:', authError.message);

@@ -3,7 +3,6 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import { auth } from '@/app/firebase';
 import Link from 'next/link';
-import UserInfo from '@/components/UserInfo';
 import TimeAgo from 'react-timeago';
 import { UserAuth} from '@/app/context/authContext';
 import Pagination from '@/components/Pagination';
@@ -13,6 +12,7 @@ import Bookmark from '@/components/Bookmark';
 import ModalClose from '@mui/joy/ModalClose';
 import Sheet from '@mui/joy/Sheet';
 import Modal from '@mui/joy/Modal';
+import Image from 'next/image'
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 5000;
@@ -31,6 +31,10 @@ interface ForumData {
       _nanoseconds: number;
     };
   };
+  user:{
+    displayName: string;
+    photoURL: string;
+  }
   commentCount: number;
 }
 
@@ -65,7 +69,8 @@ const ForumComponent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<ForumData[]>([]);
 
 
   const fetchData = async (page: number | undefined) => {
@@ -81,6 +86,7 @@ const ForumComponent: React.FC = () => {
         setForumData(forumData);
         setCurrentPage(currentPage);
         setTotalPages(totalPages);
+        setSearchResults(forumData);
       } else {
         console.error('Gagal mengambil data:', response.statusText);
       }
@@ -92,15 +98,17 @@ const ForumComponent: React.FC = () => {
   useEffect(() => {
     // Memanggil fetchData untuk mengambil data awal
     fetchData(currentPage);
-  }, [currentPage]);
+  }, [currentPage, searchTerm]);
 
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
-  };
+  const displayData = searchTerm ? searchResults : forumData;
 
   // Dapatkan data forum untuk halaman saat ini
   const currentForumData = forumData;
 
+  const filteredForumData = forumData.filter((item) =>
+  item.data.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  item.data.topics.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -314,18 +322,36 @@ const ForumComponent: React.FC = () => {
             </Modal>
           </React.Fragment>
 
-
-
-    
+          <input
+            type="text"
+            placeholder="Cari..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="p-2 border rounded-md"
+          />
       
       {/* Tampilkan postingan yang ada */}
-    {currentForumData.map((item) => (
+    {filteredForumData.map((item) => (
       <div key={item.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
       <div className="flex">
-        <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
+        <div className="p-6 bg-slate-500 rounded-full mr-2">
+        <Image
+          src={item.user.photoURL}
+          alt="Picture of the author"
+          width={40}
+          height={40}
+          className="rounded-full" />
+        </div>
+        
         <div className="items-center justify-between">
-        <p className="text-lg font-semibold text-gray-900 -mt-1"><UserInfo uid={item.data.userId as string} /></p>
-          <p className="text-gray-700 text-sm"><TimeAgo date={new Date(item.data.createdAt._seconds * 1000)} /></p>
+        <p className="text-lg font-semibold text-gray-900 -mt-1">{item.user.displayName}</p>
+        <p className="text-gray-700 text-sm">
+          {item.data.createdAt._seconds * 1000 > new Date().getTime() - 7 * 24 * 60 * 60 * 1000 ? (
+            <TimeAgo date={new Date(item.data.createdAt._seconds * 1000)} />
+          ) : (
+            <span>{new Date(item.data.createdAt._seconds * 1000).toLocaleDateString()}</span>
+          )}
+          </p>
         </div>
       </div>
       <Link href={`/forum/${item.id}`}>

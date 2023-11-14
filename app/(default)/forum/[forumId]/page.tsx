@@ -4,7 +4,6 @@ import axios from 'axios';
 import { auth } from '@/app/firebase';
 import { usePathname } from 'next/navigation';
 import Spinner from '@/components/Spinner';
-import UserInfo from '@/components/UserInfo';
 import Image from 'next/image'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import TimeAgo from 'react-timeago';
@@ -124,9 +123,16 @@ export default function DetailPage() {
           {detailForum ? (
             <div className="items-start px-4 py-6 my-5 shadow-md rounded-lg border">
                 <div className="flex">
-                  <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
+                  <div className="p-6 bg-slate-500 rounded-full mr-2">
+                  <Image
+                  src={detailForum.user.photoURL}
+                  alt="Picture of the author"
+                  width={40}
+                  height={40}
+                  className="rounded-full" />
+                  </div>
                   <div className="items-center justify-between">
-                  <p className="text-lg font-semibold text-gray-900 -mt-1"><UserInfo uid={detailForum.data.userId as string} /></p>
+                  <p className="text-lg font-semibold text-gray-900 -mt-1">{detailForum.user.displayName}</p>
                     <p className="text-gray-700 text-sm"> <TimeAgo className='text-sm text-gray-500' date={new Date(detailForum.data.createdAt._seconds * 1000)} /></p>
                   </div>
                 </div>
@@ -183,9 +189,16 @@ export default function DetailPage() {
               {comments.map((comment: any) => (
                 <div key={comment.id} className=' my-3'>
                   <div className="flex">
-                    <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
+                    <div className="p-6 bg-slate-500 rounded-full mr-2">
+                    <Image
+                    src={comment.user.photoURL}
+                    alt="Picture of the author"
+                    width={40}
+                    height={40}
+                    className="rounded-full" />
+                    </div>
                     <div className="items-center justify-between mt-2">
-                      <p className="text-base font-semibold text-gray-900 -mt-1"><UserInfo uid={comment.data.userId as string} /></p>
+                      <p className="text-base font-semibold text-gray-900 -mt-1">{comment.user.displayName}</p>
                       <p className="text-gray-700 text-sm"><TimeAgo className='text-sm text-gray-500' date={new Date(comment.data.createdAt._seconds * 1000)} /></p>
                     </div>
                   </div>
