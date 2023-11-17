@@ -108,7 +108,7 @@ const page = () => {
                             <h5 className="text-lg text-center text-gray-500 ">{user.email}</h5>          
                             <div className="flex flex-col items-center mt-10 sm:flex-row sm:space-x-6">
                                 <p className="text-gray-500 dark:text-gray-400"><span className="font-bold">4</span> Posts in Forum</p>
-                                <p className="mt-3 text-center text-gray-500  sm:mt-0">Member Since </p>
+                                <p className="mt-3 text-center text-gray-500  sm:mt-0">Member Since  </p>
                             </div>
                             {/* <div className=" mt-4 flex space-x-3 ">
                             <a href="" className="block px-4 py-2 text-sm text-center text-gray-600 transition-colors duration-300 transform border rounded-lg  hover:bg-gray-100  focus:outline-none">

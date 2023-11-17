@@ -25,9 +25,10 @@ const language = {
     label: "R (4.0.0)",
     value: "r",
 }
+const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [response, setResponse] = useState('');
   const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-  const API_PORT = 3001;
+  const API_PORT = 5000;
 
 const enterPress = useKeyPress("Enter");
 const ctrlPress = useKeyPress("Control");
@@ -39,6 +40,16 @@ useEffect(() => {
     handleCompile();
     }
 }, [ctrlPress, enterPress]);
+
+  // Use useEffect to clean up the image element when imageUrl changes
+  useEffect(() => {
+    return () => {
+      // Clean up the image element
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
+    };
+  }, [imageUrl]);
 
 const onChange = (action: any, data: string) => {
     switch (action) {
@@ -54,23 +65,35 @@ const onChange = (action: any, data: string) => {
 
 const handleCompile = async () => {
     try {
-        const response = await fetch(`${API_HOST}:${API_PORT}/api/compiler`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code }),
-        });
+      const response = await fetch(`${API_HOST}:${API_PORT}/api/compiler/test/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+      });
   
+    // Reset imageUrl to null before processing new response
+    setImageUrl(null);
+
+      // Check if the response is an image
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('image/png')) {
+        // If it's an image, set the response as an image source
+        const blob = await response.blob();
+        const newImageUrl = URL.createObjectURL(blob);
+        setImageUrl(newImageUrl);
+      } else {
+        // If it's not an image, set the response as text
         const data = await response.text();
         setOutputDetails(data);
         setResponse(data);
-        console.log(data);
-      } catch (error) {
-        console.error(error);
-        setResponse('Terjadi kesalahan saat mengirim kode.');
       }
-};
+    } catch (error) {
+      console.error(error);
+      setResponse('Terjadi kesalahan saat mengirim kode.');
+    }
+  };
 
 
 function handleThemeChange(th: any) {
@@ -139,10 +162,15 @@ return (
                 Output
             </h1>
             </div>
-        {/* <OutputWindow outputDetails={outputDetails} /> */}
-        <div className="w-full h-56 bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
-            <pre className="p-5">{response}</pre>
-        </div>
+            <div className="w-full h-56 bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
+                {/* Conditional rendering based on content type */}
+                {imageUrl ? (
+                    <img src={imageUrl} alt="Output" className="w-full h-full" />
+                ) : (
+                    <pre className="p-5">{response}</pre>
+                )}
+                </div>
+
         <div className="flex flex-col items-end">
         </div>
         

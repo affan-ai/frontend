@@ -16,7 +16,7 @@ import IconButton from '@mui/joy/IconButton';
 
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 3001;
+const API_PORT = 5000;
 
 function ModulList() {
   // Buat sebuah jenis yang mencerminkan struktur data dari API

@@ -139,6 +139,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
     try {
       await signOut(auth);
       setUser(null);
+      window.location.href = '/signin';
     } catch (error) {
       const authError = error as Error;
       console.error('Gagal keluar:', authError.message);

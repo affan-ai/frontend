@@ -71,7 +71,7 @@ const ForumComponent: React.FC = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResults, setSearchResults] = useState<ForumData[]>([]);
-
+  const photoURL = user?.photoURL || '';
 
   const fetchData = async (page: number | undefined) => {
     try {
@@ -189,7 +189,9 @@ const ForumComponent: React.FC = () => {
           <div className="p-4 md:p-6 shadow-md bg-white rounded-lg border">
             <div className="flex items-center space-x-4">
               <div className="flex-shrink-0">
-              <div className="p-6 bg-slate-500 rounded-full mr-2"></div>
+              <div className="p-6  rounded-full mr-2">
+              <Image src={photoURL} alt="profile" width={80} height={80} className="rounded-full" />
+              </div>
               </div>
               <div
                 className="w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer"
@@ -334,12 +336,12 @@ const ForumComponent: React.FC = () => {
     {filteredForumData.map((item) => (
       <div key={item.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
       <div className="flex">
-        <div className="p-6 bg-slate-500 rounded-full mr-2">
+        <div className="p-6  rounded-full mr-2">
         <Image
           src={item.user.photoURL}
           alt="Picture of the author"
-          width={40}
-          height={40}
+          width={80}
+          height={80}
           className="rounded-full" />
         </div>
         
