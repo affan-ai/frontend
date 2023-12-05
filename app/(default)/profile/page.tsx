@@ -21,7 +21,7 @@ import Image from 'next/image'
 
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_PORT = 3001;
 
 interface ForumData {
     id: string;
