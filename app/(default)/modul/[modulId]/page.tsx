@@ -48,7 +48,7 @@ export default function DetailPage() {
               type="application/pdf"
               src={pdfUrl}
               width="50%"
-              height="1000px"
+              height="600px"
               title="PDF Viewer"
             />
           )}
