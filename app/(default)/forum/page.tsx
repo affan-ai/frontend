@@ -6,13 +6,13 @@ import Link from 'next/link';
 import TimeAgo from 'react-timeago';
 import { UserAuth} from '@/app/context/authContext';
 import Pagination from '@/components/Pagination';
-import { BiCommentDetail} from "react-icons/bi";
+import { BiCommentDetail, BiLink} from "react-icons/bi";
 import LikeButton from '@/components/LikeButton';
 import Bookmark from '@/components/Bookmark';
 import ModalClose from '@mui/joy/ModalClose';
 import Sheet from '@mui/joy/Sheet';
 import Modal from '@mui/joy/Modal';
-import Image from 'next/image'
+import Image from 'next/image';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 5000;
@@ -69,9 +69,8 @@ const ForumComponent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<ForumData[]>([]);
   const photoURL = user?.photoURL || '';
+  const [searchTerm, setSearchTerm] = useState('');
 
   const fetchData = async (page: number | undefined) => {
     try {
@@ -86,7 +85,6 @@ const ForumComponent: React.FC = () => {
         setForumData(forumData);
         setCurrentPage(currentPage);
         setTotalPages(totalPages);
-        setSearchResults(forumData);
       } else {
         console.error('Gagal mengambil data:', response.statusText);
       }
@@ -98,18 +96,16 @@ const ForumComponent: React.FC = () => {
   useEffect(() => {
     // Memanggil fetchData untuk mengambil data awal
     fetchData(currentPage);
-  }, [currentPage, searchTerm]);
+  }, [currentPage]);
 
-  const displayData = searchTerm ? searchResults : forumData;
+  const handleSearch = () => {
+    const redirectUrl = `/forum/search?q=${searchTerm}`;
+    window.location.href = redirectUrl;
+  };
+  
 
   // Dapatkan data forum untuk halaman saat ini
   const currentForumData = forumData;
-
-  const filteredForumData = forumData.filter((item) =>
-  item.data.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  item.data.topics.toLowerCase().includes(searchTerm.toLowerCase())
-);
-
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -200,6 +196,11 @@ const ForumComponent: React.FC = () => {
                 <h3 className=" text-base text-gray-500">
                   Tanyakan Sesuatu di Forum Diskusi ini...
                 </h3>
+              </div>
+
+              <div>
+                <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                <button onClick={handleSearch}>Search</button>
               </div>
             </div>
           </div>
@@ -324,16 +325,10 @@ const ForumComponent: React.FC = () => {
             </Modal>
           </React.Fragment>
 
-          <input
-            type="text"
-            placeholder="Cari..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="p-2 border rounded-md"
-          />
-      
+          {currentForumData.length > 0 ? (
+      <div>
       {/* Tampilkan postingan yang ada */}
-    {filteredForumData.map((item) => (
+    {currentForumData.map((item) => (
       <div key={item.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
       <div className="flex">
         <div className="p-6  rounded-full mr-2">
@@ -377,6 +372,18 @@ const ForumComponent: React.FC = () => {
             <div className="flex  text-gray-700 text-sm mr-3">
               <Bookmark itemId={item.id} />
             </div>
+            <div className="flex  text-gray-700 text-sm mr-3">
+                <BiLink size='20'
+                 onClick={() => {
+                  const linkElement = document.querySelector(`a[href="/forum/${item.id}"]`);
+                  const link = (linkElement as HTMLAnchorElement).href;                  
+                  if (link) {
+                    navigator.clipboard.writeText(link);
+                  }
+                }}
+                
+                />
+            </div>
          </div>
    </div>
       
@@ -387,7 +394,8 @@ const ForumComponent: React.FC = () => {
         totalPages={totalPages}
         onPageChange={(page) => setCurrentPage(page)}
       />
-      
+      </div>
+      ) : <p>Loading...</p>}
         
     </div>
   );

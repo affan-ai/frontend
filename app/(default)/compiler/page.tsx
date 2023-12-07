@@ -10,22 +10,23 @@ import "react-toastify/dist/ReactToastify.css";
 import { defineTheme } from "@/components/compiler/utils/defineTheme";
 import useKeyPress from "@/components/compiler/utils/useKeyPress";
 import ThemeDropdown from "@/components/compiler/ThemeDropdown";
-
+// import useAuthMiddleware from '@/app/middleware/authMiddleware';
 
 
 const CodeEditor = () => { 
-const [code, setCode] = useState('#Write Your R Code Here');
-const [customInput, setCustomInput] = useState("");
-const [outputDetails, setOutputDetails] = useState('');
-const [processing, setProcessing] = useState(null);
-const [theme, setTheme] = useState("amy");
-const language = {
-    id: 80,
-    name: "R (4.0.0)",
-    label: "R (4.0.0)",
-    value: "r",
-}
-const [imageUrl, setImageUrl] = useState<string | null>(null);
+  // const { user } = useAuthMiddleware();
+  const [code, setCode] = useState('#Write Your R Code Here # png("out.png", width = 800, height = 600)');
+  const [customInput, setCustomInput] = useState("");
+  const [outputDetails, setOutputDetails] = useState('');
+  const [processing, setProcessing] = useState(null);
+  const [theme, setTheme] = useState("amy");
+  const language = {
+      id: 80,
+      name: "R (4.0.0)",
+      label: "R (4.0.0)",
+      value: "r",
+  }
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [response, setResponse] = useState('');
   const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
   const API_PORT = 5000;
@@ -113,7 +114,9 @@ useEffect(() => {
 }, []);
 
 return (
+  
     <>
+          
     <ToastContainer
         position="bottom-right"
         autoClose={2000}
@@ -162,10 +165,10 @@ return (
                 Output
             </h1>
             </div>
-            <div className="w-full h-56 bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
+            <div className="w-full h-72 bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
                 {/* Conditional rendering based on content type */}
                 {imageUrl ? (
-                    <img src={imageUrl} alt="Output" className="w-full h-full" />
+                    <img src={imageUrl} alt="Output" className="h-full p-5" />
                 ) : (
                     <pre className="p-5">{response}</pre>
                 )}
@@ -176,6 +179,7 @@ return (
         
         </div>
     </div>
+    
     </>
 );
 };
