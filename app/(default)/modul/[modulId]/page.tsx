@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import Spinner from '@/components/Spinner';
 import CodeEditorWindow from "@/components/compiler/CodeEditorWindows";
 import { defineTheme } from "@/components/compiler/utils/defineTheme";
+import Select from "react-select";
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 3001;
@@ -24,7 +25,13 @@ export default function DetailPage() {
     name: "R (4.0.0)",
     label: "R (4.0.0)",
     value: "r",
-}
+  }
+
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
 
   const onChange = (action: any, data: string) => {
     switch (action) {
@@ -81,10 +88,15 @@ export default function DetailPage() {
     <div className='px-4'>
       {detailModul ? (
         <div className=''>
-          <div className='items-center text-center mb-5'>
-            <h1 className='font-extrabold text-3xl md:text-5xl text-[#00726B]'>{detailModul.data.namaModul}</h1>
-            <h1 className='font-semibold text-xl text-[#00726B]'>{detailModul.data.judulModul}</h1>
-            <p>code: {detailModul.data.codeSampel}</p>
+          <div className='grid grid-cols-2 gap-7 mb-5 bg-gray-100 px-4 py-3 outline outline-1 rounded-lg outline-gray-300'>
+            <h1 className=' font-extrabold text-base md:text-2xl text-[#00726B]'>{detailModul.data.namaModul} : <span className='font-medium'>{detailModul.data.judulModul}</span></h1>
+            <Select
+              placeholder="Pilih Modul"
+              options={options}
+              onChange={undefined}
+
+            />
+            {/* <p>code: {detailModul.data.codeSampel}</p> */}
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
