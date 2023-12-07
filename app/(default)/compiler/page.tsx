@@ -14,6 +14,7 @@ import ThemeDropdown from "@/components/compiler/ThemeDropdown";
 
 
 const CodeEditor = () => { 
+
   // const { user } = useAuthMiddleware();
   const [code, setCode] = useState('#Write Your R Code Here # png("out.png", width = 800, height = 600)');
   const [customInput, setCustomInput] = useState("");
@@ -27,9 +28,10 @@ const CodeEditor = () => {
       value: "r",
   }
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+
   const [response, setResponse] = useState('');
   const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-  const API_PORT = 5000;
+  const API_PORT = 3001;
 
 const enterPress = useKeyPress("Enter");
 const ctrlPress = useKeyPress("Control");
@@ -132,7 +134,7 @@ return (
 
 
     <div className=" items-start">
-        <div className=" pb-4 items-end grid grid-cols-2 md:grid-cols-5 gap-4 ">
+        <div className=" pb-4 items-end grid grid-cols-2 md:grid-cols-5 gap-4 px-3">
             <div className="md:col-span-2 md:col-start-3">
             <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
             </div>
@@ -151,11 +153,10 @@ return (
         </div>
         <div className=" w-full justify-start items-end">
         <CodeEditorWindow
-            code={code}
-            
-            onChange={onChange}
-            language={language?.value}
-            theme={theme.value}
+          code={code}
+          onChange={onChange}
+          language={language?.value}
+          theme={theme.value}
         />
         </div>
 

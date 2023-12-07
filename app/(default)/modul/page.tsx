@@ -16,7 +16,7 @@ import IconButton from '@mui/joy/IconButton';
 
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_PORT = 3001;
 
 function ModulList() {
   // Buat sebuah jenis yang mencerminkan struktur data dari API
@@ -75,7 +75,7 @@ useEffect(() => {
   };
 
   return (
-    <div className='md:px-7'>
+    <div className='px-4 md:px-7'>
       <div className='flex justify-between h-16 mb-5'>
         <h2 className='font-bold text-2xl text-[#00726B] '>Modul Pembelajaran</h2>
         <Link href={`/modul/addNew`}>

@@ -12,7 +12,7 @@ import { BiCommentDetail, BiBookmark } from "react-icons/bi";
 import LikeButton from '@/components/LikeButton';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_PORT = 3001;
 
 export default function DetailPage() {
     const {user} = UserAuth();
@@ -123,12 +123,12 @@ export default function DetailPage() {
           {detailForum ? (
             <div className="items-start px-4 py-6 my-5 shadow-md rounded-lg border">
                 <div className="flex">
-                  <div className="p-6 bg-slate-500 rounded-full mr-2">
+                  <div className=" rounded-full mr-2">
                   <Image
                   src={detailForum.user.photoURL}
                   alt="Picture of the author"
-                  width={40}
-                  height={40}
+                  width={50}
+                  height={50}
                   className="rounded-full" />
                   </div>
                   <div className="items-center justify-between">
@@ -189,12 +189,12 @@ export default function DetailPage() {
               {comments.map((comment: any) => (
                 <div key={comment.id} className=' my-3'>
                   <div className="flex">
-                    <div className="p-6 bg-slate-500 rounded-full mr-2">
+                    <div className="rounded-full mr-2">
                     <Image
                     src={comment.user.photoURL}
                     alt="Picture of the author"
-                    width={40}
-                    height={40}
+                    width={50}
+                    height={50}
                     className="rounded-full" />
                     </div>
                     <div className="items-center justify-between mt-2">

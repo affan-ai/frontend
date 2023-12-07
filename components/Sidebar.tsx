@@ -32,6 +32,8 @@ import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import SmsIcon from '@mui/icons-material/Sms';
+import Image from 'next/image';
+import RwikiLogo from '@/public/logo-horizontal.png'
 
 import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '@/components/utils';
@@ -142,11 +144,11 @@ return (
         }}
         onClick={() => closeSidebar()}
     />
-    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <IconButton variant="soft" color="primary" size="lg">
+    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', marginLeft: 3, marginTop: 2 }}>
+        {/* <IconButton variant="soft" color="primary" size="lg">
         <BrightnessAutoRoundedIcon />
-        </IconButton>
-        <Typography level="title-lg">RWikiStat</Typography>
+        </IconButton> */}
+        <Image src={RwikiLogo} alt={'Rwikistat Icon'} width={128}/>
         {/* <ColorSchemeToggle sx={{ ml: 'auto' }} /> */}
     </Box>
     <Box

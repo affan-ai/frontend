@@ -15,7 +15,7 @@ import Modal from '@mui/joy/Modal';
 import Image from 'next/image';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_PORT = 3001;
 
 
 interface ForumData {
@@ -185,8 +185,8 @@ const ForumComponent: React.FC = () => {
           <div className="p-4 md:p-6 shadow-md bg-white rounded-lg border">
             <div className="flex items-center space-x-4">
               <div className="flex-shrink-0">
-              <div className="p-6  rounded-full mr-2">
-              <Image src={photoURL} alt="profile" width={80} height={80} className="rounded-full" />
+              <div className="rounded-full mr-2">
+              <Image src={photoURL} alt="profile" width={60} height={60} className="rounded-full" />
               </div>
               </div>
               <div
@@ -331,12 +331,12 @@ const ForumComponent: React.FC = () => {
     {currentForumData.map((item) => (
       <div key={item.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
       <div className="flex">
-        <div className="p-6  rounded-full mr-2">
+        <div className=" rounded-full mr-2">
         <Image
           src={item.user.photoURL}
           alt="Picture of the author"
-          width={80}
-          height={80}
+          width={50}
+          height={50}
           className="rounded-full" />
         </div>
         
