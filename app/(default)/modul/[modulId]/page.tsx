@@ -6,8 +6,18 @@ import CodeEditorWindow from "@/components/compiler/CodeEditorWindows";
 import { defineTheme } from "@/components/compiler/utils/defineTheme";
 import Select from "react-select";
 
+
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 3001;
+const API_PORT = 5000;
+
+interface ModulData {
+  id: number;
+  data: {
+    namaModul: string;
+    codeSampel: string;
+    judulModul: string;
+  };
+}
 
 export default function DetailPage() {
   const pathname = usePathname();
@@ -16,6 +26,7 @@ export default function DetailPage() {
   const [pdfData, setPdfData] = useState(null);
   const [detailModul, setDetailModul] = useState<any>(null);
   const [pdfUrl, setPdfUrl] = useState(''); // State untuk URL PDF
+
   const [code, setCode] = useState('#Write Your R Code Here...');
   const [theme, setTheme] = useState("amy");
 
@@ -45,6 +56,15 @@ export default function DetailPage() {
     }
   };
 
+  const [testData, setTestData] = useState<ModulData[]>([]);
+  const [customInput, setCustomInput] = useState("");
+  const [outputDetails, setOutputDetails] = useState('');
+  const [response, setResponse] = useState('');
+  const defaultCode = detailModul?.data?.codeSampel || ''; // Nilai default untuk properti code
+  const [code, setCode] = useState<string>(defaultCode);
+  
+
+
   useEffect(() => {
     if (modulId) {
       // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
@@ -65,6 +85,7 @@ export default function DetailPage() {
     }
   }, [modulId]);
 
+
   function handleThemeChange(th: any) {
     const theme = th;
     console.log("theme...", theme);
@@ -81,12 +102,66 @@ export default function DetailPage() {
       );
   }, []);
 
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${API_HOST}:${API_PORT}/api/modul`);
+      if (response.status === 200) {
+        setTestData(response.data);
+        console.log(response.data)
+      } else {
+        console.error('Gagal mengambil data:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Gagal mengambil data:', error);
+    }
+  };
+  
+  useEffect(() => {
+      fetchData();
+  }, []);
+
+  const handleCodeChange = (newCode: string) => {
+    setCode(newCode);
+  };
+
+  const handleSubmit = async (code: string) => {
+    try {
+      const response = await fetch(`${API_HOST}:${API_PORT}/api/compiler/modul/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+      });
+
+      if (response.status === 200) {
+        const data = await response.text();
+        setOutputDetails(data);
+        setResponse(data);
+        console.log(data)
+      } else {
+        console.error('Gagal mengirim kode:', response.statusText);
+        setResponse('Gagal mengirim kode. Status: ' + response.status);
+      }
+
+      
+    } catch (error) {
+      console.error(error);
+      setResponse('Terjadi kesalahan saat mengirim kode.');
+    }
+    // // Lakukan sesuatu dengan nilai code, misalnya kirim ke server atau lakukan operasi tertentu
+    // console.log('Code submitted:', code);
+  };
+
+
   return (
 
 
     
     <div className='px-4'>
       {detailModul ? (
+
         <div className=''>
           <div className='grid grid-cols-2 gap-7 mb-5 bg-gray-100 px-4 py-3 outline outline-1 rounded-lg outline-gray-300'>
             <h1 className=' font-extrabold text-base md:text-2xl text-[#00726B]'>{detailModul.data.namaModul} : <span className='font-medium'>{detailModul.data.judulModul}</span></h1>
@@ -139,6 +214,7 @@ export default function DetailPage() {
                 )} */}
                 </div>
             </div>
+
         </div>
       ) : (
         <Spinner />
@@ -146,5 +222,6 @@ export default function DetailPage() {
     </div>
   );
 }
+
 
 

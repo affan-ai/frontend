@@ -33,6 +33,9 @@ interface AuthContextProviderProps {
   children: ReactNode;
 }
 
+const AUTO_LOGOUT_TIME = 6 * 60 * 60 * 1000; 
+// const AUTO_LOGOUT_TIME = 6 * 60 * 60 * 1000; // 6 jam dalam milidetik
+
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
@@ -133,6 +136,8 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
       // Tangani kesalahan jaringan jika diperlukan
     }
   };
+
+
   
 
   const logOut = async () => {
@@ -150,7 +155,16 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    return unsubscribe;
+
+    // Fungsi untuk logout otomatis setelah waktu tertentu
+    const autoLogoutTimeout = setTimeout(() => {
+      logOut(); // Panggil fungsi logout
+    }, AUTO_LOGOUT_TIME);
+
+    return () => {
+      unsubscribe();
+      clearTimeout(autoLogoutTimeout);
+    };
   }, []);
 
   return (

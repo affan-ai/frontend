@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from 'react';
-import { UserAuth } from '../app/context/authContext';
+import { UserAuth } from '@/app/context/authContext';
 
 const LoginForm = () => {
-    const {user, googleSignIn, emailSignIn} = UserAuth();
+  const {user, googleSignIn, emailSignIn} = UserAuth();
   const [nim, setNim] = useState('');
   const [password, setPassword] = useState('');
 
