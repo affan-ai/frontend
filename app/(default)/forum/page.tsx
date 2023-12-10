@@ -15,6 +15,8 @@ import Modal from '@mui/joy/Modal';
 import Image from 'next/image';
 import { IoSearch } from "react-icons/io5";
 import { MdVerified } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 3001;
@@ -56,6 +58,17 @@ interface NewPost {
 }
 
 const ForumComponent: React.FC = () => {
+  const notify = () => toast('🦄 Wow so easy!', {
+    position: "bottom-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    });
+
   const [open, setOpen] = React.useState<boolean>(false);
   const {user} = UserAuth();
   const [forumData, setForumData] = useState<ForumData[]>([]);
@@ -215,11 +228,6 @@ const ForumComponent: React.FC = () => {
                   Tanyakan Sesuatu di Forum Diskusi ini...
                 </h3>
               </div>
-
-              <div>
-                <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-                <button onClick={handleSearch}>Search</button>
-              </div>
             </div>
           </div>
 
@@ -343,13 +351,13 @@ const ForumComponent: React.FC = () => {
             </Modal>
           </React.Fragment>
 
-          <input
+          {/* <input
             type="text"
             placeholder="Cari..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="p-2 border rounded-md"
-          />
+          /> */}
       
       {/* Tampilkan postingan yang ada */}
     {currentForumData.map((item) => (
@@ -398,6 +406,31 @@ const ForumComponent: React.FC = () => {
             </div>
             <div className="flex  text-gray-700 text-sm mr-3">
               <Bookmark itemId={item.id} />
+            </div>
+            <div className="flex  text-gray-700 text-sm mr-3">
+                <BiLink size='20'
+                  onClick={() => {
+                  const linkElement = document.querySelector(`a[href="/forum/${item.id}"]`);
+                  const link = (linkElement as HTMLAnchorElement).href;                  
+                  if (link) {
+                      navigator.clipboard.writeText(link);
+                  };
+                  notify;
+                }}
+                />
+                <ToastContainer
+                  position="bottom-right"
+                  autoClose={3000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                />
+                
             </div>
          </div>
    </div>
