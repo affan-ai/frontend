@@ -5,6 +5,7 @@ import Spinner from '@/components/Spinner';
 import CodeEditorWindow from "@/components/compiler/CodeEditorWindows";
 import { defineTheme } from "@/components/compiler/utils/defineTheme";
 import Select from "react-select";
+import axios from "axios";
 
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
@@ -26,8 +27,6 @@ export default function DetailPage() {
   const [pdfData, setPdfData] = useState(null);
   const [detailModul, setDetailModul] = useState<any>(null);
   const [pdfUrl, setPdfUrl] = useState(''); // State untuk URL PDF
-
-  const [code, setCode] = useState('#Write Your R Code Here...');
   const [theme, setTheme] = useState("amy");
 
 

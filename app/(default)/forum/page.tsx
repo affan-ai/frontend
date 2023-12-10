@@ -403,15 +403,13 @@ const ForumComponent: React.FC = () => {
    </div>
       
     ))}
-
+    
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={(page) => setCurrentPage(page)}
       />
-      </div>
-      ) : <p>Loading...</p>}
-        
+      
     </div>
   );
 };
