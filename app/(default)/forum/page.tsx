@@ -13,6 +13,8 @@ import ModalClose from '@mui/joy/ModalClose';
 import Sheet from '@mui/joy/Sheet';
 import Modal from '@mui/joy/Modal';
 import Image from 'next/image';
+import { IoSearch } from "react-icons/io5";
+import { MdVerified } from "react-icons/md";
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 3001;
@@ -181,7 +183,23 @@ const ForumComponent: React.FC = () => {
 
 
   return (
-    <div className='w-full md:w-3/4 items-center justify-center mx-auto'>
+    <div className='w-full md:w-3/4 items-center justify-center mx-auto px-3'>
+      <div className='w-full shadow-md bg-white rounded-lg border mb-3'>
+      <Link href={'/forum/search'}>
+        <div
+          className=" flex items-center md:py-2 mx-7 my-4 bg-gray-100 hover:bg-gray-200 rounded-lg"
+          // onClick={() => setOpen(true)}
+        >
+          <IoSearch
+            size={22}
+            className="text-gray-500 ml-2"
+          />
+          <h3 className=" text-sm text-gray-500">
+            Cari Sesuatu...
+          </h3>
+        </div>
+      </Link>
+      </div>
           <div className="p-4 md:p-6 shadow-md bg-white rounded-lg border">
             <div className="flex items-center space-x-4">
               <div className="flex-shrink-0">
@@ -325,8 +343,14 @@ const ForumComponent: React.FC = () => {
             </Modal>
           </React.Fragment>
 
-          {currentForumData.length > 0 ? (
-      <div>
+          <input
+            type="text"
+            placeholder="Cari..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="p-2 border rounded-md"
+          />
+      
       {/* Tampilkan postingan yang ada */}
     {currentForumData.map((item) => (
       <div key={item.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
@@ -341,7 +365,10 @@ const ForumComponent: React.FC = () => {
         </div>
         
         <div className="items-center justify-between">
-        <p className="text-lg font-semibold text-gray-900 -mt-1">{item.user.displayName}</p>
+          <div className='flex items-center'>
+          <p className="text-lg font-semibold text-gray-900 -mt-1">{item.user.displayName}</p>
+          <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
+          </div>
         <p className="text-gray-700 text-sm">
           {item.data.createdAt._seconds * 1000 > new Date().getTime() - 7 * 24 * 60 * 60 * 1000 ? (
             <TimeAgo date={new Date(item.data.createdAt._seconds * 1000)} />
@@ -358,7 +385,7 @@ const ForumComponent: React.FC = () => {
         </div>
       </Link>
       <hr />
-         <div className=" mt-3 flex items-center">
+          <div className=" mt-3 flex items-center">
             <div className="flex 2 text-gray-700 text-sm mr-3">
             <LikeButton itemId={item.id} />
               <span>{item.data.likes}</span>
@@ -367,22 +394,10 @@ const ForumComponent: React.FC = () => {
               <BiCommentDetail
               size='20'
               />
-               <span>{item.commentCount}</span>
+              <span>{item.commentCount}</span>
             </div>
             <div className="flex  text-gray-700 text-sm mr-3">
               <Bookmark itemId={item.id} />
-            </div>
-            <div className="flex  text-gray-700 text-sm mr-3">
-                <BiLink size='20'
-                 onClick={() => {
-                  const linkElement = document.querySelector(`a[href="/forum/${item.id}"]`);
-                  const link = (linkElement as HTMLAnchorElement).href;                  
-                  if (link) {
-                    navigator.clipboard.writeText(link);
-                  }
-                }}
-                
-                />
             </div>
          </div>
    </div>

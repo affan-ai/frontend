@@ -94,7 +94,7 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
   return (
     <>
       {isLiked ? (
-        <BiSolidLike id={itemId} onClick={() => handleUnlike(itemId)} size='20' />
+        <BiSolidLike id={itemId} onClick={() => handleUnlike(itemId)} size='20' className="text-[#00726B]" />
       ) : (
         <BiLike id={itemId} onClick={() => handleLike(itemId)} size='20' />
       )}

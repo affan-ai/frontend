@@ -10,6 +10,7 @@ import TimeAgo from 'react-timeago';
 import { UserAuth} from '@/app/context/authContext';
 import { BiCommentDetail, BiBookmark } from "react-icons/bi";
 import LikeButton from '@/components/LikeButton';
+import { MdVerified } from 'react-icons/md';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 3001;
@@ -132,8 +133,11 @@ export default function DetailPage() {
                   className="rounded-full" />
                   </div>
                   <div className="items-center justify-between">
-                  <p className="text-lg font-semibold text-gray-900 -mt-1">{detailForum.user.displayName}</p>
-                    <p className="text-gray-700 text-sm"> <TimeAgo className='text-sm text-gray-500' date={new Date(detailForum.data.createdAt._seconds * 1000)} /></p>
+                    <div className='flex items-center'>
+                      <p className="text-lg font-semibold text-gray-900 -mt-1">{detailForum.user.displayName}</p>
+                      <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
+                    </div>
+                  <p className="text-gray-700 text-sm"> <TimeAgo className='text-sm text-gray-500' date={new Date(detailForum.data.createdAt._seconds * 1000)} /></p>
                   </div>
                 </div>
                   <div className="my-3">
@@ -174,7 +178,7 @@ export default function DetailPage() {
                     onChange={handleCommentInputChange}
                     required
                     />
-                    <button type="submit" className="bg-gray-800 text-white px-4 py-2 rounded-md text-sm">Kirim Komentar</button>
+                    <button type="submit" className="bg-[#00726B] text-white px-4 py-2 rounded-md text-sm">Kirim Komentar</button>
                 </form>):  
                 (<p>Login dulu bang - Protected Route</p>)}
               {/* Formulir komentar */}
@@ -198,7 +202,10 @@ export default function DetailPage() {
                     className="rounded-full" />
                     </div>
                     <div className="items-center justify-between mt-2">
-                      <p className="text-base font-semibold text-gray-900 -mt-1">{comment.user.displayName}</p>
+                      <div className='flex items-center'>
+                        <p className="text-lg font-semibold text-gray-900 -mt-1">{comment.user.displayName}</p>
+                        <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
+                      </div>
                       <p className="text-gray-700 text-sm"><TimeAgo className='text-sm text-gray-500' date={new Date(comment.data.createdAt._seconds * 1000)} /></p>
                     </div>
                   </div>
