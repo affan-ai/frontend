@@ -20,12 +20,10 @@ const CodeEditorWindow = ({ onChange, language, code, theme}) => {
         theme={theme}
         defaultValue=""
         onChange={handleEditorChange}
-
-        // options={{
-        //   fontSize: 30
-        // }}
+        options={{
+          fontSize: 14
+        }}
         
-
       />
     </div>
   );
