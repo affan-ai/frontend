@@ -31,7 +31,7 @@ const CodeEditor = () => {
 
   const [response, setResponse] = useState('');
   const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-  const API_PORT = 3001;
+  const API_PORT = 8080;
 
 const enterPress = useKeyPress("Enter");
 const ctrlPress = useKeyPress("Control");
@@ -68,7 +68,7 @@ const onChange = (action: any, data: string) => {
 
 const handleCompile = async () => {
     try {
-      const response = await fetch(`${API_HOST}:${API_PORT}/api/compiler/test/`, {
+      const response = await fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/compiler/test/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

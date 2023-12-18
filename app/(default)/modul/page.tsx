@@ -36,7 +36,7 @@ const [open, setOpen] = React.useState<number | null>(null);
 
 const fetchData = async () => {
   try {
-    const response = await axios.get(`${API_HOST}:${API_PORT}/api/modul`);
+    const response = await axios.get('https://rest-api-zzvthujxxq-as.a.run.app/api/modul');
     if (response.status === 200) {
       setTestData(response.data);
       console.log(response.data)

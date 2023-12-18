@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 
 const API_HOST = "http://localhost"; // Ganti dengan host Anda jika berbeda
-const API_PORT = 3001;
+const API_PORT = 8080;
 
 interface ChatData {
   id: string;
