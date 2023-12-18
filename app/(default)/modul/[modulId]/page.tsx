@@ -6,10 +6,12 @@ import CodeEditorWindow from "@/components/compiler/CodeEditorWindows";
 import { defineTheme } from "@/components/compiler/utils/defineTheme";
 import Select from "react-select";
 import axios from "axios";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_PORT = 8080;
 
 interface ModulData {
   id: number;
@@ -28,6 +30,7 @@ export default function DetailPage() {
   const [detailModul, setDetailModul] = useState<any>(null);
   const [pdfUrl, setPdfUrl] = useState(''); // State untuk URL PDF
   const [theme, setTheme] = useState("amy");
+  const router = useRouter();
 
 
   const language = {
@@ -37,11 +40,7 @@ export default function DetailPage() {
     value: "r",
   }
 
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ]
+
 
   const onChange = (action: any, data: string) => {
     switch (action) {
@@ -120,6 +119,16 @@ export default function DetailPage() {
       fetchData();
   }, []);
 
+  const options = testData.map((module) => ({
+    label: module.data.namaModul,
+    value: module.id,
+  }));
+
+  const handleChange = (selectedOption: any) => { 
+    router.push(`/modul/${selectedOption.value}`);
+  }
+
+
   const handleCodeChange = (newCode: string) => {
     setCode(newCode);
   };
@@ -167,8 +176,7 @@ export default function DetailPage() {
             <Select
               placeholder="Pilih Modul"
               options={options}
-              onChange={undefined}
-
+              onChange={handleChange}
             />
             {/* <p>code: {detailModul.data.codeSampel}</p> */}
           </div>
@@ -203,6 +211,11 @@ export default function DetailPage() {
             <h1 className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 mb-2">
                 Output
             </h1>
+            <iframe
+              src="http://127.0.0.1:8879/"
+              width="600"
+              height="600"
+            ></iframe>
             </div>
             <div className="w-full h-56 bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
 

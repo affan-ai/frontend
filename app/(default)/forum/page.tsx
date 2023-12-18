@@ -19,7 +19,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 3001;
+const API_PORT = 8080;
 
 
 interface ForumData {
@@ -89,7 +89,7 @@ const ForumComponent: React.FC = () => {
 
   const fetchData = async (page: number | undefined) => {
     try {
-      const url = `${API_HOST}:${API_PORT}/api/forum/page?page=${page}`;
+      const url = `https://rest-api-zzvthujxxq-as.a.run.app/api/forum/page?page=${page}`;
 
       const response = await axios.get(url);
       if (response.status === 200) {
@@ -162,7 +162,7 @@ const ForumComponent: React.FC = () => {
         formData.append('images', image);
       });
 
-      const response = await axios.post(`${API_HOST}:${API_PORT}/api/forum`, formData, {
+      const response = await axios.post(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
