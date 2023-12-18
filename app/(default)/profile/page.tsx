@@ -21,7 +21,7 @@ import Pagination from '@/components/Pagination';
 
 
 
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
+const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 8080;
 
 interface ForumData {

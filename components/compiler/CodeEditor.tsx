@@ -27,7 +27,7 @@ const language = {
     value: "r",
 }
   const [response, setResponse] = useState('');
-  const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
+  const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
   const API_PORT = 5000;
 
 const enterPress = useKeyPress("Enter");

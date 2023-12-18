@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_HOST = "http://localhost";
+const API_HOST = "https://rest-api-zzvthujxxq-as.a.run.app";
 const API_PORT = 3001;
 
 export async function getForumData() {
