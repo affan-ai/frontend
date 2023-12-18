@@ -19,6 +19,7 @@ import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import TerminalIcon from '@mui/icons-material/Terminal';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
@@ -229,6 +230,22 @@ return (
             <ListItemContent>
                 <Typography level="title-sm">Chat Bot</Typography>
             </ListItemContent>
+            </ListItemButton>
+        </ListItem>
+
+        <ListItem>
+            <ListItemButton
+            role="menuitem"
+            component="a"
+            href="/verivied"
+            >
+            <IconButton>
+                <PeopleAltIcon />
+            </IconButton>
+            <ListItemContent>
+                <Typography level="title-sm">Verivied User</Typography>
+            </ListItemContent>
+            
             </ListItemButton>
         </ListItem>
 
