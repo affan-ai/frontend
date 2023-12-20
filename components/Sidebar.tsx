@@ -32,6 +32,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import SmsIcon from '@mui/icons-material/Sms';
 import Image from 'next/image';
 import RwikiLogo from '@/public/logo-horizontal.png'
@@ -240,7 +241,7 @@ return (
             href="/verivied"
             >
             <IconButton>
-                <PeopleAltIcon />
+                <VerifiedIcon  />
             </IconButton>
             <ListItemContent>
                 <Typography level="title-sm">Verivied User</Typography>

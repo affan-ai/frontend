@@ -14,6 +14,8 @@ import ModalDialog from '@mui/joy/ModalDialog';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import IconButton from '@mui/joy/IconButton';
 import { MdVerified } from 'react-icons/md';
+import VeriviedCard from '@/components/VeriviedCard';
+import AvatarTest from '@/public/avatar-test.png'
 
 
 const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
@@ -95,78 +97,42 @@ useEffect(() => {
         
 
         <div className='grid grid-cols-1 md:grid-cols-3 mx-auto w-full gap-3 '>
-            <div className='p-4 flex shadow-md bg-white rounded-lg border items-center'>
-                <div className=" p-6 rounded-full mr-2 bg-slate-300">
-                    {/* Image Here */}
-                  </div>
-                  <div className="items-center justify-between">
-                    <div className='flex items-center'>
-                      <p className="text-lg font-semibold text-gray-900 -mt-1">Muhammad Nurifai</p>
-                      <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
-                    </div>
-                    <p className="text-gray-700 text-sm">muhammadnurifai@gmail.com</p>
-                  </div>
-            </div>
-            <div className='p-4 flex shadow-md bg-white rounded-lg border items-center'>
-                <div className=" p-6 rounded-full mr-2 bg-slate-300">
-                    {/* Image Here */}
-                  </div>
-                  <div className="items-center justify-between">
-                    <div className='flex items-center'>
-                      <p className="text-lg font-semibold text-gray-900 -mt-1">Muhammad Nurifai</p>
-                    </div>
-                    <p className="text-gray-700 text-sm">muhammadnurifai@gmail.com</p>
-                  </div>
-            </div>
-            <div className='p-4 flex shadow-md bg-white rounded-lg border items-center'>
-                <div className=" p-6 rounded-full mr-2 bg-slate-300">
-                    {/* Image Here */}
-                  </div>
-                  <div className="items-center justify-between">
-                    <div className='flex items-center'>
-                      <p className="text-lg font-semibold text-gray-900 -mt-1">Muhammad Nurifai</p>
-                      <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
-                    </div>
-                    <p className="text-gray-700 text-sm">muhammadnurifai@gmail.com</p>
-                  </div>
-            </div>
-            <div className='p-4 flex shadow-md bg-white rounded-lg border items-center'>
-                <div className=" p-6 rounded-full mr-2 bg-slate-300">
-                    {/* Image Here */}
-                  </div>
-                  <div className="items-center justify-between">
-                    <div className='flex items-center'>
-                      <p className="text-lg font-semibold text-gray-900 -mt-1">Muhammad Nurifai</p>
-                      <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
-                    </div>
-                    <p className="text-gray-700 text-sm">muhammadnurifai@gmail.com</p>
-                  </div>
-            </div>
-            <div className='p-4 flex shadow-md bg-white rounded-lg border items-center'>
-                <div className=" p-6 rounded-full mr-2 bg-slate-300">
-                    {/* Image Here */}
-                  </div>
-                  <div className="items-center justify-between">
-                    <div className='flex items-center'>
-                      <p className="text-lg font-semibold text-gray-900 -mt-1">Muhammad Nurifai</p>
-                      <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
-                    </div>
-                    <p className="text-gray-700 text-sm">muhammadnurifai@gmail.com</p>
-                  </div>
-            </div>
-            <div className='p-4 flex shadow-md bg-white rounded-lg border items-center'>
-                <div className=" p-6 rounded-full mr-2 bg-slate-300">
-                    {/* Image Here */}
-                  </div>
-                  <div className="items-center justify-between">
-                    <div className='flex items-center'>
-                      <p className="text-lg font-semibold text-gray-900 -mt-1">Muhammad Nurifai</p>
-                      <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
-                    </div>
-                    <p className="text-gray-700 text-sm">muhammadnurifai@gmail.com</p>
-                  </div>
-            </div>
-
+            <VeriviedCard
+                profileImage={AvatarTest}
+                name={'Mahlil Ikramuddin'}
+                email={'mahmil@gmail.com'}
+                verified={true}
+            />
+            <VeriviedCard
+                profileImage={AvatarTest}
+                name={'Mahlil Ikramuddin'}
+                email={'mahmil@gmail.com'}
+                verified={false}
+            />
+            <VeriviedCard
+                profileImage={AvatarTest}
+                name={'Mahlil Ikramuddin'}
+                email={'mahmil@gmail.com'}
+                verified={false}
+            />
+            <VeriviedCard
+                profileImage={AvatarTest}
+                name={'Mahlil Ikramuddin'}
+                email={'mahmil@gmail.com'}
+                verified={true}
+            />
+            <VeriviedCard
+                profileImage={AvatarTest}
+                name={'Mahlil Ikramuddin'}
+                email={'mahmil@gmail.com'}
+                verified={true}
+            />
+            <VeriviedCard
+                profileImage={AvatarTest}
+                name={'Mahlil Ikramuddin'}
+                email={'mahmil@gmail.com'}
+                verified={false}
+            />
         </div>
     </div>
   );
