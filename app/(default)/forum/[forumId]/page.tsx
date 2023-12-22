@@ -12,7 +12,7 @@ import { BiCommentDetail, BiBookmark } from "react-icons/bi";
 import LikeButton from '@/components/LikeButton';
 import { MdVerified } from 'react-icons/md';
 
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
+const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 3001;
 
 export default function DetailPage() {

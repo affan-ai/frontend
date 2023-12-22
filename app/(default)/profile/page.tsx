@@ -21,7 +21,7 @@ import Pagination from '@/components/Pagination';
 
 
 
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
+const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 8080;
 
 interface ForumData {
@@ -159,7 +159,7 @@ const page = () => {
                         </div>
                     </div>
                 
-                    <div className=" mx-auto h-96 mt-10">
+                    <div className="w-full md:w-3/4 mx-auto h-96 mt-10">
                     <Tabs defaultValue={0} sx={{alignItems: 'center', backgroundColor: 'white'}}>
                     
                     
@@ -195,12 +195,12 @@ const page = () => {
                             {currentPosted.map((post) => (
                             <div key={post.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
                             <div className="flex">
-                                <div className="p-6 rounded-full mr-2">
+                                <div className=" rounded-full mr-2">
                                 <Image
                                     src={post.user.photoURL}
                                     alt="Picture of the author"
-                                    width={80}
-                                    height={80}
+                                    width={50}
+                                    height={50}
                                     className="rounded-full" />
                                 </div>
                                 <div className="items-center justify-between">
@@ -262,12 +262,12 @@ const page = () => {
                             {currentBookmarked.map((bookmark) => (
                             <div key={bookmark.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
                             <div className="flex">
-                                <div className="p-6 bg-slate-500 rounded-full mr-2">
+                                <div className=" rounded-full mr-2">
                                 <Image
                                     src={bookmark.user.photoURL}
                                     alt="Picture of the author"
-                                    width={80}
-                                    height={80}
+                                    width={50}
+                                    height={50}
                                     className="rounded-full" />
                                 
                                 </div>

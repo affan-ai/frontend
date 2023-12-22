@@ -30,7 +30,7 @@ const CodeEditor = () => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const [response, setResponse] = useState('');
-  const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
+  const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
   const API_PORT = 8080;
 
 const enterPress = useKeyPress("Enter");

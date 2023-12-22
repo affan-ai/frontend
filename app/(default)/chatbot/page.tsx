@@ -6,7 +6,7 @@ import { UserAuth} from '@/app/context/authContext';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 
-const API_HOST = "http://localhost"; // Ganti dengan host Anda jika berbeda
+const API_HOST = "https://rest-api-zzvthujxxq-as.a.run.app"; // Ganti dengan host Anda jika berbeda
 const API_PORT = 8080;
 
 interface ChatData {

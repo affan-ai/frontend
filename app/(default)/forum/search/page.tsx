@@ -1,6 +1,4 @@
 
-
-
 export default function Search() {
     return (
         <div className='w-full md:w-3/4 items-center justify-center mx-auto px-3'>
