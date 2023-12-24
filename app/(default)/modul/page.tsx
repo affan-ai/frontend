@@ -62,7 +62,7 @@ useEffect(() => {
 
   const handleDelete = (id: number) => {
     // Panggil endpoint dengan menggunakan ID modul
-    axios.delete(`${API_HOST}:${API_PORT}/api/modul/${id}`)
+    axios.delete(`https://rest-api-zzvthujxxq-as.a.run.app/api/modul/${id}`)
       .then(response => {
         console.log(id)
         setOpen(null);
