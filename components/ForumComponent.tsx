@@ -21,7 +21,7 @@ import DialogActions from '@mui/joy/DialogActions';
 import ModalDialog from '@mui/joy/ModalDialog';
 import Divider from '@mui/joy/Divider';
 
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
+const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 3001;
 
 

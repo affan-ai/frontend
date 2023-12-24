@@ -15,7 +15,7 @@ import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import IconButton from '@mui/joy/IconButton';
 
 
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
+const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 3001;
 
 function ModulList() {
