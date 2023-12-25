@@ -44,7 +44,7 @@ interface ForumData {
     commentCount: number;
   }
 
-const page = () => {
+const Page = () => {
     const {user} = UserAuth();
     const [loading, setLoading] = useState(true);
     const [bookmarks, setBookmarks] = useState<ForumData[]>([]);
@@ -375,4 +375,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

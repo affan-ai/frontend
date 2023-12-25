@@ -118,11 +118,11 @@ function handleThemeChange(th: any) {
     defineTheme(theme.value).then((_) => setTheme(theme));
     }
 }
-useEffect(() => {
-    defineTheme("monoindustrial").then((_) =>
-    setTheme({ value: "monoindustrial", label: "monoindustrial" })
-    );
-}, []);
+// useEffect(() => {
+//     defineTheme("monoindustrial").then((_) =>
+//     setTheme({ value: "monoindustrial", label: "monoindustrial" })
+//     );
+// }, []);
 
 // const showSuccessToast = (msg) => {
 //     toast.success(msg || `Compiled Successfully!`, {
@@ -187,7 +187,7 @@ return (
             
             onChange={onChange}
             language={language?.value}
-            theme={theme.value}
+            theme={theme}
         />
         </div>
 

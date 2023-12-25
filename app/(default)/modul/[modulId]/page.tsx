@@ -94,11 +94,11 @@ export default function DetailPage() {
     defineTheme(theme.value).then((_) => setTheme(theme));
     }
 }
-  useEffect(() => {
-      defineTheme("monoindustrial").then((_) =>
-      setTheme({ value: "monoindustrial", label: "monoindustrial" })
-      );
-  }, []);
+  // useEffect(() => {
+  //     defineTheme("monoindustrial").then((_) =>
+  //     setTheme({ value: "monoindustrial", label: "monoindustrial" })
+  //     );
+  // }, []);
 
 
   const fetchData = async () => {
@@ -200,7 +200,7 @@ export default function DetailPage() {
                 code={code}
                 onChange={onChange}
                 language={language?.value}
-                theme={theme.value}
+                theme={theme}
               />
             </div>      
 

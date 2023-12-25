@@ -109,11 +109,6 @@ function handleThemeChange(th: any) {
     defineTheme(theme.value).then((_) => setTheme(theme));
     }
 }
-useEffect(() => {
-    defineTheme("monoindustrial").then((_) =>
-    setTheme({ value: "monoindustrial", label: "monoindustrial" })
-    );
-}, []);
 
 return (
   
@@ -156,7 +151,7 @@ return (
           code={code}
           onChange={onChange}
           language={language?.value}
-          theme={theme.value}
+          theme={theme}
         />
         </div>
 

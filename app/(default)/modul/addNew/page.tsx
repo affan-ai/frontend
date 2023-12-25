@@ -2,11 +2,8 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 8080;
 
-
-export default function page() {
+export default function Page() {
   const [codeSampel, setCodeSampel] = useState('');
   const [namaModul, setNamaModul] = useState('');
   const [judulModul, setJudulModul] = useState('');
@@ -35,7 +32,7 @@ export default function page() {
 
     try {
       // Menggunakan fetch untuk mengirim data ke endpoint
-      const response = await fetch(`${API_HOST}:${API_PORT}/api/modul`, {
+      const response = await fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/modul`, {
         method: 'POST',
         body: formData,
       });
