@@ -362,13 +362,14 @@ const ForumComponent: React.FC = () => {
       {/* Tampilkan postingan yang ada */}
     {currentForumData.map((item) => (
       <div key={item.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
+      <Link href={`/userId`}>
       <div className="flex">
         <div className=" rounded-full mr-2">
         <Image
           src={item.user.photoURL}
           alt="Picture of the author"
           width={50}
-          height={50}
+          height={50} 
           className="rounded-full" />
         </div>
         
@@ -386,6 +387,7 @@ const ForumComponent: React.FC = () => {
           </p>
         </div>
       </div>
+      </Link>
       <Link href={`/forum/${item.id}`}>
         <div className="my-3">
           <p className="text-gray-700 text-xl font-bold">{item.data.title}</p>

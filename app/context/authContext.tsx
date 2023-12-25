@@ -68,7 +68,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
   
   const sendUserDataToServer = async (userData: UserData) => {
     try {
-      const response = await fetch(`${API_HOST}:${API_PORT}/google-login`, {
+      const response = await fetch(`https://rest-api-zzvthujxxq-as.a.run.app/google-login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
       
   
       // Kirim permintaan ke endpoint di server
-      const response = await fetch(`${API_HOST}:${API_PORT}/login`, {
+      const response = await fetch(`https://rest-api-zzvthujxxq-as.a.run.app/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

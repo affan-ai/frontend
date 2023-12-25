@@ -66,7 +66,7 @@ export default function DetailPage() {
   useEffect(() => {
     if (modulId) {
       // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
-      fetch(`${API_HOST}:${API_PORT}/api/modul/${modulId}`)
+      fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/modul/${modulId}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Gagal mengambil data detail modul.');
@@ -103,7 +103,7 @@ export default function DetailPage() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${API_HOST}:${API_PORT}/api/modul`);
+      const response = await axios.get(`https://rest-api-zzvthujxxq-as.a.run.app/api/modul`);
       if (response.status === 200) {
         setTestData(response.data);
         console.log(response.data)

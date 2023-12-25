@@ -11,6 +11,7 @@ import { UserAuth} from '@/app/context/authContext';
 import { BiCommentDetail, BiBookmark } from "react-icons/bi";
 import LikeButton from '@/components/LikeButton';
 import { MdVerified } from 'react-icons/md';
+import Link from 'next/link';
 
 const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 8080;
@@ -31,7 +32,7 @@ export default function DetailPage() {
     useEffect(() => {
         if (forumId) {
           // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
-          fetch(`${API_HOST}:${API_PORT}/api/forum/${forumId}`)
+          fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/${forumId}`)
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Gagal mengambil data postingan.');
@@ -45,7 +46,7 @@ export default function DetailPage() {
               console.error('Gagal mengambil data postingan:', error);
             });
     
-            fetch(`${API_HOST}:${API_PORT}/api/forum/${forumId}/comments`)
+            fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/${forumId}/comments`)
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Gagal mengambil komentar.');
@@ -93,7 +94,7 @@ export default function DetailPage() {
           }
         
           // Kirim komentar ke endpoint Express dengan ID pengguna yang aktif
-          const response = await axios.post(`${API_HOST}:${API_PORT}/api/forum/${topicId}/comments`, { text, userId });
+          const response = await axios.post(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/${topicId}/comments`, { text, userId });
         
           if (response.status === 200) {
             // Clear the comment input after a successful submission
@@ -103,7 +104,7 @@ export default function DetailPage() {
             });
       
             // Refresh comments data after a successful submission
-            fetch(`${API_HOST}:${API_PORT}/api/forum/${topicId}/comments`)
+            fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/${topicId}/comments`)
               .then((response) => response.json())
               .then((data) => {
                 setComments(data); // Update comments with the latest data
@@ -123,6 +124,7 @@ export default function DetailPage() {
 
           {detailForum ? (
             <div className="items-start px-4 py-6 my-5 shadow-md rounded-lg border">
+              <Link href={`/userId`}>
                 <div className="flex">
                   <div className=" rounded-full mr-2">
                   <Image
@@ -140,6 +142,7 @@ export default function DetailPage() {
                   <p className="text-gray-700 text-sm"> <TimeAgo className='text-sm text-gray-500' date={new Date(detailForum.data.createdAt._seconds * 1000)} /></p>
                   </div>
                 </div>
+              </Link>
                   <div className="my-3">
                     <p className="text-gray-700 text-xl font-bold">{detailForum.data.title}</p>
                     <p className="text-gray-700">{detailForum.data.topics}</p>

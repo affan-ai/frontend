@@ -6,7 +6,7 @@ import DownloadNow from '@/components/landing-page/download-now'
 import Footer from "@/components/landing-page/footer";
 
 export const metadata = {
-    title: 'Protect Cube',
+    title: 'Rwikistat',
     description: 'Page description',
 }
 
@@ -18,7 +18,6 @@ export default function home() {
         <Hero/>
         <FeatureWhy/>
         <Features/>
-        <DownloadNow/>
         <DownloadNow/>
         <Footer/>
 

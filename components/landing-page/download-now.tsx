@@ -57,18 +57,6 @@ export default function Features() {
             </div>
 
             <div className="flex flex-col items-start  md:flex-row md:max-w-md px-3 py-5 " data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
-                <div className='bg-white p-3 rounded-lg mt-5'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-                  <g clip-path="url(#clip0_165_479)">
-                    <path d="M19.5875 5H17.5V2.5H12.5V5H10.4125C9.5 5 8.75 5.75 8.75 6.6625V25.825C8.75 26.75 9.5 27.5 10.4125 27.5H19.575C20.5 27.5 21.25 26.75 21.25 25.8375V6.6625C21.25 5.75 20.5 5 19.5875 5ZM13.75 25V18.125H11.25L16.25 8.75V15.625H18.75L13.75 25Z" fill="#F87D2F"/>
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_165_479">
-                      <rect width="30" height="30" fill="white"/>
-                    </clipPath>
-                  </defs>
-                </svg>
-                </div>
                 <div className="flex flex-col justify-between p-4 leading-normal">
                     <h5 className="mb-2 text-xl font-bold tracking-tight ">Modul Pembelajaran Interkatif</h5>
                     <p className="mb-3 font-normal  ">Stay powered for hours with our reliable Backup Battery</p>

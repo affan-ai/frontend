@@ -102,36 +102,42 @@ useEffect(() => {
                 name={'Mahlil Ikramuddin'}
                 email={'mahmil@gmail.com'}
                 verified={true}
+                link='/userId'
             />
             <VeriviedCard
                 profileImage={AvatarTest}
                 name={'Mahlil Ikramuddin'}
                 email={'mahmil@gmail.com'}
                 verified={false}
+                link='/userId'
             />
             <VeriviedCard
                 profileImage={AvatarTest}
                 name={'Mahlil Ikramuddin'}
                 email={'mahmil@gmail.com'}
                 verified={false}
+                link='/userId'
             />
             <VeriviedCard
                 profileImage={AvatarTest}
                 name={'Mahlil Ikramuddin'}
                 email={'mahmil@gmail.com'}
                 verified={true}
+                link='/userId'
             />
             <VeriviedCard
                 profileImage={AvatarTest}
                 name={'Mahlil Ikramuddin'}
                 email={'mahmil@gmail.com'}
                 verified={true}
+                link='/userId'
             />
             <VeriviedCard
                 profileImage={AvatarTest}
                 name={'Mahlil Ikramuddin'}
                 email={'mahmil@gmail.com'}
                 verified={false}
+                link='/userId'
             />
         </div>
     </div>

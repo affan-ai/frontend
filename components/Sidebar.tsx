@@ -238,13 +238,13 @@ return (
             <ListItemButton
             role="menuitem"
             component="a"
-            href="/verivied"
+            href="/verified"
             >
             <IconButton>
                 <VerifiedIcon  />
             </IconButton>
             <ListItemContent>
-                <Typography level="title-sm">Verivied User</Typography>
+                <Typography level="title-sm">Verified User</Typography>
             </ListItemContent>
             
             </ListItemButton>

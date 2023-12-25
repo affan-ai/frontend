@@ -70,7 +70,7 @@ const page = () => {
         try {
             if (user) {
                 const userId = user.uid;
-                const url = `${API_HOST}:${API_PORT}/api/forum/bookmarks/${userId}?page=${page}`;
+                const url = `https://rest-api-zzvthujxxq-as.a.run.app/api/forum/bookmarks/${userId}?page=${page}`;
                 const response = await axios.get(url);
                 if (response.status === 200) {
                     const { bookmarks, currentBookmarkPage, totalBookmarkPages, totalBookmarks } = response.data;
@@ -100,7 +100,7 @@ const page = () => {
             if (user) {
                 
                     const userId = user.uid;
-                    const url = `${API_HOST}:${API_PORT}/api/forum/posted/${userId}?page=${page}`;
+                    const url = `https://rest-api-zzvthujxxq-as.a.run.app/api/forum/posted/${userId}?page=${page}`;
                     const response = await axios.get(url);
                     if (response.status === 200) {
                         const { forumData, currentPage, totalPages, totalPosts } = response.data;
@@ -146,7 +146,6 @@ const page = () => {
                             <h5 className="text-lg text-center text-gray-500 ">{user.email}</h5>          
                             <div className="flex flex-col items-center mt-10 sm:flex-row sm:space-x-6">
                                 <p className="text-gray-500 dark:text-gray-400"><span className="font-bold">{jumlahCurrentPosted}</span> Posts in Forum </p>
-                                <p className="mt-3 text-center text-gray-500  sm:mt-0">Member Since  </p>
                             </div>
                             {/* <div className=" mt-4 flex space-x-3 ">
                             <a href="" className="block px-4 py-2 text-sm text-center text-gray-600 transition-colors duration-300 transform border rounded-lg  hover:bg-gray-100  focus:outline-none">

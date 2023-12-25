@@ -17,7 +17,7 @@ export default function Features() {
   }, []) 
 
   return (
-    <section className="relative mt-28 bg-gray-100 h-screen">
+    <section className="relative mt-20 bg-gray-100 h-screen">
 
       {/* Section background (needs .relative class on parent and next sibling elements) */}
       <div className="absolute inset-0 pointer-events-none mb-16" aria-hidden="true">
@@ -32,13 +32,13 @@ export default function Features() {
           {/* Section header */}
           <div className="md:flex max-w-4xl mx-auto text-center md:text-left pb-5 md:pb-10">
             <h1 className="h2 text-5xl font-bold mb-4 text-[#00726B]">Fitur Aplikasi RWikiStat</h1>
-            <p className="text-base text-gray-600 mt-2">We offer a variety of interesting features that you can help increase security for your system!</p>
+            <p className="text-base text-gray-600 mt-2">Kami menawarkan 4 fitur unggulan umtuk pemgalaman pembelajaran anda dalam aplikasi Rwikistat!</p>
           </div>
 
           {/* Section content */}
           <div className=" bg-gradient-to-t from-[#00726B] to-[#38B68D] rounded-xl text-white" aria-hidden="true">
 
-          <div className=" md:py-16 md:px-20 max-w-sm mx-auto grid gap-4 md:grid-cols-2 lg:grid-cols-2 items-start  md:max-w-2xl lg:max-w-none" >
+          <div className=" md:py-12 md:px-20 max-w-sm mx-auto grid gap-4 md:grid-cols-2 lg:grid-cols-2 items-start  md:max-w-2xl lg:max-w-none" >
 
             
             <div className="flex flex-col items-start  md:flex-row md:max-w-md px-3 py-5 " data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
@@ -56,7 +56,7 @@ export default function Features() {
                 </div>
                 <div className="flex flex-col justify-between p-4 leading-normal">
                     <h5 className="mb-2 text-xl font-bold tracking-tight  ">R Compiler</h5>
-                    <p className="mb-3 font-normal  ">Unlock limitless possibilities with our Multiple Interface I/O Sensor</p>
+                    <p className="mb-3 font-normal  ">Coba sendiri dan bangun logika pemrograman kode R hingga kamu paham</p>
                 </div>
             </div>
 
@@ -75,7 +75,7 @@ export default function Features() {
                 </div>
                 <div className="flex flex-col justify-between p-4 leading-normal">
                     <h5 className="mb-2 text-xl font-bold tracking-tight ">Modul Pembelajaran Interkatif</h5>
-                    <p className="mb-3 font-normal  ">Stay powered for hours with our reliable Backup Battery</p>
+                    <p className="mb-3 font-normal  ">Baca, pahami dan eksekusi berbagai contoh yang akan membuat kamu mudah memahami modul</p>
                 </div>
             </div>
 
@@ -95,7 +95,7 @@ export default function Features() {
                 </div>
                 <div className="flex flex-col justify-between p-4 leading-normal">
                     <h5 className="mb-2 text-xl font-bold tracking-tight  ">Forum Diskusi</h5>
-                    <p className="mb-3 font-normal  ">Alwayas locates positions by Global Positioning System.</p>
+                    <p className="mb-3 font-normal  ">Masih kurang paham? tanyakan kepada pengguna lain tentang kebingunganmu</p>
                 </div>
             </div>
 
@@ -113,8 +113,8 @@ export default function Features() {
                 </svg>
                 </div>
                 <div className="flex flex-col justify-between p-4 leading-normal">
-                    <h5 className="mb-2 text-xl font-bold tracking-tight ">AI Chat Bot</h5>
-                    <p className="mb-3 font-normal  ">Experience lightning-fast connections with our 4G Connectivity Ready solution</p>
+                    <h5 className="mb-2 text-xl font-bold tracking-tight ">AI Rwichat</h5>
+                    <p className="mb-3 font-normal  ">Tanyakan kepada AI Rwichat supaya kamu dapat penecerahan</p>
                 </div>
             </div>
 

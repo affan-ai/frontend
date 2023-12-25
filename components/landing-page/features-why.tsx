@@ -25,7 +25,7 @@ export default function FeaturesBlocks() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             <h2 className="text-4xl font-extrabold mb-4 text-[#00726B]">Kenapa Belajar Melalui Rwikistat?</h2>
-            <p className="text-xl text-gray-600">Our core is easy to use with an attractive user interface</p>
+            <p className="text-xl text-gray-600">Pada dasarnya Rwikistat mengedepankan kemudahan bagi pengguna</p>
           </div>
 
           {/* Items */}
@@ -42,7 +42,7 @@ export default function FeaturesBlocks() {
                 </g>
               </svg>
               <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-center">Adanya Library GetShinny</h4>
-              <p className="text-gray-600 text-center text-sm">Customizable processes to suit your project needs.</p>
+              <p className="text-gray-600 text-center text-sm">Lebih mudah dalam percobaan dan eksplorasi.</p>
             </div>
 
             {/* 2nd */}
@@ -63,7 +63,7 @@ export default function FeaturesBlocks() {
                 </g>
               </svg>
               <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-center">Mudah Untuk Dicoba</h4>
-              <p className="text-gray-600 text-center text-sm">Customizable processes to suit your project needs.</p>
+              <p className="text-gray-600 text-center text-sm">Masuk dengan akun anda dan coba berbagai kemudahan.</p>
             </div>
 
             {/* 3rd */}
@@ -83,7 +83,7 @@ export default function FeaturesBlocks() {
                     </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-center">Fitur Forum Tempat Diskusi</h4>
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-center">Forum Tempat Diskusi</h4>
               <p className="text-gray-600 text-center text-sm">Customizable processes to suit your project needs.</p>
             </div>
 
@@ -94,7 +94,7 @@ export default function FeaturesBlocks() {
                   <path transform="translate(5, 5)" d="M28.6667 28.1667C27.4533 29.38 25.525 29.38 24.3333 28.1883V28.1667C23.1417 26.975 23.1417 25.0467 24.3333 23.855V23.8333C25.525 22.6417 27.4533 22.6417 28.645 23.8333H28.6667C29.8583 25.025 29.8583 26.975 28.6667 28.1667ZM26.5 13L31.0933 17.5933L36.51 12.1767L29.5767 5.24333C27.8867 3.55333 25.135 3.55333 23.445 5.24333L16.5117 12.1767L21.9283 17.5933L26.5 13ZM13.5 26L18.0933 21.4067L12.6767 15.99L5.74333 22.9233C4.05333 24.6133 4.05333 27.365 5.74333 29.055L12.6767 35.9883L18.0933 30.5717L13.5 26ZM39.5 26L34.9067 30.5933L40.3233 36.01L47.2567 29.0767C48.9467 27.3867 48.9467 24.635 47.2567 22.945L40.3233 16.0117L34.9067 21.4283L39.5 26ZM26.5 39L21.9067 34.4067L16.49 39.8233L23.4233 46.7567C25.1133 48.4467 27.865 48.4467 29.555 46.7567L36.4883 39.8233L31.0717 34.4067L26.5 39Z" fill="white"/>
               </svg>
               <h4 className="text-xl font-bold leading-snug tracking-tight mb-1 text-center">Belajar dan Langsung Coba</h4>
-              <p className="text-gray-600 text-center text-sm">Customizable processes to suit your project needs.</p>
+              <p className="text-gray-600 text-center text-sm">Tiap modul memiliki latihan untuk di pelajari.</p>
             </div>
            
 
