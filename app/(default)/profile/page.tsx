@@ -18,7 +18,7 @@ import TabPanel from '@mui/joy/TabPanel';
 import { ListItemDecorator } from '@mui/joy';
 import Image from 'next/image';
 import Pagination from '@/components/Pagination';
-
+import { MdVerified } from 'react-icons/md';
 
 
 const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
@@ -40,6 +40,7 @@ interface ForumData {
     user:{
         displayName: string;
         photoURL: string;
+        verified: boolean;
       }
     commentCount: number;
   }
@@ -203,7 +204,12 @@ const Page = () => {
                                     className="rounded-full" />
                                 </div>
                                 <div className="items-center justify-between">
-                                <p className="text-lg font-semibold text-gray-900 -mt-1">{post.user.displayName}</p>
+                                <div className='flex items-center'>
+                                        <p className="text-lg font-semibold text-gray-900 -mt-1">{post.user.displayName}</p>
+                                        {post.user.verified && (
+                                            <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
+                                        )}
+                                    </div>
                                 <p className="text-gray-700 text-sm">
                                 {post.data.createdAt._seconds * 1000 > new Date().getTime() - 7 * 24 * 60 * 60 * 1000 ? (
                                     <TimeAgo date={new Date(post.data.createdAt._seconds * 1000)} />
@@ -271,7 +277,13 @@ const Page = () => {
                                 
                                 </div>
                                 <div className="items-center justify-between">
-                                <p className="text-lg font-semibold text-gray-900 -mt-1"><UserInfo uid={bookmark.data.userId as string} /></p>
+                                    <div className='flex items-center'>
+                                        <p className="text-lg font-semibold text-gray-900 -mt-1">{bookmark.user.displayName}</p>
+                                        {bookmark.user.verified && (
+                                            <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
+                                        )}
+                                    </div>
+                                
                                 <p className="text-gray-700 text-sm">
                                 {bookmark.data.createdAt._seconds * 1000 > new Date().getTime() - 7 * 24 * 60 * 60 * 1000 ? (
                                     <TimeAgo date={new Date(bookmark.data.createdAt._seconds * 1000)} />

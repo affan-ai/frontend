@@ -18,28 +18,29 @@ import VeriviedCard from '@/components/VeriviedCard';
 import AvatarTest from '@/public/avatar-test.png'
 
 
-const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
+const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
+const API_PORT = 8080;
 
 function Verivied() {
   // Buat sebuah jenis yang mencerminkan struktur data dari API
-interface ModulData {
+interface UserData {
   id: number;
   data: {
-    namaModul: string;
-    codeSampel: string;
-    judulModul: string;
+    photoURL: string;
+    displayName: string;
+    email: string;
+    verified: boolean;
   };
 }
   
 
 // Kemudian gunakan jenis ini untuk menentukan jenis state
-const [testData, setTestData] = useState<ModulData[]>([]);
+const [testData, setTestData] = useState<UserData[]>([]);
 const [open, setOpen] = React.useState<number | null>(null);
 
 const fetchData = async () => {
   try {
-    const response = await axios.get('https://rest-api-zzvthujxxq-as.a.run.app/api/modul');
+    const response = await axios.get(`https://rest-api-zzvthujxxq-as.a.run.app/api/user/`);
     if (response.status === 200) {
       setTestData(response.data);
       console.log(response.data)
@@ -55,27 +56,7 @@ useEffect(() => {
     fetchData();
 }, []);
 
-  const handleOpen = (id:number) => {
-    setOpen(id);
-  };
 
-  const handleClose = () => {
-    setOpen(null);
-  };
-
-  const handleDelete = (id: number) => {
-    // Panggil endpoint dengan menggunakan ID modul
-    axios.delete(`${API_HOST}:${API_PORT}/api/modul/${id}`)
-      .then(response => {
-        console.log(id)
-        setOpen(null);
-        fetchData();
-      })
-      .catch(error => {
-        console.error('Gagal menghapus data:', error);
-        // Handle error secara sesuai kebutuhan Anda
-      });
-  };
 
   return (
     <div className='px-4 md:px-7'>
@@ -97,48 +78,17 @@ useEffect(() => {
         
 
         <div className='grid grid-cols-1 md:grid-cols-3 mx-auto w-full gap-3 '>
+        {testData.map((item) => (
             <VeriviedCard
-                profileImage={AvatarTest}
-                name={'Mahlil Ikramuddin'}
-                email={'mahmil@gmail.com'}
-                verified={true}
+                key={item.id}
+                profileImage={item.data.photoURL}
+                name={item.data.displayName}
+                email={item.data.email}
+                verified={item.data.verified}
                 link='/userId'
+                id={item.id}
             />
-            <VeriviedCard
-                profileImage={AvatarTest}
-                name={'Mahlil Ikramuddin'}
-                email={'mahmil@gmail.com'}
-                verified={false}
-                link='/userId'
-            />
-            <VeriviedCard
-                profileImage={AvatarTest}
-                name={'Mahlil Ikramuddin'}
-                email={'mahmil@gmail.com'}
-                verified={false}
-                link='/userId'
-            />
-            <VeriviedCard
-                profileImage={AvatarTest}
-                name={'Mahlil Ikramuddin'}
-                email={'mahmil@gmail.com'}
-                verified={true}
-                link='/userId'
-            />
-            <VeriviedCard
-                profileImage={AvatarTest}
-                name={'Mahlil Ikramuddin'}
-                email={'mahmil@gmail.com'}
-                verified={true}
-                link='/userId'
-            />
-            <VeriviedCard
-                profileImage={AvatarTest}
-                name={'Mahlil Ikramuddin'}
-                email={'mahmil@gmail.com'}
-                verified={false}
-                link='/userId'
-            />
+            ))}
         </div>
     </div>
   );

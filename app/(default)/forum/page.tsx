@@ -38,6 +38,7 @@ interface ForumData {
   user:{
     displayName: string;
     photoURL: string;
+    verified: boolean;
   }
   commentCount: number;
 }
@@ -376,7 +377,9 @@ const ForumComponent: React.FC = () => {
         <div className="items-center justify-between">
           <div className='flex items-center'>
           <p className="text-lg font-semibold text-gray-900 -mt-1">{item.user.displayName}</p>
+          {item.user.verified && (
           <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
+          )}
           </div>
         <p className="text-gray-700 text-sm">
           {item.data.createdAt._seconds * 1000 > new Date().getTime() - 7 * 24 * 60 * 60 * 1000 ? (

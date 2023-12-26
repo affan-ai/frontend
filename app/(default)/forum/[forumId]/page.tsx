@@ -137,7 +137,9 @@ export default function DetailPage() {
                   <div className="items-center justify-between">
                     <div className='flex items-center'>
                       <p className="text-lg font-semibold text-gray-900 -mt-1">{detailForum.user.displayName}</p>
+                      {detailForum.user.verified && (
                       <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
+                      )}
                     </div>
                   <p className="text-gray-700 text-sm"> <TimeAgo className='text-sm text-gray-500' date={new Date(detailForum.data.createdAt._seconds * 1000)} /></p>
                   </div>
@@ -207,7 +209,9 @@ export default function DetailPage() {
                     <div className="items-center justify-between mt-2">
                       <div className='flex items-center'>
                         <p className="text-lg font-semibold text-gray-900 -mt-1">{comment.user.displayName}</p>
+                        {comment.user.verified && (
                         <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
+                        )}
                       </div>
                       <p className="text-gray-700 text-sm"><TimeAgo className='text-sm text-gray-500' date={new Date(comment.data.createdAt._seconds * 1000)} /></p>
                     </div>

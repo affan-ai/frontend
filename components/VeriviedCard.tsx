@@ -11,6 +11,7 @@ import Modal from '@mui/joy/Modal';
 import ModalDialog from '@mui/joy/ModalDialog';
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
+import axios from 'axios';
 
 interface VeriviedData {
     profileImage: any;
@@ -18,7 +19,11 @@ interface VeriviedData {
     email: string;
     verified: boolean;
     link: string;
+    id: number;
 }
+
+const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
+const API_PORT = 8080;
 
 const VeriviedCard = ({
     profileImage,
@@ -26,8 +31,22 @@ const VeriviedCard = ({
     email,
     verified,
     link,
+    id,
 }:VeriviedData) => {
     const [open, setOpen] = React.useState<boolean>(false);
+
+    const handleVerified = (id: number) => {
+        // Panggil endpoint dengan menggunakan ID modul
+        axios.post(`${API_HOST}:${API_PORT}/api/user/${id}`)
+          .then(response => {
+            console.log(id)
+            setOpen(false);
+          })
+          .catch(error => {
+            console.error('Gagal menghapus data:', error);
+            // Handle error secara sesuai kebutuhan Anda
+          });
+      };
     return (
         <div className='p-4 shadow-md flex justify-between bg-white rounded-lg border items-center'>
             <Link href={link} className=" flex">
@@ -63,7 +82,7 @@ const VeriviedCard = ({
                         Apakah anda yakin ingin memverifikasi user ini?
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="soft" color="success" onClick={() => setOpen(false)}>
+                        <Button variant="soft" color="success" onClick={() => handleVerified(id)}>
                         Verivikasi
                         </Button>
                         <Button variant="plain" color="neutral" onClick={() => setOpen(false)}>
