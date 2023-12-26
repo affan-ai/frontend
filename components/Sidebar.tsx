@@ -74,7 +74,31 @@ return (
 
 export default function Sidebar() {
     const {user, logOut} = UserAuth();
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        const checkUser = async() => {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            if (user) {
+                try {
+                  const idTokenResult = await user.getIdTokenResult();
+                  setIsAdmin(idTokenResult.claims.admin || false);
+                } catch (error) {
+                  console.error('Error fetching custom claims:', error);
+                }
+              }
+
+            setLoading(false);
+        }
+
+        
+          
+        checkUser();
+    }, [user]);
+
     const [loading, setLoading] = useState(true);
+    const photoURL = user?.photoURL || '';
 
         const handleSignOut = async() => { 
         try {
@@ -84,13 +108,7 @@ export default function Sidebar() {
         }
     }
 
-    useEffect(() => {
-        const checkUser = async() => {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            setLoading(false);
-        }
-        checkUser();
-    }, [user]);
+
 return (
     <Sheet
     className="Sidebar"
@@ -234,21 +252,19 @@ return (
             </ListItemButton>
         </ListItem>
 
-        <ListItem>
-            <ListItemButton
-            role="menuitem"
-            component="a"
-            href="/verified"
-            >
-            <IconButton>
-                <VerifiedIcon  />
-            </IconButton>
-            <ListItemContent>
-                <Typography level="title-sm">Verified User</Typography>
-            </ListItemContent>
-            
-            </ListItemButton>
-        </ListItem>
+        {user && isAdmin === true && (
+            <ListItem>
+                <ListItemButton role="menuitem" component="a" href="/verified">
+                <IconButton>
+                    <VerifiedIcon />
+                </IconButton>
+                <ListItemContent>
+                    <Typography level="title-sm">Verified User</Typography>
+                </ListItemContent>
+                </ListItemButton>
+            </ListItem>
+            )}
+
 
         <ListItem>
             <ListItemButton
@@ -324,14 +340,12 @@ return (
     </Box>
     ) : (
     <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <Avatar
-        variant="outlined"
-        size="sm"
-        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-        />
+        
+        <Image src={photoURL} alt="profile" width={30} height={30} className="rounded-full" />
         <Box sx={{ minWidth: 0, flex: 1 }}>
         <Typography level="title-sm">{user.displayName}</Typography>
         <Typography level="body-xs">{user.email}</Typography>
+        {/* <Typography level="body-xs">{isAdmin}</Typography> */}
         </Box>
         <IconButton size="sm" variant="plain" color="neutral">
         <LogoutRoundedIcon onClick={handleSignOut} />

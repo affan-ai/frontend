@@ -13,7 +13,7 @@ import Modal from '@mui/joy/Modal';
 import ModalDialog from '@mui/joy/ModalDialog';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import IconButton from '@mui/joy/IconButton';
-
+import { UserAuth } from '@/app/context/authContext';
 
 const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 5000;
@@ -33,6 +33,28 @@ interface ModulData {
 // Kemudian gunakan jenis ini untuk menentukan jenis state
 const [testData, setTestData] = useState<ModulData[]>([]);
 const [open, setOpen] = React.useState<number | null>(null);
+const {user, logOut} = UserAuth();
+const [isAdmin, setIsAdmin] = useState(false);
+
+useEffect(() => {
+  const checkUser = async() => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      if (user) {
+          try {
+            const idTokenResult = await user.getIdTokenResult();
+            setIsAdmin(idTokenResult.claims.admin || false);
+          } catch (error) {
+            console.error('Error fetching custom claims:', error);
+          }
+        }
+        
+  }
+
+  
+    
+  checkUser();
+}, [user]);
 
 const fetchData = async () => {
   try {
@@ -78,9 +100,11 @@ useEffect(() => {
     <div className='px-4 md:px-7'>
       <div className='flex justify-between h-16 mb-5'>
         <h2 className='font-bold text-2xl text-[#00726B] '>Modul Pembelajaran</h2>
+        {user && isAdmin === true && (
         <Link href={`/modul/addNew`}>
           <button type="submit" className=" w-full bg-[#00726B] py-2 px-10 rounded-lg hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Tambah Modul</button>
         </Link>
+        )}
       </div>
         <div className='grid grid-cols-1 md:grid-cols-2 mx-auto w-full gap-5 '>
         {testData.map((item) => (
@@ -88,7 +112,7 @@ useEffect(() => {
           <div className="bg-gradient-to-t from-[#00726B] to-[#38B68D]  z-10 h-full w-full overflow-hidden rounded-xl  opacity-90 transition duration-300 ease-in-out group-hover:opacity-100">
           <div className='mx-auto flex p-3'>
             <div className='p-2 absolute top-0 right-0'>
-              
+            {user && isAdmin === true && ( 
             <React.Fragment>
               <IconButton
               color="danger"
@@ -119,6 +143,7 @@ useEffect(() => {
                 </ModalDialog>
               </Modal>
             </React.Fragment>
+            )}
             </div>
             </div>
           </div>
