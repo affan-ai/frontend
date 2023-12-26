@@ -74,27 +74,26 @@ return (
 
 export default function Sidebar() {
     const {user, logOut} = UserAuth();
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
     useEffect(() => {
-        const checkUser = async() => {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            if (user) {
-                try {
-                  const idTokenResult = await user.getIdTokenResult();
-                  setIsAdmin(idTokenResult.claims.admin || false);
-                } catch (error) {
-                  console.error('Error fetching custom claims:', error);
-                }
-              }
-
-            setLoading(false);
+      const checkUser = async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+    
+        if (user) {
+          try {
+            const idTokenResult = await user.getIdTokenResult();
+            const isAdminValue = idTokenResult.claims?.admin || false;
+            setIsAdmin(isAdminValue  as boolean);
+          } catch (error) {
+            console.error('Error fetching custom claims:', error);
+            setIsAdmin(false); // Set a default value in case of an error
+          }
         }
-
-        
-          
-        checkUser();
+        setLoading(false);
+      };
+    
+      checkUser();
     }, [user]);
 
     const [loading, setLoading] = useState(true);

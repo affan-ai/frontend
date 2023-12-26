@@ -1,6 +1,6 @@
 "use client";
 import React,{ useContext, createContext, useEffect, useState, ReactNode } from 'react';
-import { signInWithPopup, signOut, signInWithEmailAndPassword,UserCredential, onAuthStateChanged, GoogleAuthProvider, getAdditionalUserInfo } from 'firebase/auth';
+import { signInWithPopup, signOut, signInWithEmailAndPassword,UserCredential, onAuthStateChanged, GoogleAuthProvider, IdTokenResult } from 'firebase/auth';
 import { auth } from '../firebase';
 
 interface User {
@@ -8,8 +8,7 @@ interface User {
   email: string | null;
   displayName: string | null;
   photoURL: string | null;
-  
-  getIdTokenResult: () => Promise<{ claims: { admin: boolean } }>;
+  getIdTokenResult: () => Promise<IdTokenResult>;
 }
 
 interface AuthContextType {
@@ -55,9 +54,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
         uid: signedInUser.uid,
         displayName: signedInUser.displayName || '',
         photoURL: signedInUser.photoURL || '',
-        
-        // customClaims: signedInUser.customAttributes
-
       };
   
       // Kirim data pengguna ke endpoint REST API
