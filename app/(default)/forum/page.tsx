@@ -39,6 +39,7 @@ interface ForumData {
     displayName: string;
     photoURL: string;
     verified: boolean;
+    userId: string;
   }
   commentCount: number;
 }
@@ -90,7 +91,7 @@ const ForumComponent: React.FC = () => {
 
   const fetchData = async (page: number | undefined) => {
     try {
-      const url = `https://rest-api-zzvthujxxq-as.a.run.app/api/forum/page?page=${page}`;
+      const url = `http://localhost:8080/api/forum//page?page=${page}`;
 
       const response = await axios.get(url);
       if (response.status === 200) {
@@ -363,7 +364,7 @@ const ForumComponent: React.FC = () => {
       {/* Tampilkan postingan yang ada */}
     {currentForumData.map((item) => (
       <div key={item.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
-      <Link href={`/userId`}>
+      <Link href={`userId/${item.data.userId}`}>
       <div className="flex">
         <div className=" rounded-full mr-2">
         <Image

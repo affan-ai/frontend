@@ -85,7 +85,7 @@ useEffect(() => {
                 name={item.data.displayName}
                 email={item.data.email}
                 verified={item.data.verified}
-                link='/userId'
+                link={`userId/${item.id}`}
                 id={item.id}
             />
             ))}
