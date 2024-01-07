@@ -31,8 +31,15 @@ export default function DetailPage() {
 
     useEffect(() => {
         if (forumId) {
+          // Mendapatkan token dari localStorage atau sumber lainnya
+          const storedToken = localStorage.getItem('customToken');
+
+          // Membuat header dengan menyertakan token
+          const headers = {
+              Authorization: `Bearer ${storedToken}`,
+          };
           // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
-          fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/${forumId}`)
+          fetch(`http://localhost:8080/api/forum/${forumId}`,{headers})
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Gagal mengambil data postingan.');
@@ -46,7 +53,7 @@ export default function DetailPage() {
               console.error('Gagal mengambil data postingan:', error);
             });
     
-            fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/${forumId}/comments`)
+            fetch(`http://localhost:8080/api/forum/${forumId}/comments`,{headers})
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Gagal mengambil komentar.');
@@ -92,9 +99,16 @@ export default function DetailPage() {
             console.error('Pengguna belum terotentikasi atau belum masuk.');
             return;
           }
+          // Mendapatkan token dari localStorage atau sumber lainnya
+          const storedToken = localStorage.getItem('customToken');
+
+          // Membuat header dengan menyertakan token
+          const headers = {
+              Authorization: `Bearer ${storedToken}`,
+          };
         
           // Kirim komentar ke endpoint Express dengan ID pengguna yang aktif
-          const response = await axios.post(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/${topicId}/comments`, { text, userId });
+          const response = await axios.post(`http://localhost:8080/api/forum/${topicId}/comments`, { text, userId, headers });
         
           if (response.status === 200) {
             // Clear the comment input after a successful submission
@@ -104,7 +118,7 @@ export default function DetailPage() {
             });
       
             // Refresh comments data after a successful submission
-            fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/${topicId}/comments`)
+            fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/${topicId}/comments`,{headers})
               .then((response) => response.json())
               .then((data) => {
                 setComments(data); // Update comments with the latest data

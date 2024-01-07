@@ -68,10 +68,15 @@ const onChange = (action: any, data: string) => {
 
 const handleCompile = async () => {
     try {
-      const response = await fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/compiler/test/`, {
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      
+      const response = await fetch(`http://localhost:8080/api/compiler/test/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${storedToken}`,
         },
         body: JSON.stringify({ code }),
       });

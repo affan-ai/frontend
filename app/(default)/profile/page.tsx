@@ -69,10 +69,17 @@ const Page = () => {
 
     const fetchBookmark = async (page:number | undefined) => {
         try {
+            // Mendapatkan token dari localStorage atau sumber lainnya
+            const storedToken = localStorage.getItem('customToken');
+
+            // Membuat header dengan menyertakan token
+            const headers = {
+                Authorization: `Bearer ${storedToken}`,
+            };
             if (user) {
                 const userId = user.uid;
-                const url = `https://rest-api-zzvthujxxq-as.a.run.app/api/forum/bookmarks/${userId}?page=${page}`;
-                const response = await axios.get(url);
+                const url = `https://localhost:8080/api/forum/bookmarks/${userId}?page=${page}`;
+                const response = await axios.get(url,{headers});
                 if (response.status === 200) {
                     const { bookmarks, currentBookmarkPage, totalBookmarkPages, totalBookmarks } = response.data;
                     setBookmarks(bookmarks);
@@ -99,10 +106,18 @@ const Page = () => {
     const fetchPosted = async (page: number | undefined) => { 
         try {
             if (user) {
+
+                // Mendapatkan token dari localStorage atau sumber lainnya
+                const storedToken = localStorage.getItem('customToken');
+
+                // Membuat header dengan menyertakan token
+                const headers = {
+                    Authorization: `Bearer ${storedToken}`,
+                };
                 
                     const userId = user.uid;
-                    const url = `https://rest-api-zzvthujxxq-as.a.run.app/api/forum/posted/${userId}?page=${page}`;
-                    const response = await axios.get(url);
+                    const url = `http://localhost:8080/api/forum/posted/${userId}?page=${page}`;
+                    const response = await axios.get(url,{headers});
                     if (response.status === 200) {
                         const { forumData, currentPage, totalPages, totalPosts } = response.data;
                         setForumData(forumData);

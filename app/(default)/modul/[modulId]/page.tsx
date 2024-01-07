@@ -65,8 +65,15 @@ export default function DetailPage() {
 
   useEffect(() => {
     if (modulId) {
+      // Mendapatkan token dari localStorage atau sumber lainnya
+    const storedToken = localStorage.getItem('customToken');
+
+    // Membuat header dengan menyertakan token
+    const headers = {
+      Authorization: `Bearer ${storedToken}`,
+    };
       // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
-      fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/modul/${modulId}`)
+      fetch(`http://localhost:8080/api/modul/${modulId}`, { headers })
         .then((response) => {
           if (!response.ok) {
             throw new Error('Gagal mengambil data detail modul.');
@@ -103,7 +110,14 @@ export default function DetailPage() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`https://rest-api-zzvthujxxq-as.a.run.app/api/modul`);
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+        Authorization: `Bearer ${storedToken}`,
+      };
+      const response = await axios.get(`http://loclahost:8080/api/modul`, { headers });
       if (response.status === 200) {
         setTestData(response.data);
         console.log(response.data)

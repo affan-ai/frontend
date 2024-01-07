@@ -91,9 +91,16 @@ const ForumComponent: React.FC = () => {
 
   const fetchData = async (page: number | undefined) => {
     try {
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+        Authorization: `Bearer ${storedToken}`,
+      };
       const url = `http://localhost:8080/api/forum//page?page=${page}`;
 
-      const response = await axios.get(url);
+      const response = await axios.get(url, { headers });
       if (response.status === 200) {
         const { forumData, currentPage, totalPages } = response.data;
         console.log(forumData);
@@ -115,10 +122,7 @@ const ForumComponent: React.FC = () => {
     fetchData(currentPage);
   }, [currentPage]);
 
-  const handleSearch = () => {
-    const redirectUrl = `/forum/search?q=${searchTerm}`;
-    window.location.href = redirectUrl;
-  };
+
   
 
   // Dapatkan data forum untuk halaman saat ini
@@ -164,9 +168,14 @@ const ForumComponent: React.FC = () => {
         formData.append('images', image);
       });
 
-      const response = await axios.post(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum`, formData, {
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+
+      const response = await axios.post(`http://localhost:8080/api/forum`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${storedToken}`,
         },
       });
 

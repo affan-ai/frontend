@@ -40,7 +40,14 @@ const [open, setOpen] = React.useState<number | null>(null);
 
 const fetchData = async () => {
   try {
-    const response = await axios.get(`https://rest-api-zzvthujxxq-as.a.run.app/api/user/`);
+    // Mendapatkan token dari localStorage atau sumber lainnya
+    const storedToken = localStorage.getItem('customToken');
+
+    // Membuat header dengan menyertakan token
+    const headers = {
+      Authorization: `Bearer ${storedToken}`,
+    };
+    const response = await axios.get(`http://localhost:8080/api/user/`, {headers});
     if (response.status === 200) {
       setTestData(response.data);
       console.log(response.data)

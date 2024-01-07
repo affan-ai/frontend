@@ -18,6 +18,7 @@ import { UserAuth } from '@/app/context/authContext';
 const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 5000;
 
+
 function ModulList() {
   // Buat sebuah jenis yang mencerminkan struktur data dari API
 interface ModulData {
@@ -57,7 +58,15 @@ useEffect(() => {
 
 const fetchData = async () => {
   try {
-    const response = await axios.get('https://rest-api-zzvthujxxq-as.a.run.app/api/modul');
+    // Mendapatkan token dari localStorage atau sumber lainnya
+    const storedToken = localStorage.getItem('customToken');
+
+    // Membuat header dengan menyertakan token
+    const headers = {
+      Authorization: `Bearer ${storedToken}`,
+    };
+
+    const response = await axios.get('http://localhost:8080/api/modul', { headers });
     if (response.status === 200) {
       setTestData(response.data);
       console.log(response.data)
@@ -82,8 +91,15 @@ useEffect(() => {
   };
 
   const handleDelete = (id: number) => {
+    // Mendapatkan token dari localStorage atau sumber lainnya
+    const storedToken = localStorage.getItem('customToken');
+
+    // Membuat header dengan menyertakan token
+    const headers = {
+      Authorization: `Bearer ${storedToken}`,
+    };
     // Panggil endpoint dengan menggunakan ID modul
-    axios.delete(`https://rest-api-zzvthujxxq-as.a.run.app/api/modul/${id}`)
+    axios.delete(`http://localhost:8080/api/modul/${id}`, { headers })
       .then(response => {
         console.log(id)
         setOpen(null);

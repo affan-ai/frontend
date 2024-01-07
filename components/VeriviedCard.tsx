@@ -36,14 +36,21 @@ const VeriviedCard = ({
     const [open, setOpen] = React.useState<boolean>(false);
 
     const handleVerified = (id: number) => {
+        // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+        Authorization: `Bearer ${storedToken}`,
+      };
         // Panggil endpoint dengan menggunakan ID modul
-        axios.post(`${API_HOST}:${API_PORT}/api/user/${id}`)
+        axios.post(`${API_HOST}:${API_PORT}/api/user/${id}`, {}, { headers })
           .then(response => {
             console.log(id)
             setOpen(false);
           })
           .catch(error => {
-            console.error('Gagal menghapus data:', error);
+            console.error('Gagal memverifikasi user:', error);
             // Handle error secara sesuai kebutuhan Anda
           });
       };

@@ -40,8 +40,16 @@ export default function Search() {
     const handleSearch = async () => {
         
         try {
+            // Mendapatkan token dari localStorage atau sumber lainnya
+            const storedToken = localStorage.getItem('customToken');
+
+            // Membuat header dengan menyertakan token
+            const headers = {
+                Authorization: `Bearer ${storedToken}`,
+            };
+
             setLoading(true);
-            const response = await fetch(`http://localhost:8080/api/forum/search?query=${query}`);
+            const response = await fetch(`http://localhost:8080/api/forum/search?query=${query}`,{headers});
             const data = await response.json();
             setResults(data);
             setSearchExecuted(true);

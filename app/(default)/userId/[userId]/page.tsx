@@ -62,8 +62,15 @@ export default function Page() {
 
     useEffect(() => {
         if (userId) {
+            // Mendapatkan token dari localStorage atau sumber lainnya
+            const storedToken = localStorage.getItem('customToken');
+
+            // Membuat header dengan menyertakan token
+            const headers = {
+                Authorization: `Bearer ${storedToken}`,
+            };
           // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
-          fetch(`http://localhost:8080/api/user/${userId}`)
+          fetch(`http://localhost:8080/api/user/${userId}`, {headers})
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Gagal mengambil data detail user.');
@@ -82,18 +89,25 @@ export default function Page() {
 
       const fetchPosted = async (page: number | undefined) => { 
         try {
-                
-                    const url = `https://rest-api-zzvthujxxq-as.a.run.app/api/forum/posted/${userId}?page=${page}`;
-                    const response = await axios.get(url);
-                    if (response.status === 200) {
-                        const { forumData, currentPage, totalPages, totalPosts } = response.data;
-                        setForumData(forumData);
-                        setCurrentPage(currentPage);
-                        setTotalPages(totalPages);
-                        setTotalPosts(totalPosts);
-                    } else {
-                        console.error('Gagal mendapatkan postingan yang diposting:', response.statusText);
-                    }
+                // Mendapatkan token dari localStorage atau sumber lainnya
+            const storedToken = localStorage.getItem('customToken');
+
+            // Membuat header dengan menyertakan token
+            const headers = {
+                Authorization: `Bearer ${storedToken}`,
+            };
+
+            const url = `http://localhost:8080/api/forum/posted/${userId}?page=${page}`;
+            const response = await axios.get(url, {headers});
+            if (response.status === 200) {
+                const { forumData, currentPage, totalPages, totalPosts } = response.data;
+                setForumData(forumData);
+                setCurrentPage(currentPage);
+                setTotalPages(totalPages);
+                setTotalPosts(totalPosts);
+            } else {
+                console.error('Gagal mendapatkan postingan yang diposting:', response.statusText);
+            }
               
         } catch (error) {
             console.error('Gagal mengambil data:', error);

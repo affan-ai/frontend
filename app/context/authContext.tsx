@@ -58,9 +58,22 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
   
       // Kirim data pengguna ke endpoint REST API
       await sendUserDataToServer(userData);
-  
+
+          // Mendapatkan token akses
+      const customToken = await signedInUser.getIdToken();
+
+      // Gunakan idToken sesuai kebutuhan, seperti menyertakannya dalam header permintaan API
+      // atau menyimpannya di local storage untuk digunakan nanti
+      console.log('Token Akses:', customToken);
+
       // Set pengguna di aplikasi Anda, jika diperlukan
       setUser(signedInUser);
+
+      if (typeof window !== 'undefined') {
+        // Simpan token di Local Storage
+        localStorage.setItem('customToken', customToken);
+      }
+
       window.location.href = '/compiler';
     } catch (error) {
       const authError = error as Error;
@@ -70,7 +83,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
   
   const sendUserDataToServer = async (userData: UserData) => {
     try {
-      const response = await fetch(`https://rest-api-zzvthujxxq-as.a.run.app/google-login`, {
+      const response = await fetch(`http://localhost:8080/google-login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,9 +108,14 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
       const result: UserCredential = await signInWithEmailAndPassword(auth, email, password);
       const signedInUser = result.user;
       setUser(signedInUser);
-      console.log('Login Sukses');
+      const customToken = await signedInUser.getIdToken();
       // Panggil handleLoginSuccess di sini jika perlu
       handleLoginSuccess(email, password);
+
+      if (typeof window !== 'undefined') {
+        // Simpan token di Local Storage
+        localStorage.setItem('customToken', customToken);
+      }
 
       window.location.href = '/compiler';
     } catch (error) {
@@ -117,7 +135,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
       
   
       // Kirim permintaan ke endpoint di server
-      const response = await fetch(`https://rest-api-zzvthujxxq-as.a.run.app/login`, {
+      const response = await fetch(`http://localhost:8080/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -129,7 +147,11 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
         // Tangani respons dari server
         const data = await response.json();
         const customToken = data.customToken;
-        console.log('Custom Token:', customToken);
+         // Cek apakah kode sedang dijalankan di sisi klien
+        if (typeof window !== 'undefined') {
+          // Simpan token di Local Storage
+          localStorage.setItem('customToken', customToken);
+        }
       } else {
         // Tangani kesalahan jika ada
       }

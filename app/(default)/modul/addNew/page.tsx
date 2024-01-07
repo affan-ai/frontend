@@ -31,10 +31,18 @@ export default function Page() {
     formData.append('judulModul', judulModul);
 
     try {
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+        Authorization: `Bearer ${storedToken}`,
+      };
       // Menggunakan fetch untuk mengirim data ke endpoint
-      const response = await fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/modul`, {
+      const response = await fetch(`http://localhost:8080/api/modul`, {
         method: 'POST',
         body: formData,
+        headers,
       });
 
       if (response.ok) {
