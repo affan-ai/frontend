@@ -6,7 +6,7 @@ import { UserAuth} from '@/app/context/authContext';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 
-const API_HOST = "https://rest-api-zzvthujxxq-as.a.run.app"; // Ganti dengan host Anda jika berbeda
+const API_HOST = "http://localhost"; 
 const API_PORT = 8080;
 
 interface ChatData {
@@ -68,11 +68,18 @@ const ChatBot = () => {
       const user = auth.currentUser;
       const userId = user?.uid;
 
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+        Authorization: `Bearer ${storedToken}`,
+      };
+
       if (!userId) {
         setLoading(false);
         return;
       }
-      const response = await axiosInstance.get(`${API_HOST}:${API_PORT}/api/chatbot/`);
+      const response = await axiosInstance.get(`http://localhost:8080/api/chatbot/`,{headers});
       if (response.status === 200) {
         const data = response.data;
         console.log(data)
