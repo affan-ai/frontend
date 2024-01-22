@@ -72,7 +72,7 @@ const handleCompile = async () => {
       const storedToken = localStorage.getItem('customToken');
 
       
-      const response = await fetch(`http://localhost:8080/api/compiler/test/`, {
+      const response = await fetch(`http://localhost:8080/api/compiler/modul/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

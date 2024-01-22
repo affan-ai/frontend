@@ -7,6 +7,8 @@ export default function Page() {
   const [codeSampel, setCodeSampel] = useState('');
   const [namaModul, setNamaModul] = useState('');
   const [judulModul, setJudulModul] = useState('');
+  const [urlShiny, setUrlShiny] = useState('');
+  const [textData, setTextData] = useState('');
   const [pdfFile, setPdfFile] = useState<File | null>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +31,9 @@ export default function Page() {
     formData.append('namaModul', namaModul);
     formData.append('codeSampel', codeSampel);
     formData.append('judulModul', judulModul);
+    formData.append('urlShiny', urlShiny);
+    formData.append('textData', textData);
+
 
     try {
       // Mendapatkan token dari localStorage atau sumber lainnya
@@ -100,6 +105,39 @@ export default function Page() {
                 />
               </div>
 
+              <div className="mb-5">
+                <label
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Masukan teks modul
+                </label>
+                <input
+                  type="textData"
+                  name="textData"
+                  id="textData"
+                  value={textData}
+                  onChange={(e) => setTextData(e.target.value)}
+                  placeholder="banyakk"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
+                />
+              </div>
+
+              <div className="mb-5">
+                <label
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Masukan Url Shiny
+                </label>
+                <input
+                  type="urlShiny"
+                  name="urlShiny"
+                  id="urlShiny"
+                  value={urlShiny}
+                  onChange={(e) => setUrlShiny(e.target.value)}
+                  placeholder="local"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
+                />
+              </div>
 
               <div className="mb-5">
                 <label

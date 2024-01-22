@@ -8,7 +8,7 @@ import Select from "react-select";
 import axios from "axios";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
+import { classnames } from "@/components/compiler/utils/general";
 
 const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 8080;
@@ -19,6 +19,8 @@ interface ModulData {
     namaModul: string;
     codeSampel: string;
     judulModul: string;
+    urlShiny: string;
+    textData: string;
   };
 }
 
@@ -61,7 +63,8 @@ export default function DetailPage() {
   const defaultCode = detailModul?.data?.codeSampel || ''; // Nilai default untuk properti code
   const [code, setCode] = useState<string>(defaultCode);
   const pdfUrlWithParams = `${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`;
-
+  const [downloadClicked, setDownloadClicked] = useState(false);
+  const [processing, setProcessing] = useState(null);
 
   useEffect(() => {
     if (modulId) {
@@ -89,6 +92,15 @@ export default function DetailPage() {
         });
     }
   }, [modulId]);
+
+    // Fungsi untuk menangani klik tombol download
+    const handleDownloadClick = () => {
+      setDownloadClicked(true);
+  
+      // Lakukan proses download (bisa menggunakan window.open atau metode lain)
+      // Misalnya, menggunakan window.open
+      window.open(pdfUrlWithParams, '_blank');
+    };
 
 
   function handleThemeChange(th: any) {
@@ -142,38 +154,41 @@ export default function DetailPage() {
     router.push(`/modul/${selectedOption.value}`);
   }
 
+  const handleCodeChange = (action: any, data: string) => {
+    switch (action) {
+    case "code": {
+        setCode(data);
+        break;
+    }
+    default: {
+        console.warn("case not handled!", action, data);
+    }
+    }
+};
 
-  const handleCodeChange = (newCode: string) => {
-    setCode(newCode);
-  };
-
-  const handleSubmit = async (code: string) => {
+  const handleCompile = async () => {
     try {
-      const response = await fetch(`${API_HOST}:${API_PORT}/api/compiler/modul/`, {
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      
+      const response = await fetch(`http://localhost:8080/api/compiler/modul/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${storedToken}`,
         },
         body: JSON.stringify({ code }),
       });
 
-      if (response.status === 200) {
         const data = await response.text();
         setOutputDetails(data);
         setResponse(data);
-        console.log(data)
-      } else {
-        console.error('Gagal mengirim kode:', response.statusText);
-        setResponse('Gagal mengirim kode. Status: ' + response.status);
-      }
-
       
     } catch (error) {
       console.error(error);
       setResponse('Terjadi kesalahan saat mengirim kode.');
     }
-    // // Lakukan sesuatu dengan nilai code, misalnya kirim ke server atau lakukan operasi tertentu
-    // console.log('Code submitted:', code);
   };
 
 
@@ -196,29 +211,42 @@ export default function DetailPage() {
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
+          <div>
+            {pdfUrl && !downloadClicked && (
+              <a
+                href={pdfUrlWithParams}
+                download="your-pdf-file.pdf"
+              >
+                <button onClick={handleDownloadClick}>
+                  Download PDF
+                </button>
+              </a>
+            )}
+          </div>
+          <div>
             <div>
-              
-              {pdfUrl && (
-                
-                <embed
-                  type="application/pdf"
-                  src={pdfUrlWithParams}
-                  width="100%"
-                  height="100%"
-                  title="PDF Viewer"
-                
-                />
-              )}
-
+            <button
+            onClick={handleCompile}
+            disabled={!code}
+            value={code}
+            className={classnames(
+                "block w-full bg-[#00726B] mt-5 py-2 rounded-lg duration-500 text-white font-semibold md:col-span-1",
+                !code ? "opacity-50" : ""
+            )}
+            >
+            {processing ? "Processing..." : "Compile"}
+            </button>
             </div>
             <div>
-              <CodeEditorWindow
-                code={code}
-                onChange={onChange}
-                language={language?.value}
-                theme={theme}
-              />
-            </div>      
+                <CodeEditorWindow
+                  code={detailModul.data.codeSampel}
+                  onChange={handleCodeChange}
+                  language={language?.value}
+                  theme={theme}
+                />
+              </div>
+          </div>
+                  
 
           </div>
 
@@ -228,18 +256,14 @@ export default function DetailPage() {
                 Output
             </h1>
             <iframe
-              src="https://4fig6f-affan-ian0amara.shinyapps.io/shiny/"
+              src={detailModul.data.urlShiny}
               width="600"
               height="600"
             ></iframe>
             </div>
             <div className="w-full h-56 bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
 
-                {/* {imageUrl ? (
-                    <img src={imageUrl} alt="Output" className="w-full h-full" />
-                ) : (
                     <pre className="p-5">{response}</pre>
-                )} */}
                 </div>
             </div>
 
