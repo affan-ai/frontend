@@ -108,7 +108,8 @@ export default function DetailPage() {
           };
         
           // Kirim komentar ke endpoint Express dengan ID pengguna yang aktif
-          const response = await axios.post(`http://localhost:8080/api/forum/${topicId}/comments`, { text, userId, headers });
+          const response = await axios.post(`http://localhost:8080/api/forum/${topicId}/comments`, { text, userId },
+          { headers });
         
           if (response.status === 200) {
             // Clear the comment input after a successful submission
@@ -118,7 +119,7 @@ export default function DetailPage() {
             });
       
             // Refresh comments data after a successful submission
-            fetch(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/${topicId}/comments`,{headers})
+            fetch(`http://localhost:8080/api/forum/${topicId}/comments`,{headers})
               .then((response) => response.json())
               .then((data) => {
                 setComments(data); // Update comments with the latest data

@@ -18,6 +18,7 @@ import Bookmark from '@/components/Bookmark';
 import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
 import  { BiSolidBookmark } from "react-icons/bi";
 import Link from 'next/link';
+import StarRating from '@/components/StarRating';
 
 interface UserData {
   id: number;
@@ -59,6 +60,35 @@ export default function Page() {
     const [totalPages, setTotalPages] = useState(0);
     const [totalPosts, setTotalPosts] = useState(0);    
     const [forumData, setForumData] = useState<ForumData[]>([]);
+    const [score, setScore] = useState(null);
+
+    const fetchScore = async () => {
+        try {
+            // Mendapatkan token dari localStorage atau sumber lainnya
+            const storedToken = localStorage.getItem('customToken');
+
+            // Membuat header dengan menyertakan token
+            const headers = {
+                Authorization: `Bearer ${storedToken}`,
+            };
+
+            if (userId) {
+                // Mengirim request ke API
+                const response = await axios.get(`http://localhost:8080/api/user/${userId}/score`, { headers });
+
+                // Mengubah state dengan data yang diterima dari API
+                setScore(response.data.score);
+            }
+        } catch (error) {
+            console.error('Gagal mengambil data:', error);
+        }
+    }
+
+    useEffect(() => {
+        // Memanggil fetchData untuk mengambil data awal
+        fetchScore();
+        
+      }, []);
 
     useEffect(() => {
         if (userId) {
@@ -137,7 +167,17 @@ export default function Page() {
 
                         <div className="flex flex-col items-center mt-4">
                             <h3 className="text-xl font-semibold text-center text-gray-800 sm:text-3xl ">{detailUser.displayName}</h3>
-                            <h5 className="text-lg text-center text-gray-500 ">{detailUser.email}</h5>          
+                            <h5 className="text-lg text-center text-gray-500 ">{detailUser.email}</h5>
+                            <div className="flex items-center justify-center mt-4 space-x-2">
+                            {score !== null ? (
+                                <div>
+                                {/* <p>Your Score: {score}</p> */}
+                                <StarRating score={score} />
+                                </div>
+                            ) : (
+                                <p>Loading score...</p>
+                            )}
+                            </div>          
                             <div className="flex flex-col items-center mt-10 sm:flex-row sm:space-x-6">
                                 <p className="text-gray-500 dark:text-gray-400"><span className="font-bold">{jumlahCurrentPosted}</span> Posts in Forum </p>
                             </div>

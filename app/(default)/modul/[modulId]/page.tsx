@@ -60,7 +60,7 @@ export default function DetailPage() {
   const [response, setResponse] = useState('');
   const defaultCode = detailModul?.data?.codeSampel || ''; // Nilai default untuk properti code
   const [code, setCode] = useState<string>(defaultCode);
-  
+  const pdfUrlWithParams = `${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`;
 
 
   useEffect(() => {
@@ -197,10 +197,12 @@ export default function DetailPage() {
 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
             <div>
+              
               {pdfUrl && (
+                
                 <embed
                   type="application/pdf"
-                  src={pdfUrl}
+                  src={pdfUrlWithParams}
                   width="100%"
                   height="100%"
                   title="PDF Viewer"
@@ -226,7 +228,7 @@ export default function DetailPage() {
                 Output
             </h1>
             <iframe
-              src="http://127.0.0.1:8879/"
+              src="https://4fig6f-affan-ian0amara.shinyapps.io/shiny/"
               width="600"
               height="600"
             ></iframe>
