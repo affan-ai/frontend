@@ -10,7 +10,7 @@ import { defineTheme } from "./utils/defineTheme";
 import useKeyPress from "./utils/useKeyPress";
 import OutputWindow from "./OutputWindow";
 import OutputDetails from "./OutputDetails";
-import ThemeDropdown from "./ThemeDropdown";
+import ThemeDropdown from "./SelectDropdown";
 
 
 

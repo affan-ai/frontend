@@ -215,7 +215,7 @@ const Page = () => {
                         </div>
                     </div>
                 
-                    <div className="w-full md:w-3/4 mx-auto h-96 mt-10">
+                    <div className="w-full mx-auto h-96 mt-10">
                     <Tabs defaultValue={0} sx={{alignItems: 'center', backgroundColor: 'white'}}>
                     
                     
@@ -249,7 +249,7 @@ const Page = () => {
                         </TabList>
                         <TabPanel value={0}>
                             {currentPosted.map((post) => (
-                            <div key={post.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
+                            <div key={post.id} className=" w-full items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
                             <div className="flex">
                                 <div className=" rounded-full mr-2">
                                 <Image
@@ -321,7 +321,7 @@ const Page = () => {
                         </TabPanel>
                         <TabPanel value={1}>
                             {currentBookmarked.map((bookmark) => (
-                            <div key={bookmark.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
+                            <div key={bookmark.id} className="w-full items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
                             <div className="flex">
                                 <div className=" rounded-full mr-2">
                                 <Image

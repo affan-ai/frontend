@@ -164,8 +164,8 @@ useEffect(() => {
           </div>
           <Link href={`/modul/${item.id}`} className='absolute bottom-0 z-20 m-0 pb-4 ps-4 transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:translate-x-3 group-hover:scale-110'>
           <div className="">
-            <h1 className=" text-2xl md:text-3xl font-bold text-white">{item.data.namaModul}</h1>
-            <h1 className="text-base md:text-xl  text-gray-200">{item.data.judulModul}</h1>
+            <h1 className=" text-2xl md:text-4xl font-bold text-white">{item.data.namaModul}</h1>
+            <h1 className="text-base md:text-2xl  text-gray-200">{item.data.judulModul}</h1>
           </div>
           </Link>
         </div>

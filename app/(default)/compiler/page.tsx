@@ -7,16 +7,17 @@ import { classnames } from "@/components/compiler/utils/general";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import Select from "react-select";
 import { defineTheme } from "@/components/compiler/utils/defineTheme";
 import useKeyPress from "@/components/compiler/utils/useKeyPress";
-import ThemeDropdown from "@/components/compiler/ThemeDropdown";
 // import useAuthMiddleware from '@/app/middleware/authMiddleware';
+import Markdown from "react-markdown";
 
 
 const CodeEditor = () => { 
 
   // const { user } = useAuthMiddleware();
-  const [code, setCode] = useState('#Write Your R Code Here # png("out.png", width = 800, height = 600)');
+  const [code, setCode] = useState('');
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState('');
   const [processing, setProcessing] = useState(null);
@@ -35,6 +36,17 @@ const CodeEditor = () => {
 
 const enterPress = useKeyPress("Enter");
 const ctrlPress = useKeyPress("Control");
+
+const options = [
+  { value: 'png("out.png", width = 800, height = 600', label: 'Plot Compiler' },
+  { value: '#write the code bellow', label: 'String Compiler' },
+]
+
+const handleSelectChange = (selectedOption: any) => {
+  console.log(`Option selected:`, selectedOption);
+  setCode(selectedOption.value);
+  console.log(code);
+}
 
 useEffect(() => {
     if (enterPress && ctrlPress) {
@@ -104,17 +116,6 @@ const handleCompile = async () => {
   };
 
 
-function handleThemeChange(th: any) {
-    const theme = th;
-    console.log("theme...", theme);
-
-    if (["vs-dark", "vs-dark"].includes(theme.value)) {
-    setTheme(theme);
-    } else {
-    defineTheme(theme.value).then((_) => setTheme(theme));
-    }
-}
-
 return (
   
     <>
@@ -133,14 +134,21 @@ return (
 
 
 
-    <div className=" items-start">
+    <div className=" items-start px-5">
         <div className=" pb-4 items-end grid grid-cols-2 md:grid-cols-5 gap-4 px-3">
             <div className="md:col-span-2 md:col-start-3">
-            <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
+            <Select
+              placeholder={`Select Compiler Type`}
+              // options={languageOptions}
+              options={options}
+              isSearchable={false}
+            //   styles={customStyles}
+              onChange={handleSelectChange}
+            />
             </div>
             <button
             onClick={handleCompile}
-            disabled={!code}
+            disabled={!code }
             value={code}
             className={classnames(
                 "block w-full bg-[#00726B] mt-5 py-2 rounded-lg duration-500 text-white font-semibold md:col-span-1",
@@ -155,18 +163,19 @@ return (
         <CodeEditorWindow
           code={code}
           onChange={onChange}
-          language={language?.value}
-          theme={theme}
+          language="r"
+          theme="vs-dark"
         />
         </div>
 
-        <div className="  flex flex-shrink-0 w-full  flex-col">
-            <div className="px-4 py-2">
-            <h1 className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 mb-2">
-                Output
-            </h1>
-            </div>
-            <div className="w-full h-72 bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
+        <div className="flex flex-shrink-0 w-full  flex-col mt-5">
+            
+            <div className="w-full h-96 bg-[#1E1E1E] text-green-500 font-normal text-sm overflow-y-auto">
+              <div className="px-4 py-2">
+                <h1 className="font-bold text-xl mb-2">
+                    Output
+                </h1>
+              </div>
                 {/* Conditional rendering based on content type */}
                 {imageUrl ? (
                     <img src={imageUrl} alt="Output" className="h-full p-5" />

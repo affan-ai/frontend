@@ -9,6 +9,8 @@ import axios from "axios";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { classnames } from "@/components/compiler/utils/general";
+import Markdown from "react-markdown";
+import MarkdownPreview from '@uiw/react-markdown-preview';
 
 const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
 const API_PORT = 8080;
@@ -25,6 +27,7 @@ interface ModulData {
 }
 
 export default function DetailPage() {
+
   const pathname = usePathname();
   const modulId = pathname.split('/')[2];
   const [loading, setLoading] = useState(true);
@@ -33,6 +36,7 @@ export default function DetailPage() {
   const [pdfUrl, setPdfUrl] = useState(''); // State untuk URL PDF
   const [theme, setTheme] = useState("amy");
   const router = useRouter();
+  const [postContent, setPostContent] = useState("");
 
 
   const language = {
@@ -42,6 +46,7 @@ export default function DetailPage() {
     value: "r",
   }
 
+  
 
 
   const onChange = (action: any, data: string) => {
@@ -103,21 +108,6 @@ export default function DetailPage() {
     };
 
 
-  function handleThemeChange(th: any) {
-    const theme = th;
-    console.log("theme...", theme);
-
-    if (["vs-dark", "vs-dark"].includes(theme.value)) {
-    setTheme(theme);
-    } else {
-    defineTheme(theme.value).then((_) => setTheme(theme));
-    }
-}
-  // useEffect(() => {
-  //     defineTheme("monoindustrial").then((_) =>
-  //     setTheme({ value: "monoindustrial", label: "monoindustrial" })
-  //     );
-  // }, []);
 
 
   const fetchData = async () => {
@@ -192,80 +182,99 @@ export default function DetailPage() {
   };
 
 
+  // const file_name = 'test.md';
+  // const [post, setPost] = useState('hello');
+
+  // useEffect(() => {
+  //   import(`../../../../public/${file_name}`)
+  //       .then(res => {
+  //           fetch(res.default)
+  //               .then(res => res.text())
+  //               .then(res => setPost(res))
+  //               .catch(err => console.log(err));
+  //       })
+  //       .catch(err => console.log(err));
+  // });
+
+  const [markdown, setMarkdown] = useState("# Markdown Preview");
+
   return (
-
-
-    
-    <div className='px-4'>
+    <div className='px-8'>
       {detailModul ? (
 
-        <div className=''>
-          <div className='grid grid-cols-2 gap-7 mb-5 bg-gray-100 px-4 py-3 outline outline-1 rounded-lg outline-gray-300'>
+        <div className='mt-5'>
+          <div className='grid grid-cols-2 gap-7 mb-5 bg-gray-100 px-5 py-3 outline outline-1 rounded-lg outline-gray-300'>
             <h1 className=' font-extrabold text-base md:text-2xl text-[#00726B]'>{detailModul.data.namaModul} : <span className='font-medium'>{detailModul.data.judulModul}</span></h1>
-            <Select
-              placeholder="Pilih Modul"
-              options={options}
-              onChange={handleChange}
-            />
-            {/* <p>code: {detailModul.data.codeSampel}</p> */}
-          </div>
-
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
-          <div>
-            {pdfUrl && !downloadClicked && (
-              <a
-                href={pdfUrlWithParams}
-                download="your-pdf-file.pdf"
-              >
-                <button onClick={handleDownloadClick}>
-                  Download PDF
-                </button>
-              </a>
-            )}
-          </div>
-          <div>
-            <div>
-            <button
-            onClick={handleCompile}
-            disabled={!code}
-            value={code}
-            className={classnames(
-                "block w-full bg-[#00726B] mt-5 py-2 rounded-lg duration-500 text-white font-semibold md:col-span-1",
-                !code ? "opacity-50" : ""
-            )}
-            >
-            {processing ? "Processing..." : "Compile"}
-            </button>
-            </div>
-            <div>
-                <CodeEditorWindow
-                  code={detailModul.data.codeSampel}
-                  onChange={handleCodeChange}
-                  language={language?.value}
-                  theme={theme}
-                />
-              </div>
-          </div>
-                  
-
-          </div>
-
-          <div className="  flex flex-shrink-0 w-full  flex-col">
-            <div className="px-4 py-2">
-            <h1 className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 mb-2">
-                Output
-            </h1>
-            <iframe
-              src={detailModul.data.urlShiny}
-              width="600"
-              height="600"
-            ></iframe>
-            </div>
-            <div className="w-full h-56 bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
-
-                    <pre className="p-5">{response}</pre>
+            <div className='grid grid-cols-2 gap-3'>
+              <Select
+                placeholder="Pilih Modul"
+                options={options}
+                onChange={handleChange}
+              />
+                <div>
+                  {pdfUrl && !downloadClicked && (
+                    <a
+                      href={pdfUrlWithParams}
+                      download="your-pdf-file.pdf"
+                    >
+                      <button
+                        onClick={handleDownloadClick}
+                        className='block w-full bg-[#00726B] py-2 rounded-lg text-white font-semibold md:col-span-1"'
+                      >
+                        Download PDF
+                      </button>
+                    </a>
+                  )}
                 </div>
             </div>
+          </div>
+          {/* <section className='bg-blue-100 mx-20 px-10 py-10 markdown'>
+            <Markdown className="text-bold">{markdown}</Markdown>
+          </section> */}
+          <article data-color-mode="light" className='px-14 py-7' >
+            <MarkdownPreview source={detailModul.data.textData} />
+          </article>
+          <hr/>
+          <div className=' mt-5'>
+            <div className='flex p-5 justify-between items-center'>
+            <h1 className=' font-bold text-base md:text-2xl text-[#00726B]'>Compiler {detailModul.data.namaModul}</h1>
+              <button
+              onClick={handleCompile}
+              disabled={!code}
+              value={code}
+              className={classnames(
+                  "block w-56 bg-[#00726B] py-2 rounded-lg duration-500 text-white font-semibold md:col-span-1",
+                  !code ? "opacity-50" : ""
+              )}
+              >
+              {processing ? "Processing..." : "Compile"}
+              </button>
+            </div>
+            <div>
+              <CodeEditorWindow
+                code={detailModul.data.codeSampel}
+                onChange={handleCodeChange}
+                language="r"
+                theme="vs-dark"
+              />
+            </div>
+          </div>
+
+          <div className=" flex flex-shrink-0 w-full  flex-col mt-5">
+            <h1 className="font-bold text-xl mb-2 text-[#00726B]">
+                Output
+            </h1>
+            <div className='grid grid-cols-2 gap-3 h-96'>
+              <iframe
+                src={detailModul.data.urlShiny}
+                width="100%"
+                height="100%"
+              />
+              <div className="w-full bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
+                <pre className="p-5">{response}</pre>
+              </div>
+            </div>
+          </div>
 
         </div>
       ) : (
