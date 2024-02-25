@@ -1,4 +1,6 @@
+import { red } from '@mui/material/colors';
 import React from 'react';
+import { FaStar } from "react-icons/fa6";
 
 interface StarRatingProps {
   score: number;
@@ -23,10 +25,10 @@ const StarRating: React.FC<StarRatingProps> = ({ score }) => {
   const filledStars = getStarCount();
 
   return (
-    <div className="star-rating">
+    <div className="star-rating flex">
       {Array.from({ length: filledStars }).map((_, index) => (
-        <span key={index} className="filled">
-          ★
+        <span key={index} className="">
+          <FaStar size={22} className="text-yellow-300" />
         </span>
       ))}
     </div>

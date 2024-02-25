@@ -1,10 +1,13 @@
 "use client"
 
 import { ChangeEvent, FormEvent, useState } from "react";
+import MarkdownPreview from '@uiw/react-markdown-preview';
+import Editor from "@monaco-editor/react";
 
 
 export default function Page() {
   const [codeSampel, setCodeSampel] = useState('');
+  const [textMarkdown, setTextMarkdown] = useState('');
   const [namaModul, setNamaModul] = useState('');
   const [judulModul, setJudulModul] = useState('');
   const [urlShiny, setUrlShiny] = useState('');
@@ -33,6 +36,7 @@ export default function Page() {
     formData.append('judulModul', judulModul);
     formData.append('urlShiny', urlShiny);
     formData.append('textData', textData);
+    formData.append('textMarkdown', textMarkdown);
 
 
     try {
@@ -59,10 +63,11 @@ export default function Page() {
       alert('Gagal menambahkan modul.');
       console.error(error);
     }
+
   }
   return (
         <div className="flex items-center justify-center py-12 md:px-12">
-          <div className="mx-auto w-full max-w-[750px] bg-white">
+          <div className="mx-auto w-full  bg-white">
             <p className="py-2 px-9 text-2xl md:text-3xl font-extrabold text-[#00726B] ">
               Tambah Modul Pembelajaran
             </p>
@@ -72,56 +77,40 @@ export default function Page() {
               action=""
               method=""
             >
-            <div className="mb-5">
-                <label
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Masukan Nama Modul
-                </label>
-                <input
-                  type="namaModul"
-                  name="namaModul"
-                  id="namaModul"
-                  value={namaModul}
-                  onChange={(e) => setNamaModul(e.target.value)}
-                  placeholder="contoh : Modul 1, Modul 2 dll.."
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
-                />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-5">
               <div className="mb-5">
-                <label
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Masukan Judul Modul
-                </label>
-                <input
-                  type="judulModul"
-                  name="judulModul"
-                  id="judulModul"
-                  value={judulModul}
-                  onChange={(e) => setJudulModul(e.target.value)}
-                  placeholder="contoh : Belajar Dasar Statistik"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
-                />
+                  <label
+                    className="mb-3 block text-base font-medium text-[#07074D]"
+                  >
+                    Masukan Nama Modul
+                  </label>
+                  <input
+                    type="namaModul"
+                    name="namaModul"
+                    id="namaModul"
+                    value={namaModul}
+                    onChange={(e) => setNamaModul(e.target.value)}
+                    placeholder="contoh : Modul 1, Modul 2 dll.."
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-5">
+                  <label
+                    className="mb-3 block text-base font-medium text-[#07074D]"
+                  >
+                    Masukan Judul Modul
+                  </label>
+                  <input
+                    type="judulModul"
+                    name="judulModul"
+                    id="judulModul"
+                    value={judulModul}
+                    onChange={(e) => setJudulModul(e.target.value)}
+                    placeholder="contoh : Belajar Dasar Statistik"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
+                  />
+                </div>
               </div>
-
-              <div className="mb-5">
-                <label
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Masukan teks modul
-                </label>
-                <input
-                  type="textData"
-                  name="textData"
-                  id="textData"
-                  value={textData}
-                  onChange={(e) => setTextData(e.target.value)}
-                  placeholder="banyakk"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
-                />
-              </div>
-
               <div className="mb-5">
                 <label
                   className="mb-3 block text-base font-medium text-[#07074D]"
@@ -150,7 +139,7 @@ export default function Page() {
                   onChange={(e) => setCodeSampel(e.target.value)}
                   autoCorrect="false"
                   placeholder="contoh : 1 + 1"
-                  className="font-mono w-full h-72 rounded-md border border-[#e0e0e0] bg-white p-6 text-sm font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
+                  className="font-mono w-full h-44 rounded-md border border-[#e0e0e0] bg-white p-6 text-sm font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
                 />
               </div>
 
@@ -167,26 +156,45 @@ export default function Page() {
                 accept=".pdf"
                 onChange={handleFileChange}
                 className="block w-full text-sm text-gray-900  rounded-md cursor-pointer bg-gray-50  focus:outline-none " />
-                  {/* <input
-                  name="file"
-                  id="file"
-                  type="file"
-                  accept=".pdf"
-                  onChange={handleFileChange}
-                  className="sr-only" />
-                  <label
-                    htmlFor="file"
-                    className="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center"
-                  >
-                    <div>
-                      <span
-                        className="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]"
-                      >
-                        Browse
-                      </span>
-                    </div>
-                  </label> */}
                 </div>
+              </div>
+
+              <div className="mb-5">
+                <label
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Masukan Markdown Text
+                </label>
+                  {/* <textarea
+                    value={textMarkdown}
+                    onChange={(e) => setTextMarkdown(e.target.value)}
+                    autoCorrect="false"
+                    placeholder="contoh : 1 + 1"
+                    className="font-mono w-full h-96 rounded-md border border-[#e0e0e0] bg-white p-6 text-sm font-medium text-[#6B7280] outline-none focus:border-[#00726B] focus:shadow-md"
+                  /> */}
+                  <Editor
+                    height="55vh"
+                    width={`100%`}
+                    language="markdown"
+                    value={textData}
+                    theme="vs-dark"
+                    defaultValue="# Add some markdown text here"
+                    onChange={(value) => setTextData(value || '')}
+                    options={{
+                      fontSize: 14
+                    }}
+                  />
+              </div>
+
+              <div className="mb-5">
+                <label
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Preview Markdown Text
+                </label>
+                  <article className="rounded-md border border-[#e0e0e0] p-3" data-color-mode="light">
+                    <MarkdownPreview source={textData} className="px-8 py-3"/>
+                  </article>
               </div>
 
               <div>
@@ -199,17 +207,6 @@ export default function Page() {
               </div>
             </form>
           </div>
-
-
-
-
-        
-
-
-
-
-
-          
         </div>
   )
 }

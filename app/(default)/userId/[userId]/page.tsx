@@ -212,7 +212,7 @@ export default function Page() {
                             <ListItemDecorator>
                                 <QuestionAnswerRoundedIcon sx={{with: 20, height: 20}}/>
                             </ListItemDecorator>
-                            My Post
+                            User Post
                             </Tab>
                         </TabList>
                         <TabPanel value={0}>
