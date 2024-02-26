@@ -17,9 +17,8 @@ import { IoSearch } from "react-icons/io5";
 import { MdVerified } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import config from "@/config.js";
 
-const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 8080;
 
 
 interface ForumData {
@@ -98,7 +97,7 @@ const ForumComponent: React.FC = () => {
       const headers = {
         Authorization: `Bearer ${storedToken}`,
       };
-      const url = `http://localhost:8080/api/forum//page?page=${page}`;
+      const url = `${config.API_URL}/api/forum/page?page=${page}`;
 
       const response = await axios.get(url, { headers });
       if (response.status === 200) {
@@ -172,7 +171,7 @@ const ForumComponent: React.FC = () => {
       const storedToken = localStorage.getItem('customToken');
 
 
-      const response = await axios.post(`http://localhost:8080/api/forum`, formData, {
+      const response = await axios.post(`${config.API_URL}/api/forum`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${storedToken}`,

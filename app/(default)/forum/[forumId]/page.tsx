@@ -12,9 +12,7 @@ import { BiCommentDetail, BiBookmark } from "react-icons/bi";
 import LikeButton from '@/components/LikeButton';
 import { MdVerified } from 'react-icons/md';
 import Link from 'next/link';
-
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 8080;
+import config from "@/config.js";
 
 export default function DetailPage() {
     const {user} = UserAuth();
@@ -39,7 +37,7 @@ export default function DetailPage() {
               Authorization: `Bearer ${storedToken}`,
           };
           // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
-          fetch(`http://localhost:8080/api/forum/${forumId}`,{headers})
+          fetch(`${config.API_URL}/api/forum/${forumId}`,{headers})
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Gagal mengambil data postingan.');
@@ -53,7 +51,7 @@ export default function DetailPage() {
               console.error('Gagal mengambil data postingan:', error);
             });
     
-            fetch(`http://localhost:8080/api/forum/${forumId}/comments`,{headers})
+            fetch(`${config.API_URL}/api/forum/${forumId}/comments`,{headers})
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Gagal mengambil komentar.');
@@ -108,7 +106,7 @@ export default function DetailPage() {
           };
         
           // Kirim komentar ke endpoint Express dengan ID pengguna yang aktif
-          const response = await axios.post(`http://localhost:8080/api/forum/${topicId}/comments`, { text, userId },
+          const response = await axios.post(`${config.API_URL}/api/forum/${topicId}/comments`, { text, userId },
           { headers });
         
           if (response.status === 200) {
@@ -119,7 +117,7 @@ export default function DetailPage() {
             });
       
             // Refresh comments data after a successful submission
-            fetch(`http://localhost:8080/api/forum/${topicId}/comments`,{headers})
+            fetch(`${config.API_URL}/api/forum/${topicId}/comments`,{headers})
               .then((response) => response.json())
               .then((data) => {
                 setComments(data); // Update comments with the latest data

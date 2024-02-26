@@ -12,6 +12,7 @@ import { defineTheme } from "@/components/compiler/utils/defineTheme";
 import useKeyPress from "@/components/compiler/utils/useKeyPress";
 // import useAuthMiddleware from '@/app/middleware/authMiddleware';
 import Markdown from "react-markdown";
+import config from "@/config.js";
 
 
 const CodeEditor = () => { 
@@ -31,9 +32,6 @@ const CodeEditor = () => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const [response, setResponse] = useState('');
-  const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
-  const API_PORT = 8080;
-
 const enterPress = useKeyPress("Enter");
 const ctrlPress = useKeyPress("Control");
 
@@ -84,7 +82,7 @@ const handleCompile = async () => {
       const storedToken = localStorage.getItem('customToken');
 
       
-      const response = await fetch(`http://localhost:8080/api/compiler/modul/`, {
+      const response = await fetch(`${config.API_URL}/api/compiler/modul/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

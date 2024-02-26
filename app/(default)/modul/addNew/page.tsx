@@ -3,6 +3,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import Editor from "@monaco-editor/react";
+import config from "@/config.js";
 
 
 export default function Page() {
@@ -48,7 +49,7 @@ export default function Page() {
         Authorization: `Bearer ${storedToken}`,
       };
       // Menggunakan fetch untuk mengirim data ke endpoint
-      const response = await fetch(`http://localhost:8080/api/modul`, {
+      const response = await fetch(`${config.API_URL}/api/modul`, {
         method: 'POST',
         body: formData,
         headers,

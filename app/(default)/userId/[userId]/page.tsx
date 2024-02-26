@@ -19,6 +19,7 @@ import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded
 import  { BiSolidBookmark } from "react-icons/bi";
 import Link from 'next/link';
 import StarRating from '@/components/StarRating';
+import config from "@/config.js";
 
 interface UserData {
   id: number;
@@ -74,7 +75,7 @@ export default function Page() {
 
             if (userId) {
                 // Mengirim request ke API
-                const response = await axios.get(`http://localhost:8080/api/user/${userId}/score`, { headers });
+                const response = await axios.get(`${config.API_URL}/api/user/${userId}/score`, { headers });
 
                 // Mengubah state dengan data yang diterima dari API
                 setScore(response.data.score);

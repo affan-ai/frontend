@@ -8,6 +8,7 @@ import LikeButton from '@/components/LikeButton';
 import Bookmark from '@/components/Bookmark';
 import { ToastContainer, toast } from 'react-toastify';
 import { MdVerified } from "react-icons/md";
+import config from "@/config.js";
 
 interface ForumData {
     id: string;

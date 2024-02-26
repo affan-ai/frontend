@@ -16,10 +16,8 @@ import IconButton from '@mui/joy/IconButton';
 import { MdVerified } from 'react-icons/md';
 import VeriviedCard from '@/components/VeriviedCard';
 import AvatarTest from '@/public/avatar-test.png'
+import config from "@/config.js";
 
-
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 8080;
 
 function Verivied() {
   // Buat sebuah jenis yang mencerminkan struktur data dari API
@@ -47,7 +45,7 @@ const fetchData = async () => {
     const headers = {
       Authorization: `Bearer ${storedToken}`,
     };
-    const response = await axios.get(`http://localhost:8080/api/user/`, {headers});
+    const response = await axios.get(`${config.API_URL}/api/user/`, {headers});
     if (response.status === 200) {
       setTestData(response.data);
       console.log(response.data)

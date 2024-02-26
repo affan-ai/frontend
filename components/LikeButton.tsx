@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { auth } from '../app/firebase';
 import { BiSolidLike, BiLike } from "react-icons/bi";
-
-const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 3001;
+import config from "@/config.js";
 
 const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -22,7 +20,7 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
   
       if (userId) {
         // Kirim permintaan API untuk mengambil data like
-        const response = await axios.get(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/like/${itemId}/is-liked`, {
+        const response = await axios.get(`${config.API_URL}/api/forum/like/${itemId}/is-liked`, {
           params: {
             userId: userId,
           },
@@ -50,7 +48,7 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
 
       if (userId) {
         // Kirim permintaan API untuk menyukai postingan
-        const response = await axios.post(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/like/${itemId}`, {
+        const response = await axios.post(`${config.API_URL}/api/forum/like/${itemId}`, {
           userId: userId,
         });
 
@@ -74,7 +72,7 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
 
       if (userId) {
         // Kirim permintaan API untuk membatalkan like postingan
-        const response = await axios.post(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/unlike/${itemId}`, {
+        const response = await axios.post(`${config.API_URL}/api/forum/unlike/${itemId}`, {
           userId: userId,
         });
 

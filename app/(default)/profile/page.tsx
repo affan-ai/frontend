@@ -20,10 +20,7 @@ import Image from 'next/image';
 import Pagination from '@/components/Pagination';
 import { MdVerified } from 'react-icons/md';
 import StarRating from '@/components/StarRating';
-
-
-const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 8080;
+import config from "@/config.js";
 
 interface ForumData {
     id: string;
@@ -82,7 +79,7 @@ const Page = () => {
             if (user) {
                 const userId = user.uid;
                 // Mengirim request ke API
-                const response = await axios.get(`http://localhost:8080/api/user/${userId}/score`, { headers });
+                const response = await axios.get(`${config.API_URL}/api/user/${userId}/score`, { headers });
 
                 // Mengubah state dengan data yang diterima dari API
                 setScore(response.data.score);

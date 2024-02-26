@@ -14,9 +14,8 @@ import ModalDialog from '@mui/joy/ModalDialog';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import IconButton from '@mui/joy/IconButton';
 import { UserAuth } from '@/app/context/authContext';
+import config from "@/config.js";
 
-const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 5000;
 
 
 function ModulList() {
@@ -66,7 +65,7 @@ const fetchData = async () => {
       Authorization: `Bearer ${storedToken}`,
     };
 
-    const response = await axios.get('http://localhost:8080/api/modul', { headers });
+    const response = await axios.get(`${config.API_URL}/api/modul`, { headers });
     if (response.status === 200) {
       setTestData(response.data);
       console.log(response.data)
@@ -99,7 +98,7 @@ useEffect(() => {
       Authorization: `Bearer ${storedToken}`,
     };
     // Panggil endpoint dengan menggunakan ID modul
-    axios.delete(`http://localhost:8080/api/modul/${id}`, { headers })
+    axios.delete(`${config.API_URL}/api/modul/${id}`, { headers })
       .then(response => {
         console.log(id)
         setOpen(null);

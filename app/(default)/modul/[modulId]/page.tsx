@@ -11,9 +11,7 @@ import { useRouter } from 'next/navigation';
 import { classnames } from "@/components/compiler/utils/general";
 import Markdown from "react-markdown";
 import MarkdownPreview from '@uiw/react-markdown-preview';
-
-const API_HOST = 'https://rest-api-zzvthujxxq-as.a.run.app'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 8080;
+import config from "@/config.js";
 
 interface ModulData {
   id: number;
@@ -81,7 +79,7 @@ export default function DetailPage() {
       Authorization: `Bearer ${storedToken}`,
     };
       // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
-      fetch(`http://localhost:8080/api/modul/${modulId}`, { headers })
+      fetch(`${config.API_URL}/api/modul/${modulId}`, { headers })
         .then((response) => {
           if (!response.ok) {
             throw new Error('Gagal mengambil data detail modul.');
@@ -119,7 +117,7 @@ export default function DetailPage() {
       const headers = {
         Authorization: `Bearer ${storedToken}`,
       };
-      const response = await axios.get(`http://loclahost:8080/api/modul`, { headers });
+      const response = await axios.get(`${config.API_URL}/api/modul`, { headers });
       if (response.status === 200) {
         setTestData(response.data);
         console.log(response.data)
@@ -162,7 +160,7 @@ export default function DetailPage() {
       const storedToken = localStorage.getItem('customToken');
 
       
-      const response = await fetch(`http://localhost:8080/api/compiler/modul/`, {
+      const response = await fetch(`${config.API_URL}/api/compiler/modul/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

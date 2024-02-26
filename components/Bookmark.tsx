@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { auth } from '../app/firebase';
 import { BiBookmark, BiSolidBookmark } from "react-icons/bi";
+import config from "@/config.js";
 
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 8080;
 
 const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
   const [isBookmarked, setIsBookmarked] = useState(true);
@@ -22,7 +21,7 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
   
       if (userId) {
         // Kirim permintaan API untuk mengambil data like
-        const response = await axios.get(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/bookmark/${itemId}/is-bookmarked`, {
+        const response = await axios.get(`${config.API_URL}/api/forum/bookmark/${itemId}/is-bookmarked`, {
           params: {
             userId: userId,
           },
@@ -50,7 +49,7 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
 
       if (userId) {
         // Kirim permintaan API untuk menyukai postingan
-        const response = await axios.post(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/bookmark/${itemId}`, {
+        const response = await axios.post(`${config.API_URL}/api/forum/bookmark/${itemId}`, {
           userId: userId,
         });
 
@@ -74,7 +73,7 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
 
       if (userId) {
         // Kirim permintaan API untuk membatalkan like postingan
-        const response = await axios.post(`https://rest-api-zzvthujxxq-as.a.run.app/api/forum/unbookmark/${itemId}`, {
+        const response = await axios.post(`${config.API_URL}/api/forum/unbookmark/${itemId}`, {
           userId: userId,
         });
 

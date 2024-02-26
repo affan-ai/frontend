@@ -21,6 +21,7 @@
     "@mui/material": "^5.14.15",
     "@react-pdf-viewer/core": "^3.12.0",
     "@uiw/react-codemirror": "^4.21.20",
+    "@uiw/react-markdown-preview": "^5.0.7",
     "aos": "^2.3.4",
     "axios": "^1.6.1",
     "canvas": "^2.11.2",
