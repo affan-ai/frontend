@@ -24,7 +24,7 @@ import config from "@/config.js";
 interface ForumData {
   id: string;
   data: {
-    userId: string;
+    email: string;
     topics: string;
     title:string;
     images: string[];
@@ -38,7 +38,7 @@ interface ForumData {
     displayName: string;
     photoURL: string;
     verified: boolean;
-    userId: string;
+    email: string;
   }
   commentCount: number;
 }
@@ -55,7 +55,7 @@ interface NewPost {
   topics: string;
   title: string;
   images: File[];
-  userId: string,
+  email: string,
 }
 
 const ForumComponent: React.FC = () => {
@@ -79,7 +79,7 @@ const ForumComponent: React.FC = () => {
     topics: "",
     title: "",
     images: [],
-    userId: '',
+    email: '',
   }); 
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -162,7 +162,7 @@ const ForumComponent: React.FC = () => {
       formData.append('topics', newPost.topics);
       formData.append('title', newPost.title);
       if (user) {
-      formData.append('userId',user.uid);}
+      formData.append('email',user?.email ?? '');}
       newPost.images.forEach((image) => {
         formData.append('images', image);
       });
@@ -185,7 +185,7 @@ const ForumComponent: React.FC = () => {
         // Reset formulir setelah berhasil menambahkan postingan
         setNewPost({
           topics: '',
-          userId: '',
+          email: '',
           images: [],
           title: '',
         });
@@ -372,7 +372,7 @@ const ForumComponent: React.FC = () => {
       {/* Tampilkan postingan yang ada */}
     {currentForumData.map((item) => (
       <div key={item.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
-      <Link href={`userId/${item.data.userId}`}>
+      <Link href={`userId/${item.data.email}`}>
       <div className="flex">
         <div className=" rounded-full mr-2">
         <Image

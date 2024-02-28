@@ -17,7 +17,7 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
   const handleIsBookmarked= async (itemId: string) => {
     try {
       const user = auth.currentUser;
-      const userId = user?.uid; // Get the user ID from the authentication object
+      const email = user?.email; // Get the user ID from the authentication object
 
       // Mendapatkan token dari localStorage atau sumber lainnya
       const storedToken = localStorage.getItem('customToken');
@@ -25,10 +25,10 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
       // Membuat header dengan menyertakan token
       const headers = {
           Authorization: `Bearer ${storedToken}`,
-          userId: userId,
+          email: email,
       };
   
-      if (userId) {
+      if (email) {
         // Kirim permintaan API untuk mengambil data like
         const response = await axios.get(`${config.API_URL}/api/forum/bookmark/${itemId}/is-bookmarked`, {
           headers
@@ -52,7 +52,7 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
   const handleBookmark = async (itemId: string) => {
     try {
       const user = auth.currentUser;
-      const userId = user?.uid; // Get the user ID from the authentication object
+      const email = user?.email; // Get the user ID from the authentication object
 
       // Mendapatkan token dari localStorage atau sumber lainnya
       const storedToken = localStorage.getItem('customToken');
@@ -60,10 +60,10 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
       // Membuat header dengan menyertakan token
       const headers = {
           Authorization: `Bearer ${storedToken}`,
-          userId: userId,
+          email: email,
       };
 
-      if (userId) {
+      if (email) {
         // Kirim permintaan API untuk menyukai postingan
         const response = await axios.post(`${config.API_URL}/api/forum/bookmark/${itemId}`,           
           { headers }
@@ -85,7 +85,7 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
   const handleUnbookmark = async (itemId: string) => {
     try {
       const user = auth.currentUser;
-      const userId = user?.uid; // Get the user ID from the authentication object
+      const email = user?.email; // Get the user ID from the authentication object
 
       // Mendapatkan token dari localStorage atau sumber lainnya
       const storedToken = localStorage.getItem('customToken');
@@ -93,10 +93,10 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
       // Membuat header dengan menyertakan token
       const headers = {
           Authorization: `Bearer ${storedToken}`,
-          userId: userId,
+          email: email,
       };
 
-      if (userId) {
+      if (email) {
         // Kirim permintaan API untuk membatalkan like postingan
         const response = await axios.post(`${config.API_URL}/api/forum/unbookmark/${itemId}`, { headers });
 

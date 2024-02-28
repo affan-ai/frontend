@@ -25,7 +25,7 @@ import config from "@/config.js";
 interface ForumData {
     id: string;
     data: {
-      userId: string;
+        email: string;
       topics: string;
       title:string;
       images: string[];
@@ -77,9 +77,9 @@ const Page = () => {
             };
 
             if (user) {
-                const userId = user.uid;
+                const email = user.email;
                 // Mengirim request ke API
-                const response = await axios.get(`${config.API_URL}/api/user/${userId}/score`, { headers });
+                const response = await axios.get(`${config.API_URL}/api/user/${email}/score`, { headers });
 
                 // Mengubah state dengan data yang diterima dari API
                 setScore(response.data.score);
@@ -105,8 +105,8 @@ const Page = () => {
                 Authorization: `Bearer ${storedToken}`,
             };
             if (user) {
-                const userId = user.uid;
-                const url = `http://localhost:8080/api/forum/bookmarks/${userId}?page=${page}`;
+                const email = user.email;
+                const url = `http://localhost:8080/api/forum/bookmarks/${email}?page=${page}`;
                 const response = await axios.get(url,{headers});
                 if (response.status === 200) {
                     const { bookmarks, currentBookmarkPage, totalBookmarkPages, totalBookmarks } = response.data;
@@ -143,8 +143,8 @@ const Page = () => {
                     Authorization: `Bearer ${storedToken}`,
                 };
                 
-                    const userId = user.uid;
-                    const url = `http://localhost:8080/api/forum/posted/${userId}?page=${page}`;
+                    const email = user.email;
+                    const url = `http://localhost:8080/api/forum/posted/${email}?page=${page}`;
                     const response = await axios.get(url,{headers});
                     if (response.status === 200) {
                         const { forumData, currentPage, totalPages, totalPosts } = response.data;

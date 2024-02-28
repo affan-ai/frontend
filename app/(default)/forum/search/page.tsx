@@ -13,7 +13,7 @@ import config from "@/config.js";
 interface ForumData {
     id: string;
     data: {
-      userId: string;
+        email: string;
       topics: string;
       title:string;
       images: string[];
@@ -27,7 +27,7 @@ interface ForumData {
       displayName: string;
       photoURL: string;
       verified: boolean;
-      userId: string;
+      email: string;
     }
     commentCount: number;
   }
@@ -81,7 +81,7 @@ export default function Search() {
 
             {results.map((result) => (
                 <div key={result.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
-                <Link href={`userId/${result.data.userId}`}>
+                <Link href={`userId/${result.data.email}`}>
                 <div className="flex">
                     <div className=" rounded-full mr-2">
                     <Image
