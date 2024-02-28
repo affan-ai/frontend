@@ -18,13 +18,20 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
     try {
       const user = auth.currentUser;
       const userId = user?.uid; // Get the user ID from the authentication object
+
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+          Authorization: `Bearer ${storedToken}`,
+          userId: userId,
+      };
   
       if (userId) {
         // Kirim permintaan API untuk mengambil data like
         const response = await axios.get(`${config.API_URL}/api/forum/bookmark/${itemId}/is-bookmarked`, {
-          params: {
-            userId: userId,
-          },
+          headers
         });
   
         if (response.status === 200) {
@@ -47,11 +54,20 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
       const user = auth.currentUser;
       const userId = user?.uid; // Get the user ID from the authentication object
 
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+          Authorization: `Bearer ${storedToken}`,
+          userId: userId,
+      };
+
       if (userId) {
         // Kirim permintaan API untuk menyukai postingan
-        const response = await axios.post(`${config.API_URL}/api/forum/bookmark/${itemId}`, {
-          userId: userId,
-        });
+        const response = await axios.post(`${config.API_URL}/api/forum/bookmark/${itemId}`,           
+          { headers }
+        );
 
         if (response.status === 200) {
             // Set state dan simpan status like di sesi penyimpanan lokal
@@ -71,11 +87,18 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
       const user = auth.currentUser;
       const userId = user?.uid; // Get the user ID from the authentication object
 
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+          Authorization: `Bearer ${storedToken}`,
+          userId: userId,
+      };
+
       if (userId) {
         // Kirim permintaan API untuk membatalkan like postingan
-        const response = await axios.post(`${config.API_URL}/api/forum/unbookmark/${itemId}`, {
-          userId: userId,
-        });
+        const response = await axios.post(`${config.API_URL}/api/forum/unbookmark/${itemId}`, { headers });
 
         if (response.status === 200) {
             // Set state dan simpan status unlike di sesi penyimpanan lokal

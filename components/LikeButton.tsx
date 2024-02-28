@@ -17,13 +17,20 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
     try {
       const user = auth.currentUser;
       const userId = user?.uid; // Get the user ID from the authentication object
+
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+          Authorization: `Bearer ${storedToken}`,
+          userId: userId,
+      };
   
       if (userId) {
         // Kirim permintaan API untuk mengambil data like
         const response = await axios.get(`${config.API_URL}/api/forum/like/${itemId}/is-liked`, {
-          params: {
-            userId: userId,
-          },
+          headers
         });
   
         if (response.status === 200) {
@@ -46,10 +53,19 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
       const user = auth.currentUser;
       const userId = user?.uid; // Get the user ID from the authentication object
 
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+          Authorization: `Bearer ${storedToken}`,
+          userId: userId,
+      };
+
       if (userId) {
         // Kirim permintaan API untuk menyukai postingan
         const response = await axios.post(`${config.API_URL}/api/forum/like/${itemId}`, {
-          userId: userId,
+          headers
         });
 
         if (response.status === 200) {
@@ -70,10 +86,19 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
       const user = auth.currentUser;
       const userId = user?.uid; // Get the user ID from the authentication object
 
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+          Authorization: `Bearer ${storedToken}`,
+          userId: userId,
+      };
+
       if (userId) {
         // Kirim permintaan API untuk membatalkan like postingan
         const response = await axios.post(`${config.API_URL}/api/forum/unlike/${itemId}`, {
-          userId: userId,
+          headers
         });
 
         if (response.status === 200) {

@@ -50,7 +50,7 @@ export default function Search() {
             };
 
             setLoading(true);
-            const response = await fetch(`http://localhost:8080/api/forum/search?query=${query}`,{headers});
+            const response = await fetch(`${config.API_URL}/api/forum/search?query=${query}`,{headers});
             const data = await response.json();
             setResults(data);
             setSearchExecuted(true);
