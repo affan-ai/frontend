@@ -2,6 +2,7 @@
 import React,{ useContext, createContext, useEffect, useState, ReactNode } from 'react';
 import { signInWithPopup, signOut, signInWithEmailAndPassword,UserCredential, onAuthStateChanged, GoogleAuthProvider, IdTokenResult } from 'firebase/auth';
 import { auth } from '../firebase';
+import config from "@/config.js";
 
 interface User {
   uid: string | null;
@@ -25,8 +26,7 @@ interface UserData {
   photoURL: string;
 }
 
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 8080;
+
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -83,7 +83,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
   
   const sendUserDataToServer = async (userData: UserData) => {
     try {
-      const response = await fetch(`http://localhost:8080/google-login`, {
+      const response = await fetch(`${config.API_URL}/google-login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
       
   
       // Kirim permintaan ke endpoint di server
-      const response = await fetch(`http://localhost:8080/login`, {
+      const response = await fetch(`${config.API_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
