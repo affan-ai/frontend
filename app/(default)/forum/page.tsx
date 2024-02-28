@@ -92,6 +92,7 @@ const ForumComponent: React.FC = () => {
     try {
       // Mendapatkan token dari localStorage atau sumber lainnya
       const storedToken = localStorage.getItem('customToken');
+      console.log(storedToken);
 
       // Membuat header dengan menyertakan token
       const headers = {

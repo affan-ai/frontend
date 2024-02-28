@@ -24,13 +24,13 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
       // Membuat header dengan menyertakan token
       const headers = {
           Authorization: `Bearer ${storedToken}`,
-          email: email,
       };
   
-      if (email) {
+      if (user) {
         // Kirim permintaan API untuk mengambil data like
         const response = await axios.get(`${config.API_URL}/api/forum/like/${itemId}/is-liked`, {
-          headers
+          headers: headers, // Pass headers in the config object
+          params: { email: email }, // Include email as a query parameter
         });
   
         if (response.status === 200) {
@@ -52,21 +52,19 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
     try {
       const user = auth.currentUser;
       const email = user?.email; // Get the user ID from the authentication object
-
       // Mendapatkan token dari localStorage atau sumber lainnya
       const storedToken = localStorage.getItem('customToken');
 
       // Membuat header dengan menyertakan token
       const headers = {
           Authorization: `Bearer ${storedToken}`,
-          email: email,
       };
 
-      if (email) {
+      if (user) {
         // Kirim permintaan API untuk menyukai postingan
-        const response = await axios.post(`${config.API_URL}/api/forum/like/${itemId}`, {
-          headers
-        });
+        const response = await axios.post(`${config.API_URL}/api/forum/like/${itemId}`, { email: email }, 
+        { headers: headers } 
+         );
 
         if (response.status === 200) {
             // Set state dan simpan status like di sesi penyimpanan lokal
@@ -92,14 +90,13 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
       // Membuat header dengan menyertakan token
       const headers = {
           Authorization: `Bearer ${storedToken}`,
-          email: email,
       };
 
       if (email) {
         // Kirim permintaan API untuk membatalkan like postingan
-        const response = await axios.post(`${config.API_URL}/api/forum/unlike/${itemId}`, {
-          headers
-        });
+        const response = await axios.post(`${config.API_URL}/api/forum/unlike/${itemId}`, { email: email }, // Include email in the data payload
+        { headers: headers } // Pass headers as the third argument
+         );
 
         if (response.status === 200) {
             // Set state dan simpan status unlike di sesi penyimpanan lokal

@@ -80,6 +80,7 @@ const handleCompile = async () => {
     try {
       // Mendapatkan token dari localStorage atau sumber lainnya
       const storedToken = localStorage.getItem('customToken');
+      console.log(storedToken);
 
       
       const response = await fetch(`${config.API_URL}/api/compiler/modul/`, {
