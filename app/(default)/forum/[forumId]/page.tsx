@@ -179,8 +179,7 @@ export default function DetailPage() {
                         <span>{detailForum.commentCount}</span>
                       </div>
                       <div className="flex  text-gray-700 text-sm mr-3">
-                        <BiBookmark
-                        size='20'
+                        <BiBookmark itemId={detailForum.id}
                         />
                       </div>
                   </div>

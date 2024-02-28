@@ -106,7 +106,7 @@ const Page = () => {
             };
             if (user) {
                 const email = user.email;
-                const url = `http://localhost:8080/api/forum/bookmarks/${email}?page=${page}`;
+                const url = `${config.API_URL}/api/forum/bookmarks/${email}?page=${page}`;
                 const response = await axios.get(url,{headers});
                 if (response.status === 200) {
                     const { bookmarks, currentBookmarkPage, totalBookmarkPages, totalBookmarks } = response.data;
@@ -144,7 +144,7 @@ const Page = () => {
                 };
                 
                     const email = user.email;
-                    const url = `http://localhost:8080/api/forum/posted/${email}?page=${page}`;
+                    const url = `${config.API_URL}/api/forum/posted/${email}?page=${page}`;
                     const response = await axios.get(url,{headers});
                     if (response.status === 200) {
                         const { forumData, currentPage, totalPages, totalPosts } = response.data;
