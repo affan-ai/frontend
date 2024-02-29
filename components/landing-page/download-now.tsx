@@ -1,6 +1,10 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
+import { RiRobot2Fill } from "react-icons/ri";
+import { IoLogoAndroid } from "react-icons/io";
+import { FaApple } from "react-icons/fa";
 
 export default function Features() {
   
@@ -19,56 +23,28 @@ export default function Features() {
   return (
     <section className="relative my-32 bg-white">
 
-      {/* Section background (needs .relative class on parent and next sibling elements) */}
-      <div className="absolute inset-0 pointer-events-none mb-16" aria-hidden="true">
-      <div className=" blur-5xl absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none -z-1" aria-hidden="true">
-
-      </div>
-      </div>
-
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-12 md:pt-20">
 
-          {/* Section header */}
-
-          {/* Section content */}
-          <div className=" bg-gradient-to-t from-[#00726B] to-[#38B68D] rounded-3xl text-white" aria-hidden="true">
-
-          <div className=" md:py-16 md:px-20 max-w-sm mx-auto grid gap-4 md:grid-cols-2 lg:grid-cols-2 items-start  md:max-w-2xl lg:max-w-none" >
-
-            
-            <div className="flex flex-col items-start  md:flex-row md:max-w-md px-3 py-5 " data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
-                <div className='bg-white p-3 rounded-lg mt-5'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-                  <g clip-path="url(#clip0_165_472)">
-                    <path d="M15 27.5C16.375 27.5 17.5 26.375 17.5 25H12.5C12.5 26.375 13.625 27.5 15 27.5ZM22.5 20V13.75C22.5 9.9125 20.4625 6.7 16.875 5.85V5C16.875 3.9625 16.0375 3.125 15 3.125C13.9625 3.125 13.125 3.9625 13.125 5V5.85C9.55 6.7 7.5 9.9 7.5 13.75V20L5 22.5V23.75H25V22.5L22.5 20ZM20 21.25H10V13.75C10 10.65 11.8875 8.125 15 8.125C18.1125 8.125 20 10.65 20 13.75V21.25Z" fill="#00726B"/>
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_165_472">
-                      <rect width="30" height="30" fill="white"/>
-                    </clipPath>
-                  </defs>
-                </svg>
+          <div className=" bg-gradient-to-t from-[#00726B] to-[#38B68D] rounded-3xl text-white" aria-hidden="true" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
+          <div className="px-5 py-10 md:px-16 md:py-20" >
+              <div className="flex flex-col justify-between p-4 leading-normal items-center">
+                <h5 className=" text-3xl md:text-5xl font-semibold text-center">Belajar dan Akses Cepat Darimana Saja</h5>
+                <p className='mt-2 text-center text-lg'>Tetap terkini dan dorong belajar anda lebih giat dengan Rwikistat di iOS & Android.</p>
+                <p className='text-center text-lg'>Unduh aplikasinya hari ini.</p>
+                <div className='flex flex-row mt-4 md:mt-10 gap-3'>
+                  <button className="flex flex-row justify-center items-center gap-2 py-3 px-5 rounded-lg text-[#00726B] font-semibold bg-white ml-3">
+                    <IoLogoAndroid color="#00726B" size="30px" className="items-center justify-center"/>
+                    Unduh Sekarang
+                  </button>
+                  <button className="flex flex-row justify-center items-center gap-2 py-3 px-5 rounded-lg text-[#00726B] font-semibold bg-gray-300 ml-3" disabled>
+                    <FaApple color="#00726B" size="30px" className="items-center justify-center"/>
+                    Coming Soon
+                  </button>
                 </div>
-                <div className="flex flex-col justify-between p-4 leading-normal">
-                    <h5 className="mb-2 text-xl font-bold tracking-tight  ">R Compiler</h5>
-                    <p className="mb-3 font-normal  ">Unlock limitless possibilities with our Multiple Interface I/O Sensor</p>
-                </div>
+              </div>
             </div>
-
-            <div className="flex flex-col items-start  md:flex-row md:max-w-md px-3 py-5 " data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
-                <div className="flex flex-col justify-between p-4 leading-normal">
-                    <h5 className="mb-2 text-xl font-bold tracking-tight ">Modul Pembelajaran Interkatif</h5>
-                    <p className="mb-3 font-normal  ">Stay powered for hours with our reliable Backup Battery</p>
-                </div>
-            </div>
-            </div>
-          
           </div>
-
-
-          
-
         </div>
       </div>
     </section>
