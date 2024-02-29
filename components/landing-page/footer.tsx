@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="md:flex md:items-center md:justify-between py-4 md:py-8 border-t border-gray-200">
 
         {/* Copyrights note */}
-        <div className="text-sm text-gray-600 mr-4">Copyright &copy; 2023 - Apan Jago & Lifeofrifai</div>
+        <div className="text-sm text-gray-600 mr-4">Copyright &copy; 2024 - Apan Jago & Lifeofrifai</div>
 
           {/* Social as */}
           <ul className="flex mb-4 md:order-1 md:ml-4 md:mb-0">
