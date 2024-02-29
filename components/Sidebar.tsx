@@ -36,6 +36,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import SmsIcon from '@mui/icons-material/Sms';
 import Image from 'next/image';
 import RwikiLogo from '@/public/logo-horizontal.png'
+import HistoryIcon from '@mui/icons-material/History';
 
 import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '@/components/utils';
@@ -264,6 +265,21 @@ return (
             </ListItem>
             )}
 
+        <ListItem>
+            <ListItemButton
+            role="menuitem"
+            component="a"
+            href="/riwayat"
+            >
+            <IconButton>
+                <HistoryIcon />
+            </IconButton>
+            <ListItemContent>
+                <Typography level="title-sm">Riwayat Gambar</Typography>
+            </ListItemContent>
+            
+            </ListItemButton>
+        </ListItem>
 
         <ListItem>
             <ListItemButton

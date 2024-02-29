@@ -170,10 +170,11 @@ return (
         <div className="flex flex-shrink-0 w-full  flex-col mt-5">
             
             <div className="w-full h-96 bg-[#1E1E1E] text-green-500 font-normal text-sm overflow-y-auto">
-              <div className="px-4 py-2">
+              <div className="px-4 py-2 flex flex-row justify-between">
                 <h1 className="font-bold text-xl mb-2">
                     Output
                 </h1>
+                <button type="submit" className=" text-[#00726B] py-2 px-8 rounded-lg  bg-white font-semibold mb-2">Simpan</button>
               </div>
                 {/* Conditional rendering based on content type */}
                 {imageUrl ? (
