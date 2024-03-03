@@ -29,6 +29,8 @@ const VeriviedCard = ({
 }:VeriviedData) => {
     const [open, setOpen] = React.useState<boolean>(false);
 
+    const imageUrl = 'http://localhost:8080/uploads/image.png';
+
     return (
         <div className='p-3 shadow-sm flex justify-between bg-white rounded-md border items-center hover:bg-gray-50  cursor-pointer' onClick={() => setOpen(true)}>
             <p className='text-base text-[#00726B]'>{imageName}</p>
@@ -53,7 +55,7 @@ const VeriviedCard = ({
                             <div className="mb-5">
                             <p className='text-base text-[#00726B]'>{imageName}</p>
                                 <Image
-                                    src={testImage}
+                                    src={imageUrl}
                                     alt={"plot image"}
                                     width={500}
                                     height={500}

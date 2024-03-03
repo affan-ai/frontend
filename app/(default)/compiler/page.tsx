@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import CodeEditorWindow from "@/components/compiler/CodeEditorWindows";
 import axios from "axios";
 import { classnames } from "@/components/compiler/utils/general";
-
+import { UserAuth} from '@/app/context/authContext';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { auth } from '@/app/firebase';
 import Select from "react-select";
 import { defineTheme } from "@/components/compiler/utils/defineTheme";
 import useKeyPress from "@/components/compiler/utils/useKeyPress";
@@ -30,7 +30,7 @@ const CodeEditor = () => {
       value: "r",
   }
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-
+  const {user} = UserAuth();
   const [response, setResponse] = useState('');
 const enterPress = useKeyPress("Enter");
 const ctrlPress = useKeyPress("Control");
@@ -75,6 +75,8 @@ const onChange = (action: any, data: string) => {
     }
     }
 };
+
+
 
 const handleCompile = async () => {
     try {
@@ -121,7 +123,11 @@ const handleCompile = async () => {
     try {
       // Send the image data to your server API for storage in the database
       const formData = new FormData();
+      const user = auth.currentUser;
       formData.append('image', blob, 'compiled_image.png');
+      if (user) {
+        formData.append('uid',user?.uid ?? '');
+        formData.append('name',user?.displayName ?? '');}
   
       await fetch(`${config.API_URL}/api/history`, {
         method: 'POST',
