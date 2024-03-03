@@ -102,6 +102,9 @@ const handleCompile = async () => {
         const blob = await response.blob();
         const newImageUrl = URL.createObjectURL(blob);
         setImageUrl(newImageUrl);
+
+        // Send the image data to the server for storage
+      saveImageToDatabase(blob);
       } else {
         // If it's not an image, set the response as text
         const data = await response.text();
@@ -111,6 +114,23 @@ const handleCompile = async () => {
     } catch (error) {
       console.error(error);
       setResponse('Terjadi kesalahan saat mengirim kode.');
+    }
+  };
+
+  const saveImageToDatabase = async (blob: Blob) => {
+    try {
+      // Send the image data to your server API for storage in the database
+      const formData = new FormData();
+      formData.append('image', blob, 'compiled_image.png');
+  
+      await fetch(`${config.API_URL}/api/history`, {
+        method: 'POST',
+        body: formData,
+      });
+  
+      console.log('Image saved to database successfully');
+    } catch (error) {
+      console.error('Error saving image to database:', error);
     }
   };
 
@@ -179,6 +199,7 @@ return (
                 {/* Conditional rendering based on content type */}
                 {imageUrl ? (
                     <img src={imageUrl} alt="Output" className="h-full p-5" />
+                    // <p> {imageUrl}</p>
                 ) : (
                     <pre className="p-5">{response}</pre>
                 )}
