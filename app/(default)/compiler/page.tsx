@@ -83,7 +83,7 @@ const handleCompile = async () => {
       console.log(storedToken);
 
       
-      const response = await fetch(`${config.API_URL}/api/compiler/modul/`, {
+      const response = await fetch(`${config.API_URL}/api/compiler/test/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -174,7 +174,7 @@ return (
                 <h1 className="font-bold text-xl mb-2">
                     Output
                 </h1>
-                <button type="submit" className=" text-[#00726B] py-2 px-8 rounded-lg  bg-white font-semibold mb-2">Simpan</button>
+                <button type="submit" className=" text -[#00726B] py-2 px-8 rounded-lg  bg-white font-semibold mb-2">Simpan</button>
               </div>
                 {/* Conditional rendering based on content type */}
                 {imageUrl ? (
