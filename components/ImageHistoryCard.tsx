@@ -21,15 +21,17 @@ import { MdDeleteForever } from "react-icons/md";
 interface VeriviedData {
     id: any;
     imageName: string;
+    imageUrl: string;
 }
 
 const VeriviedCard = ({
     id,
-    imageName
+    imageName,
+    imageUrl
 }:VeriviedData) => {
     const [open, setOpen] = React.useState<boolean>(false);
 
-    const imageUrl = 'http://localhost:8080/uploads/image.png';
+    const url= `http://localhost:8080/uploads/${imageUrl}`;
 
     return (
         <div className='p-3 shadow-sm flex justify-between bg-white rounded-md border items-center hover:bg-gray-50  cursor-pointer' onClick={() => setOpen(true)}>
@@ -55,7 +57,7 @@ const VeriviedCard = ({
                             <div className="mb-5">
                             <p className='text-base text-[#00726B]'>{imageName}</p>
                                 <Image
-                                    src={imageUrl}
+                                    src={url}
                                     alt={"plot image"}
                                     width={500}
                                     height={500}

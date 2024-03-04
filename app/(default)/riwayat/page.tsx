@@ -18,49 +18,53 @@ import VeriviedCard from '@/components/VeriviedCard';
 import AvatarTest from '@/public/avatar-test.png'
 import config from "@/config.js";
 import ImageHistoryCard from "@/components/ImageHistoryCard"
+import { UserAuth} from '@/app/context/authContext';
+import { auth } from '@/app/firebase';
 
-
-function Verivied() {
   // Buat sebuah jenis yang mencerminkan struktur data dari API
-interface UserData {
-  id: number;
-  data: {
-    photoURL: string;
-    displayName: string;
-    email: string;
-    verified: boolean;
-  };
-}
-  
-
-// Kemudian gunakan jenis ini untuk menentukan jenis state
-const [testData, setTestData] = useState<UserData[]>([]);
-const [open, setOpen] = React.useState<number | null>(null);
-
-const fetchData = async () => {
-  try {
-    // Mendapatkan token dari localStorage atau sumber lainnya
-    const storedToken = localStorage.getItem('customToken');
-
-    // Membuat header dengan menyertakan token
-    const headers = {
-      Authorization: `Bearer ${storedToken}`,
+  interface imageData {
+    id: number;
+    data: {
+      url: string;
+      fileName: string;
     };
-    const response = await axios.get(`${config.API_URL}/api/user/`, {headers});
-    if (response.status === 200) {
-      setTestData(response.data);
-      console.log(response.data)
-    } else {
-      console.error('Gagal mengambil data:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Gagal mengambil data:', error);
   }
-};
 
-useEffect(() => {
-    fetchData();
-}, []);
+function History() {
+  const {user} = UserAuth();
+  // Kemudian gunakan jenis ini untuk menentukan jenis state
+  const [testData, setTestData] = useState<imageData[]>([]);
+ 
+
+
+  const fetchData = async () => {
+    try {
+      // Mendapatkan token dari localStorage atau sumber lainnya
+      const storedToken = localStorage.getItem('customToken');
+
+      // Membuat header dengan menyertakan token
+      const headers = {
+        Authorization: `Bearer ${storedToken}`,
+      };
+      
+      if (user) {
+        const uid = user.uid;
+        
+      const response = await axios.get(`${config.API_URL}/api/history/${uid}`, {headers});
+      if (response.status === 200) {
+        setTestData(response.data);
+        console.log('data',response.data)
+      } else {
+        console.error('Gagal mengambil data:', response.statusText);
+      }}
+    } catch (error) {
+      console.error('Gagal mengambil data:', error);
+    }
+  };
+
+  useEffect(() => {
+      fetchData();
+  }, []);
 
 
 
@@ -71,28 +75,21 @@ useEffect(() => {
         </div>
 
         
-
+        
         <div className='grid grid-cols-1 md:grid-cols-3 mx-auto w-full gap-3 '>
+        {testData.map((item) => (
+          
             <ImageHistoryCard
-              id={undefined}
-              imageName={'rwikistat-rplot-01'}
+              key={item.id}
+              id={item.id}
+              imageName={item.data.fileName}
+              imageUrl={item.data.url}
             />
-            <ImageHistoryCard
-              id={undefined}
-              imageName={'rwikistat-rplot-01'}
-            />
-            <ImageHistoryCard
-              id={undefined}
-              imageName={'rwikistat-rplot-01'}
-            />
-            <ImageHistoryCard
-              id={undefined}
-              imageName={'rwikistat-rplot-01'}
-            />
-
+            ))}
         </div>
+        
     </div>
   );
 }
 
-export default Verivied;
+export default History;

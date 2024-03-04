@@ -33,6 +33,8 @@ const CodeEditor = () => {
       value: "r",
   }
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageData, setImageData] = useState<Blob | null>(null);
+  const [fileName, setFileName] = useState('')
   const {user} = UserAuth();
   const [response, setResponse] = useState('');
   const enterPress = useKeyPress("Enter");
@@ -100,9 +102,10 @@ const handleCompile = async () => {
         const blob = await response.blob();
         const newImageUrl = URL.createObjectURL(blob);
         setImageUrl(newImageUrl);
+        setImageData(blob)
 
         // Send the image data to the server for storage
-      saveImageToDatabase(blob);
+      // saveImageToDatabase(blob);
       } else {
         // If it's not an image, set the response as text
         const data = await response.text();
@@ -115,20 +118,48 @@ const handleCompile = async () => {
     }
   };
 
+  const imageName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFileName(e.target.value);
+};
+
+  const handelSimpan = async () => {
+    if (imageData) {
+      saveImageToDatabase(imageData);
+    }
+  }
+
   const saveImageToDatabase = async (blob: Blob) => {
     try {
       // Send the image data to your server API for storage in the database
+      const storedToken = localStorage.getItem('customToken');
+
       const formData = new FormData();
       const user = auth.currentUser;
-      formData.append('image', blob, 'compiled_image.png');
+      formData.append('fileName',fileName);
       if (user) {
-        formData.append('uid',user?.uid ?? '');
-        formData.append('name',user?.displayName ?? '');}
+        formData.append('uid',user?.uid);
+        }
+      formData.append('image', blob, 'compiled_image.png');
+      
   
-      await fetch(`${config.API_URL}/api/history`, {
+      const response = await fetch(`${config.API_URL}/api/history`, {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
         body: formData,
       });
+
+      const responseData = await response.json();
+
+      if (response.status === 200) {
+        const responseData = await response.json();
+        console.log('Success:', responseData.message);
+        // Display success message to the user
+      } else {
+        console.error('Error:', response.statusText);
+        // Display error message to the user using the status text
+      }
   
       console.log('Image saved to database successfully');
     } catch (error) {
@@ -198,7 +229,7 @@ return (
             onChange={onChange}
             language="r"
             theme="vs-dark"
-            defaultValue={`png("out.png", width = 800, height = 600")`}
+            defaultValue={`png("out.png", width = 800, height = 600)`}
           />
           )}
         
@@ -243,13 +274,13 @@ return (
                           <input
                             type="text"
                             name="title"
-                            value={undefined}
-                            onChange={undefined}
+                            value={fileName}
+                            onChange={imageName}
                             required
                             placeholder="contoh : gambar-plot-01"
                             className="w-full rounded-md border border-[#e0e0e0] bg-white  p-3 text-sm text-gray-800 outline-none "
                           />
-                          <button type="submit" className=" mt-2 bg-[#00726B] py-2 px-8 rounded-lg  text-white font-semibold mb-2">Simpan</button>
+                          <button type="submit" onClick={handelSimpan} className=" mt-2 bg-[#00726B] py-2 px-8 rounded-lg  text-white font-semibold mb-2">Simpan</button>
                         </div>
                             <div className="flex flex-row gap-3 items-end">
                             </div>
