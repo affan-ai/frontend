@@ -17,9 +17,10 @@ import axios from 'axios';
 import testImage from "@/public/mipa.jpeg"
 import { FaDownload } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import config from "@/config.js";
 
 interface VeriviedData {
-    id: any;
+    id: number;
     imageName: string;
     imageUrl: string;
 }
@@ -31,7 +32,7 @@ const VeriviedCard = ({
 }:VeriviedData) => {
     const [open, setOpen] = React.useState<boolean>(false);
 
-    const url= `http://localhost:8080/uploads/${imageUrl}`;
+    const url= `${config.API_URL}${imageUrl}`;
 
     return (
         <div className='p-3 shadow-sm flex justify-between bg-white rounded-md border items-center hover:bg-gray-50  cursor-pointer' onClick={() => setOpen(true)}>

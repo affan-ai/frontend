@@ -35,7 +35,7 @@ function History() {
   // Kemudian gunakan jenis ini untuk menentukan jenis state
   const [testData, setTestData] = useState<imageData[]>([]);
  
-
+  
 
   const fetchData = async () => {
     try {
@@ -46,7 +46,7 @@ function History() {
       const headers = {
         Authorization: `Bearer ${storedToken}`,
       };
-      
+      const user = auth.currentUser;
       if (user) {
         const uid = user.uid;
         
@@ -64,7 +64,7 @@ function History() {
 
   useEffect(() => {
       fetchData();
-  }, []);
+  }, [user]);
 
 
 
@@ -78,6 +78,7 @@ function History() {
         
         <div className='grid grid-cols-1 md:grid-cols-3 mx-auto w-full gap-3 '>
         {testData.map((item) => (
+          
           
             <ImageHistoryCard
               key={item.id}
