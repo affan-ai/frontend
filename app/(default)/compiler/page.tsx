@@ -13,6 +13,9 @@ import useKeyPress from "@/components/compiler/utils/useKeyPress";
 // import useAuthMiddleware from '@/app/middleware/authMiddleware';
 import Markdown from "react-markdown";
 import config from "@/config.js";
+import Modal from '@mui/joy/Modal';
+import Sheet from '@mui/joy/Sheet';
+import ModalClose from '@mui/joy/ModalClose';
 
 
 const CodeEditor = () => { 
@@ -32,19 +35,12 @@ const CodeEditor = () => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const {user} = UserAuth();
   const [response, setResponse] = useState('');
-const enterPress = useKeyPress("Enter");
-const ctrlPress = useKeyPress("Control");
+  const enterPress = useKeyPress("Enter");
+  const ctrlPress = useKeyPress("Control");
+  const [defaultValue, setDefaultValue] = useState('');
+  const [option, setOption] = useState("string");
+  const [open, setOpen] = React.useState<boolean>(false);
 
-const options = [
-  { value: 'png("out.png", width = 800, height = 600', label: 'Plot Compiler' },
-  { value: '#write the code bellow', label: 'String Compiler' },
-]
-
-const handleSelectChange = (selectedOption: any) => {
-  console.log(`Option selected:`, selectedOption);
-  setCode(selectedOption.value);
-  console.log(code);
-}
 
 useEffect(() => {
     if (enterPress && ctrlPress) {
@@ -162,14 +158,16 @@ return (
     <div className=" items-start px-5">
         <div className=" pb-4 items-end grid grid-cols-2 md:grid-cols-5 gap-4 px-3">
             <div className="md:col-span-2 md:col-start-3">
-            <Select
+            {/* <Select
               placeholder={`Select Compiler Type`}
-              // options={languageOptions}
               options={options}
               isSearchable={false}
-            //   styles={customStyles}
               onChange={handleSelectChange}
-            />
+            /> */}
+            <select className=" w-full text-[#00726B] font-semibold outline-white rounded-md" name="option" id="pilihan" onChange={(e)=>{setOption(e.target.value)}}>
+              <option className="text-center" value="string">String Compiler</option>
+              <option className="text-center" value="graph">Graph Compiler</option> 
+            </select> 
             </div>
             <button
             onClick={handleCompile}
@@ -185,12 +183,25 @@ return (
             
         </div>
         <div className=" w-full justify-start items-end">
-        <CodeEditorWindow
-          code={code}
-          onChange={onChange}
-          language="r"
-          theme="vs-dark"
-        />
+          {option === "string" && (
+            <CodeEditorWindow
+            code={code}
+            onChange={onChange}
+            language="r"
+            theme="vs-dark"
+            defaultValue="#write the code bellow"
+          />
+          )}
+          {option === "graph" && (
+            <CodeEditorWindow
+            code={code}
+            onChange={onChange}
+            language="r"
+            theme="vs-dark"
+            defaultValue={`png("out.png", width = 800, height = 600")`}
+          />
+          )}
+        
         </div>
 
         <div className="flex flex-shrink-0 w-full  flex-col mt-5">
@@ -200,7 +211,52 @@ return (
                 <h1 className="font-bold text-xl mb-2">
                     Output
                 </h1>
-                <button type="submit" className=" text -[#00726B] py-2 px-8 rounded-lg  bg-white font-semibold mb-2">Simpan</button>
+                <button type="submit" className=" text -[#00726B] py-2 px-8 rounded-lg  bg-white font-semibold mb-2" onClick={() => setOpen(true)}>Simpan</button>
+                <React.Fragment>
+                    <Modal
+                        open={open}
+                        onClose={() => setOpen(false)}
+                        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 999999, p: 2}}
+                    >
+                    <Sheet
+                        variant="plain"
+                        sx={{
+                        width: 700,
+                        borderRadius: 'md',
+                        p: 3,
+                        boxShadow: 'lg',
+                        }}
+                    >
+                        <ModalClose variant="plain" sx={{ m: 1 }} onClick={() => setOpen(false)} />
+                        <div className="px-4 py-2 mt-10  mx-auto">
+                        <div className="">
+                          <label
+                            className=" block text-base font-medium text-black"
+                          >
+                            Simpan Gambar Graph
+                          </label>
+                          <label
+                            className="block text-xs font-medium text-gray-400"
+                          >
+                            Masukan Nama yang ingin kamu simpan
+                          </label>
+                          <input
+                            type="text"
+                            name="title"
+                            value={undefined}
+                            onChange={undefined}
+                            required
+                            placeholder="contoh : gambar-plot-01"
+                            className="w-full rounded-md border border-[#e0e0e0] bg-white  p-3 text-sm text-gray-800 outline-none "
+                          />
+                          <button type="submit" className=" mt-2 bg-[#00726B] py-2 px-8 rounded-lg  text-white font-semibold mb-2">Simpan</button>
+                        </div>
+                            <div className="flex flex-row gap-3 items-end">
+                            </div>
+                        </div>
+                    </Sheet>
+                    </Modal>
+                </React.Fragment>
               </div>
                 {/* Conditional rendering based on content type */}
                 {imageUrl ? (
