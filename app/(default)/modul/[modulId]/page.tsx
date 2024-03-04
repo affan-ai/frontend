@@ -254,6 +254,7 @@ export default function DetailPage() {
                 onChange={handleCodeChange}
                 language="r"
                 theme="vs-dark"
+                defaultValue={undefined}
               />
             </div>
           </div>
