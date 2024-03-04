@@ -24,7 +24,7 @@ import config from "@/config.js";
 interface ForumData {
   id: string;
   data: {
-    email: string;
+    uid : string;
     topics: string;
     title:string;
     images: string[];
@@ -38,7 +38,7 @@ interface ForumData {
     displayName: string;
     photoURL: string;
     verified: boolean;
-    email: string;
+    uid: string;
   }
   commentCount: number;
 }
@@ -55,7 +55,7 @@ interface NewPost {
   topics: string;
   title: string;
   images: File[];
-  email: string,
+  uid : string,
 }
 
 const ForumComponent: React.FC = () => {
@@ -79,7 +79,7 @@ const ForumComponent: React.FC = () => {
     topics: "",
     title: "",
     images: [],
-    email: '',
+    uid : "",
   }); 
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,7 +103,6 @@ const ForumComponent: React.FC = () => {
       const response = await axios.get(url, { headers });
       if (response.status === 200) {
         const { forumData, currentPage, totalPages } = response.data;
-        console.log(forumData);
 
         // Set data forum, nomor halaman saat ini, dan jumlah total halaman
         setForumData(forumData);
@@ -160,13 +159,16 @@ const ForumComponent: React.FC = () => {
     try {
       const formData = new FormData();
       const user = auth.currentUser;
+      
       formData.append('topics', newPost.topics);
       formData.append('title', newPost.title);
       if (user) {
-      formData.append('email',user?.email ?? '');}
+        console.log('user',user.uid)
+      formData.append('uid',user?.uid ?? '');}
       newPost.images.forEach((image) => {
         formData.append('images', image);
       });
+      console.log('form', formData)
 
       // Mendapatkan token dari localStorage atau sumber lainnya
       const storedToken = localStorage.getItem('customToken');
@@ -186,7 +188,7 @@ const ForumComponent: React.FC = () => {
         // Reset formulir setelah berhasil menambahkan postingan
         setNewPost({
           topics: '',
-          email: '',
+          uid : '',
           images: [],
           title: '',
         });
@@ -373,7 +375,7 @@ const ForumComponent: React.FC = () => {
       {/* Tampilkan postingan yang ada */}
     {currentForumData.map((item) => (
       <div key={item.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
-      <Link href={`userId/${item.data.email}`}>
+      <Link href={`userId/${item.data.uid }`}>
       <div className="flex">
         <div className=" rounded-full mr-2">
         <Image

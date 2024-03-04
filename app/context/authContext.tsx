@@ -20,7 +20,7 @@ interface AuthContextType {
 }
 
 interface UserData {
-  email: string;
+  uid: string;
   role: string;
   displayName: string;
   photoURL: string;

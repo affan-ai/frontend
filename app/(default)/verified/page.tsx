@@ -26,7 +26,7 @@ interface UserData {
   data: {
     photoURL: string;
     displayName: string;
-    email: string;
+    uid: string;
     verified: boolean;
   };
 }
@@ -88,7 +88,7 @@ useEffect(() => {
                 key={item.id}
                 profileImage={item.data.photoURL}
                 name={item.data.displayName}
-                email={item.data.email}
+                uid={item.data.uid}
                 verified={item.data.verified}
                 link={`userId/${item.id}`}
                 id={item.id}

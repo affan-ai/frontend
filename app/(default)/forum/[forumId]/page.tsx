@@ -22,7 +22,7 @@ export default function DetailPage() {
     
     const [commentInput, setCommentInput] = useState({
         text: '',
-        email: '', // Tambahkan data pengguna saat ini jika diperlukan
+        uid: '', // Tambahkan data pengguna saat ini jika diperlukan
     });
     const [detailForum, setDetailForum] = useState<any>(null); // State untuk data detail modul
     const [comments, setComments] = useState<any[]>([]);
@@ -90,9 +90,9 @@ export default function DetailPage() {
           const { text } = commentInput;
         
           // Dapatkan ID pengguna yang aktif (dalam hal ini, kita asumsikan pengguna sudah login)
-          const email = auth.currentUser ? auth.currentUser.email : null;
+          const uid = auth.currentUser ? auth.currentUser.uid : null;
         
-          if (!email) {
+          if (!uid) {
             // Handle jika pengguna tidak terotentikasi atau belum masuk
             console.error('Pengguna belum terotentikasi atau belum masuk.');
             return;
@@ -106,14 +106,14 @@ export default function DetailPage() {
           };
         
           // Kirim komentar ke endpoint Express dengan ID pengguna yang aktif
-          const response = await axios.post(`${config.API_URL}/api/forum/${topicId}/comments`, { text, email },
+          const response = await axios.post(`${config.API_URL}/api/forum/${topicId}/comments`, { text, uid },
           { headers });
         
           if (response.status === 200) {
             // Clear the comment input after a successful submission
             setCommentInput({
               text: '',
-              email: '',
+              uid: '',
             });
       
             // Refresh comments data after a successful submission

@@ -33,7 +33,7 @@ interface UserData {
 interface ForumData {
   id: string;
   data: {
-    userId: string;
+    uid: string;
     topics: string;
     title:string;
     images: string[];
@@ -55,7 +55,7 @@ interface ForumData {
 
 export default function Page() {
     const pathname = usePathname();
-    const userId = pathname.split('/')[2];
+    const uid = pathname.split('/')[2];
     const [detailUser, setDetailUser] = useState<any>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
@@ -73,9 +73,9 @@ export default function Page() {
                 Authorization: `Bearer ${storedToken}`,
             };
 
-            if (userId) {
+            if (uid) {
                 // Mengirim request ke API
-                const response = await axios.get(`${config.API_URL}/api/user/${userId}/score`, { headers });
+                const response = await axios.get(`${config.API_URL}/api/user/${uid}/score`, { headers });
 
                 // Mengubah state dengan data yang diterima dari API
                 setScore(response.data.score);
@@ -92,7 +92,7 @@ export default function Page() {
       }, []);
 
     useEffect(() => {
-        if (userId) {
+        if (uid) {
             // Mendapatkan token dari localStorage atau sumber lainnya
             const storedToken = localStorage.getItem('customToken');
 
@@ -101,7 +101,7 @@ export default function Page() {
                 Authorization: `Bearer ${storedToken}`,
             };
           // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
-          fetch(`http://localhost:8080/api/user/${userId}`, {headers})
+          fetch(`${config.API_URL}/api/user/${uid}`, {headers})
             .then((response) => {
               if (!response.ok) {
                 throw new Error('Gagal mengambil data detail user.');
@@ -116,7 +116,7 @@ export default function Page() {
               console.error('Gagal mengambil data detail user:', error);
             });
         }
-      }, [userId]);
+      }, [uid]);
 
       const fetchPosted = async (page: number | undefined) => { 
         try {
@@ -128,7 +128,7 @@ export default function Page() {
                 Authorization: `Bearer ${storedToken}`,
             };
 
-            const url = `http://localhost:8080/api/forum/posted/${userId}?page=${page}`;
+            const url = `${config.API_URL}/api/forum/posted/${uid}?page=${page}`;
             const response = await axios.get(url, {headers});
             if (response.status === 200) {
                 const { forumData, currentPage, totalPages, totalPosts } = response.data;

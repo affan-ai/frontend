@@ -12,23 +12,22 @@ import ModalDialog from '@mui/joy/ModalDialog';
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import axios from 'axios';
+import config from "@/config.js";
 
 interface VeriviedData {
     profileImage: any;
     name: string;
-    email: string;
+    uid: string;
     verified: boolean;
     link: string;
     id: number;
 }
 
-const API_HOST = 'http://localhost'; // Ganti dengan host Anda jika berbeda
-const API_PORT = 8080;
 
 const VeriviedCard = ({
     profileImage,
     name,   
-    email,
+    uid,
     verified,
     link,
     id,
@@ -44,7 +43,7 @@ const VeriviedCard = ({
         Authorization: `Bearer ${storedToken}`,
       };
         // Panggil endpoint dengan menggunakan ID modul
-        axios.post(`${API_HOST}:${API_PORT}/api/user/${id}`, {}, { headers })
+        axios.post(`${config.API_URL}/api/user/${id}`, {}, { headers })
           .then(response => {
             console.log(id)
             setOpen(false);
@@ -65,7 +64,7 @@ const VeriviedCard = ({
                         <p className="text-lg font-semibold text-gray-900 -mt-1">{name}</p>
                         {verified ? (<MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />) : ("")  }
                     </div>
-                    <p className="text-gray-700 text-sm">{email}</p>
+                    <p className="text-gray-700 text-sm">{uid}</p>
                 </div>
             </Link>
                 <div>
