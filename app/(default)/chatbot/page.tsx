@@ -5,243 +5,144 @@ import { auth } from '@/app/firebase';
 import { UserAuth} from '@/app/context/authContext';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
-
-const API_HOST = "http://localhost"; 
-const API_PORT = 8080;
+import config from "@/config.js";
 
 interface ChatData {
   id: string;
-  data: {
-    author: string;
-    content: string;
-    response:string;
-    createdAt: {
+    userId: string;
+    message: string;
+    response: string;
+    timestamp: {
       _seconds: number;
       _nanoseconds: number;
     };
-  };
+
 }
 
-const axiosInstance = axios.create();
-axiosInstance.interceptors.request.use(
-  (config) => {
-    // Konversi header userId ke cookie
-    config.headers.cookie = {
-      userId: config.headers["userId"],
+const ChatBot = () => {
+  const {user} = UserAuth();
+  const [loading, setLoading] = useState(true);
+  const [userMessage, setUserMessage] = useState("");
+  const [chatData, setChatData] = useState<ChatData[]>([]);
+
+ // Panggil fungsi fetchChatData setiap kali komponen dimuat
+    // useEffect(() => {
+    //   fetchChatData();
+    // }, [user]);
+ 
+    const fetchChatData = async () => {
+      try {
+        const storedToken = localStorage.getItem('customToken');
+        if (user) {
+        const userId = user.uid;
+        console.log(user)
+        // Fetch data dari endpoint berdasarkan userId
+        const response = await fetch(`${config.API_URL}/api/chatbot/chats/${userId}`, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${storedToken}`,
+          },
+        });
+  
+        const chatData = await response.json();
+        console.log(chatData)
+
+        // // Urutkan data berdasarkan timestamp (dari yang terbaru ke yang terlama)
+        // const sortedChatData = chatData.sort((a: { timestamp: number; }, b: { timestamp: number; }) => b.timestamp - a.timestamp);
+
+        const sortedChatData = chatData.sort((a: { timestamp: { _seconds: number; _nanoseconds: number; };  }, b:  { timestamp: { _seconds: number; _nanoseconds: number; };  }) => {
+          const dateA = new Date(a.timestamp._seconds * 1000 + a.timestamp._nanoseconds / 1000000).getTime();
+          const dateB = new Date(b.timestamp._seconds * 1000 + b.timestamp._nanoseconds / 1000000).getTime();
+        
+          // Urutkan data berdasarkan createdAt dari yang terbaru ke yang terlama
+          return dateB + dateA;
+        });
+
+        // // Simpan data chat yang sudah diurutkan ke state
+        setChatData(sortedChatData);
+  
+        // Simpan data chat ke state
+        // setChatData(chatData);
+        // console.log('data',chatData);
+  
+      }
+      } catch (error) {
+        console.error("Error fetching chat data:", error);
+      }
     };
 
-    return config;
-  },
-  (error) => {
-    // Handle error
-    return error;
-  },
-);
+    const refreshChatbotData = async () => {
+      await fetchChatData();
+      setChatData((prevChatbotData) => [...prevChatbotData]);
+    };
 
-const ChatBot = () => {
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [chats, setChats] = useState<ChatData[]>([]);
-  const {user} = UserAuth();
-  const messageEndRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    messageEndRef.current?.scrollIntoView();
-  }, [chats])
-
-  useEffect(() => {
-    // Memuat data obrolan saat komponen pertama kali dimuat
-    loadChatbotData();
-
-    
-
-  }, [user]);
-
-  const loadChatbotData = async () => {
-    if (!user) {
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Dapatkan ID user yang sedang login
-      const user = auth.currentUser;
-      const userId = user?.uid;
-
-      const storedToken = localStorage.getItem('customToken');
-
-      // Membuat header dengan menyertakan token
-      const headers = {
-        Authorization: `Bearer ${storedToken}`,
-      };
-
-      if (!userId) {
-        setLoading(false);
-        return;
-      }
-      const response = await axiosInstance.get(`http://localhost:8080/api/chatbot/`,{headers});
-      if (response.status === 200) {
-        const data = response.data;
-        console.log(data)
-        // Saring data berdasarkan ID user yang sedang login
-        const userChats = data.filter((chat: { data: { author: string; }; }) => chat.data.author === userId);
-
-        // Urutkan data berdasarkan createdAt
-        userChats.sort((a: { data: { createdAt: number; }; }, b: { data: { createdAt: number; }; }) => b.data.createdAt - a.data.createdAt);
-
-        setChats(userChats);
-        setLoading(false);
-      } else {
-        throw new Error("Failed to fetch chats");
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setLoading(false);
-    }
-  };
-
-
-  const refreshChatbotData = async () => {
-    await loadChatbotData();
-    setChats((prevChatbotData) => [...prevChatbotData]);
-  };
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-  
+  const handleChatSubmit = async () => {
+    console.log("Submitting chat...");
+    const storedToken = localStorage.getItem('customToken');
     // Dapatkan ID user
     const user = auth.currentUser;
     const userId = user?.uid;
-  
-    // Kirim permintaan ke endpoint chatbot
-    const response = await axios.post(`${API_HOST}:${API_PORT}/api/chatbot/`, {
-      instances: [
-        {
-          context: "Kamu adalah Seorang Yang ahli di bidang statistika dan pemrograman R, nama kamu adalah R bot.",
-          examples: [
-            {
-              input: {
-                author: "user",
-                content: "siapa kamu?",
-              },
-              output: {
-                author: "bot",
-                content: "saya adalah Rbot.",
-              },
-            },
-          ],
-          messages: [
-            {
-              author: userId,
-              content: message,
-            },
-          ],
-        },
-      ],
-      parameters: {
-        candidateCount: 1,
-        maxOutputTokens: 1024,
-        temperature: 0.2,
-        topP: 0.8,
-        topK: 40,
+    console.log(userId)
+    
+    // Panggil API untuk menyimpan pertanyaan dan respons
+    const response = await fetch(`${config.API_URL}/api/chatbot/chat`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${storedToken}`,
       },
+      body: JSON.stringify({ userId, userMessage }),
     });
-  
-    // Periksa respons
-    if (response.status === 200) {
-      // reset jika berhasil
-      setMessage("");
-      
-    } else {
-      // Tangani kesalahan
-      throw new Error("Failed to get response");
-    }
+
+    const data = await response.json();
+    console.log(data);
 
     // Refresh data chatbot setelah submit berhasil
     await refreshChatbotData();
-    
   };
 
   useEffect(() => {
-    loadChatbotData();
-  }, []);
+    fetchChatData();
+  }, [user]);
+
+
+
+ 
+
+
 
   return (
   <div className="flex flex-col justify-between items-center h-screen overflow-hidden ">
 
-  {/* <div className="flex flex-col overflow-y-auto p-4">
-    {loading ? <p className="text-center">Loading...</p> : (
-      <div className="flex flex-col gap-7">
-        {chats.map((chat, index) => (
-          <li key={index} className=" grid grid-cols-2 items-center gap-10 bg-gray-300">
-            <div className="text-sm py-3 px-5  bg-green-200 border-green-200 self-end  rounded-r-xl ">
-              {chat.data.content}
-            </div>
-            <div className="text-xs px-3 py-3  bg-blue-100 border-blue-100 self-start rounded-l-xl">
-              {chat.data.response}
-            </div>
-          </li>
-        ))}
-      </div>
-    )}
-  </div> */}
-
   <div className="flex flex-col overflow-y-auto p-4 w-full md:px-28">
-    {loading ? <p className="text-center">Loading...</p> : (
+    
       <div className="flex flex-col gap-7">
-        {chats.map((chat, index) => (
-          <div key={index} className="mb-10">
+      {chatData.map((chat) => (
+          <div key={chat.id} className="mb-10">
             <div className="flex justify-end mb-3">
                 <div className="bg-green-100 text-black font-medium px-8 py-3 rounded-l-2xl  text-end">
-                  {chat.data.content}
+                {chat.message}
                 </div>
             </div>
+            
             <div className="flex">
                 <div className="bg-green-300 text-black  px-8 py-3 rounded-r-2xl  ">
-                  {chat.data.response}
+                <p>{chat.response}</p>
                 </div>
             </div>
+            
           </div>
-        ))}
+         ))}
       </div>
-    )}
-    <div ref={messageEndRef} />
+    
   </div>
-
-
-        {/* <ul className="flex flex-col gap-7">
-        {chats.map((chat, index) => (
-          <li key={index} className=" grid grid-cols-2 items-center gap-10 bg-gray-300">
-            <div className="text-sm py-3 px-5  bg-green-200 border-green-200 self-end  rounded-r-xl ">
-              {chat.data.content}
-            </div>
-            <div className="text-xs px-3 py-3  bg-blue-100 border-blue-100 self-start rounded-l-xl">
-              {chat.data.response}
-            </div>
-          </li>
-        ))}
-      </ul> */}
-  
-  
-
-  {/* <form className=" flex items-center justify-between p-4" onSubmit={handleSubmit}>
-    <input
-      type="text"
-      placeholder="Masukkan pesan Anda"
-      value={message}
-      onChange={(event) => setMessage(event.target.value)}
-      className="flex-1 border border-gray-300 rounded-full p-2"
-    />
-    <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-    <SendIcon/>
-    </button>
-  </form> */}
   
   <div className=" w-full bottom-0 bg-gray-50">
-    <form className="max-w-screen-lg m-auto w-full p-4 flex space-x-4 justify-center items-center" onSubmit={handleSubmit}>
+    <form className="max-w-screen-lg m-auto w-full p-4 flex space-x-4 justify-center items-center" onSubmit={handleChatSubmit}>
       <input
-      value={message}
-      onChange={(event) => setMessage(event.target.value)}
+      value={userMessage} 
+      onChange={(e) => setUserMessage(e.target.value)}
       type="text"
       autoComplete="off"
       className="border rounded-md p-2 flex-1 border-gray-300"
