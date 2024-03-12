@@ -33,6 +33,14 @@ interface ForumData {
   }
 
 export default function Search() {
+
+    useEffect(() => {
+        document.title = "Search Forum | Rwikistat";
+        return () => {
+        };
+      }, []); 
+    
+
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<ForumData[]>([]);
     const [loading, setLoading] = useState(false);

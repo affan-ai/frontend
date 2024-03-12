@@ -30,6 +30,13 @@ interface UserData {
     verified: boolean;
   };
 }
+
+useEffect(() => {
+  document.title = "Verified | Rwikistat";
+  return () => {
+  };
+}, []); 
+
   
 
 // Kemudian gunakan jenis ini untuk menentukan jenis state

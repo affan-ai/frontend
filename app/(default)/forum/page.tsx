@@ -70,6 +70,13 @@ const ForumComponent: React.FC = () => {
     theme: "light",
     });
 
+    useEffect(() => {
+      document.title = "Forum Diskusi | Rwikistat";
+      return () => {
+      };
+    }, []); 
+  
+
   const [open, setOpen] = React.useState<boolean>(false);
   const {user} = UserAuth();
   const [forumData, setForumData] = useState<ForumData[]>([]);

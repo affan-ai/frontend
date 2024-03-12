@@ -1,12 +1,20 @@
 "use client"
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import Editor from "@monaco-editor/react";
 import config from "@/config.js";
 
 
 export default function Page() {
+
+  useEffect(() => {
+    document.title = "Tambah Modul | Rwikistat";
+    return () => {
+    };
+  }, []); 
+
+  
   const [codeSampel, setCodeSampel] = useState('');
   const [textMarkdown, setTextMarkdown] = useState('');
   const [namaModul, setNamaModul] = useState('');

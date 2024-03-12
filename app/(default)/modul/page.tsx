@@ -30,6 +30,13 @@ interface ModulData {
 }
   
 
+useEffect(() => {
+  document.title = "Modul Belajar | Rwikistat";
+  return () => {
+  };
+}, []); 
+
+
 // Kemudian gunakan jenis ini untuk menentukan jenis state
 const [testData, setTestData] = useState<ModulData[]>([]);
 const [open, setOpen] = React.useState<number | null>(null);

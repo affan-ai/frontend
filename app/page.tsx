@@ -7,7 +7,7 @@ import Footer from "@/components/landing-page/footer";
 
 export const metadata = {
     title: 'Rwikistat',
-    description: 'Page description',
+    description: 'Rwikistat Learning App for Data Science, under licensed by ApanJago and Lifeofrifai',
 }
 
 
