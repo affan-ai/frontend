@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, ChangeEvent,useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Spinner from '@/components/Spinner';
 import CodeEditorWindow from "@/components/compiler/CodeEditorWindows";
@@ -24,6 +24,10 @@ interface ModulData {
   };
 }
 
+interface DropdownProps {
+  options: string[];
+}
+
 export default function DetailPage() {
 
   useEffect(() => {
@@ -42,6 +46,8 @@ export default function DetailPage() {
   const [theme, setTheme] = useState("amy");
   const router = useRouter();
   const [postContent, setPostContent] = useState("");
+
+  
 
 
   const language = {
@@ -75,6 +81,20 @@ export default function DetailPage() {
   const pdfUrlWithParams = `${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`;
   const [downloadClicked, setDownloadClicked] = useState(false);
   const [processing, setProcessing] = useState(null);
+  const [portInput, setPortInput] = useState({
+    text: '',
+  });
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [urlShiny, setUrlShiny] = useState('');
+
+  useEffect(() => {
+    // Pastikan detailModul dan datanya sudah tersedia
+    if (detailModul && detailModul.data) {
+      setUrlShiny(detailModul.data.urlShiny);
+    }
+  }, [detailModul]);
+
 
   useEffect(() => {
     if (modulId) {
@@ -149,6 +169,15 @@ export default function DetailPage() {
     router.push(`/modul/${selectedOption.value}`);
   }
 
+
+  const handlePortChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setPortInput({
+      ...portInput,
+      [name]: value,
+    });
+  };
+
   const handleCodeChange = (action: any, data: string) => {
     switch (action) {
     case "code": {
@@ -161,24 +190,65 @@ export default function DetailPage() {
     }
 };
 
+
+
   const handleCompile = async () => {
     try {
+      
+      const port = portInput.text;
+
       // Mendapatkan token dari localStorage atau sumber lainnya
       const storedToken = localStorage.getItem('customToken');
 
-      
-      const response = await fetch(`${config.API_URL}/api/compiler/modul/`, {
+      const response = await fetch(`${config.API_URL}/api/compiler/check-port/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${storedToken}`,
+          // Authorization: `Bearer ${storedToken}`,
         },
-        body: JSON.stringify({ code }),
+        body: JSON.stringify({ port }),
       });
 
-        const data = await response.text();
-        setOutputDetails(data);
-        setResponse(data);
+      const responseData = await response.json();
+      console.log(responseData);
+      console.log(responseData.status);
+
+      const status = responseData.status;
+
+      let shinyPort, shinyUrl;
+
+      if (status === 'false') {
+        if (port) {
+          shinyUrl = `http://127.0.0.1:${port}`;
+          setUrlShiny(shinyUrl);
+        }
+        const response = await fetch(`${config.API_URL}/api/compiler/shiny/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${storedToken}`,
+          },
+          body: JSON.stringify({ code, port }),
+        });
+  
+        const responseData = await response.json();
+  
+        const shinyOutput = responseData.shinyOutput.text;
+        const originalOutput = responseData.originalOutput;
+  
+        // Contoh: Set state atau melakukan operasi lainnya
+        setOutputDetails(shinyOutput);
+        setResponse(originalOutput);
+  
+      }else if (status === 'true') {
+        console.log('Port is already in use');
+        setErrorMessage('Port is already in use');
+      } else {
+        console.log('Unexpected value for responseData.status:', status);
+      }
+
+      // Menjalankan kode setelah kondisi status === 'false' tanpa menunggu respon
+      
       
     } catch (error) {
       console.error(error);
@@ -186,22 +256,6 @@ export default function DetailPage() {
     }
   };
 
-
-  // const file_name = 'test.md';
-  // const [post, setPost] = useState('hello');
-
-  // useEffect(() => {
-  //   import(`../../../../public/${file_name}`)
-  //       .then(res => {
-  //           fetch(res.default)
-  //               .then(res => res.text())
-  //               .then(res => setPost(res))
-  //               .catch(err => console.log(err));
-  //       })
-  //       .catch(err => console.log(err));
-  // });
-
-  const [markdown, setMarkdown] = useState("# Markdown Preview");
 
   return (
     <div className='px-8'>
@@ -241,6 +295,19 @@ export default function DetailPage() {
           </article>
           <hr/>
           <div className=' mt-5'>
+            <input
+                type="text"
+                name="text"
+                autoComplete="off"
+                className="border rounded-md p-2 flex-1 border-gray-300"
+                placeholder="Tambahkan port"
+                value={portInput.text}
+                onChange={handlePortChange}
+                required
+                />
+                <div>
+                {errorMessage && <p>{errorMessage}</p>}
+              </div>
             <div className='flex p-5 justify-between items-center'>
             <h1 className=' font-bold text-base md:text-2xl text-[#00726B]'>Compiler {detailModul.data.namaModul}</h1>
               <button
@@ -272,7 +339,7 @@ export default function DetailPage() {
             </h1>
             <div className='grid grid-cols-2 gap-3 h-96'>
               <iframe
-                src={detailModul.data.urlShiny}
+                src={urlShiny}
                 width="100%"
                 height="100%"
               />
