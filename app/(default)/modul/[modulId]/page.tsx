@@ -219,7 +219,7 @@ export default function DetailPage() {
 
       if (status === 'false') {
         if (port) {
-          shinyUrl = `http://127.0.0.1:${port}`;
+          shinyUrl = `http://10.38.0.2:${port}`;
           setUrlShiny(shinyUrl);
         }
         const response = await fetch(`${config.API_URL}/api/compiler/shiny/`, {
