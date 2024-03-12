@@ -20,8 +20,16 @@ interface ChatData {
 }
 
 const ChatBot = () => {
+
+  useEffect(() => {
+    document.title = "Chat Bot | Rwikistat";
+    return () => {
+    };
+  }, []); 
+
+
   const {user} = UserAuth();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [userMessage, setUserMessage] = useState("");
   const [chatData, setChatData] = useState<ChatData[]>([]);
 
@@ -78,6 +86,7 @@ const ChatBot = () => {
     };
 
   const handleChatSubmit = async () => {
+    setLoading(true);
     console.log("Submitting chat...");
     const storedToken = localStorage.getItem('customToken');
     // Dapatkan ID user
@@ -100,6 +109,7 @@ const ChatBot = () => {
 
     // Refresh data chatbot setelah submit berhasil
     await refreshChatbotData();
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -121,13 +131,13 @@ const ChatBot = () => {
       {chatData.map((chat) => (
           <div key={chat.id} className="mb-10">
             <div className="flex justify-end mb-3">
-                <div className="bg-green-100 text-black font-medium px-8 py-3 rounded-l-2xl  text-end">
+                <div className="bg-gray-400 text-white font-medium px-8 py-3 rounded-l-2xl  text-end">
                 {chat.message}
                 </div>
             </div>
             
             <div className="flex">
-                <div className="bg-green-300 text-black  px-8 py-3 rounded-r-2xl  ">
+                <div className="bg-[#00726B] text-white  px-8 py-3 rounded-r-2xl  ">
                 <p>{chat.response}</p>
                 </div>
             </div>
@@ -149,9 +159,9 @@ const ChatBot = () => {
       // x-model="newMessage"
       placeholder="Masukkan pesan Anda..."
       />
-      <button className="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit">
-        Send
-        </button>
+      <button className="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit" disabled={loading}>
+        {loading ? ("Sending...") : ("Send")}
+      </button>
     </form>
   </div>
 

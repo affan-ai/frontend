@@ -15,6 +15,14 @@ import Link from 'next/link';
 import config from "@/config.js";
 
 export default function DetailPage() {
+
+    useEffect(() => {
+      document.title = "Forum | Rwikistat";
+      return () => {
+      };
+    }, []); 
+
+
     const {user} = UserAuth();
     const pathname = usePathname();
     const forumId = pathname.split('/')[2];

@@ -54,6 +54,14 @@ interface ForumData {
 
 
 export default function Page() {
+
+    useEffect(() => {
+        document.title = "User | Rwikistat";
+        return () => {
+        };
+      }, []); 
+
+      
     const pathname = usePathname();
     const uid = pathname.split('/')[2];
     const [detailUser, setDetailUser] = useState<any>(null);
@@ -218,7 +226,7 @@ export default function Page() {
                         </TabList>
                         <TabPanel value={0}>
                             {currentPosted.map((post) => (
-                            <div key={post.id} className=" items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
+                            <div key={post.id} className=" w-[700px] items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
                               
                             <div className="flex">
                                 <div className=" rounded-full mr-2">

@@ -26,6 +26,13 @@ interface ModulData {
 
 export default function DetailPage() {
 
+  useEffect(() => {
+    document.title = "Baca Modul | Rwikistat";
+    return () => {
+    };
+  }, []); 
+
+
   const pathname = usePathname();
   const modulId = pathname.split('/')[2];
   const [loading, setLoading] = useState(true);

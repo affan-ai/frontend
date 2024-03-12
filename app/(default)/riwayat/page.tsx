@@ -31,6 +31,14 @@ import { auth } from '@/app/firebase';
   }
 
 function History() {
+
+  useEffect(() => {
+    document.title = "Riwayat | Rwikistat";
+    return () => {
+    };
+  }, []); 
+
+
   const {user} = UserAuth();
   // Kemudian gunakan jenis ini untuk menentukan jenis state
   const [testData, setTestData] = useState<imageData[]>([]);

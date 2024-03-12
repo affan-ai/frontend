@@ -44,6 +44,14 @@ interface ForumData {
   }
 
 const Page = () => {
+
+    useEffect(() => {
+        document.title = "Pengguna | Rwikistat";
+        return () => {
+        };
+      }, []); 
+
+      
     const {user} = UserAuth();
     const [loading, setLoading] = useState(true);
     const [bookmarks, setBookmarks] = useState<ForumData[]>([]);
@@ -246,7 +254,7 @@ const Page = () => {
                         </TabList>
                         <TabPanel value={0}>
                             {currentPosted.map((post) => (
-                            <div key={post.id} className=" w-full items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
+                            <div key={post.id} className=" w-[700px]  items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
                             <div className="flex">
                                 <div className=" rounded-full mr-2">
                                 <Image
@@ -318,7 +326,7 @@ const Page = () => {
                         </TabPanel>
                         <TabPanel value={1}>
                             {currentBookmarked.map((bookmark) => (
-                            <div key={bookmark.id} className="w-full items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
+                            <div key={bookmark.id} className="w-[700px] items-start px-4 py-6 my-5 shadow-md rounded-lg outline-1 border" >
                             <div className="flex">
                                 <div className=" rounded-full mr-2">
                                 <Image

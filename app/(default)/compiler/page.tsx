@@ -16,9 +16,16 @@ import config from "@/config.js";
 import Modal from '@mui/joy/Modal';
 import Sheet from '@mui/joy/Sheet';
 import ModalClose from '@mui/joy/ModalClose';
+import Head from 'next/head';
 
 
 const CodeEditor = () => { 
+
+  useEffect(() => {
+    document.title = "Compiler | Rwikistat";
+    return () => {
+    };
+  }, []); 
 
   // const { user } = useAuthMiddleware();
   const [code, setCode] = useState('');
@@ -242,7 +249,9 @@ return (
                 <h1 className="font-bold text-xl mb-2">
                     Output
                 </h1>
-                <button type="submit" className=" text -[#00726B] py-2 px-8 rounded-lg  bg-white font-semibold mb-2" onClick={() => setOpen(true)}>Simpan</button>
+                {option === "graph" && (
+                  <button type="submit" className=" text -[#00726B] py-2 px-8 rounded-lg  bg-white font-semibold mb-2" onClick={() => setOpen(true)}>Simpan</button>
+                )}
                 <React.Fragment>
                     <Modal
                         open={open}
