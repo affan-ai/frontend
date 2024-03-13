@@ -165,6 +165,30 @@ export default function DetailPage() {
     value: module.id,
   }));
 
+  const optionPort = [
+    { value: '4000', label: '4000' },
+    { value: '4001', label: '4001' },
+    { value: '4002', label: '4002' },
+    { value: '4003', label: '4003' },
+    { value: '4004', label: '4004' },
+    { value: '4005', label: '4005' },
+    { value: '4006', label: '4006' },
+    { value: '4007', label: '4007' },
+    { value: '4008', label: '4008' },
+    { value: '4009', label: '4009' },
+    { value: '4010', label: '4010' },
+    { value: '4011', label: '4011' },
+    { value: '4012', label: '4012' },
+    { value: '4013', label: '4013' },
+    { value: '4014', label: '4014' },
+    { value: '4015', label: '4015' },
+    { value: '4016', label: '4016' },
+    { value: '4017', label: '4017' },
+    { value: '4018', label: '4018' },
+    { value: '4019', label: '4019' },
+    { value: '4020', label: '4020' },
+  ];
+
   const handleChange = (selectedOption: any) => { 
     router.push(`/modul/${selectedOption.value}`);
   }
@@ -295,7 +319,7 @@ export default function DetailPage() {
           </article>
           <hr/>
           <div className=' mt-5'>
-            <input
+            {/* <input
                 type="text"
                 name="text"
                 autoComplete="off"
@@ -307,20 +331,27 @@ export default function DetailPage() {
                 />
                 <div>
                 {errorMessage && <p>{errorMessage}</p>}
-              </div>
+              </div> */}
             <div className='flex p-5 justify-between items-center'>
             <h1 className=' font-bold text-base md:text-2xl text-[#00726B]'>Compiler {detailModul.data.namaModul}</h1>
-              <button
-              onClick={handleCompile}
-              disabled={!code}
-              value={code}
-              className={classnames(
-                  "block w-56 bg-[#00726B] py-2 rounded-lg duration-500 text-white font-semibold md:col-span-1",
-                  !code ? "opacity-50" : ""
-              )}
-              >
-              {processing ? "Processing..." : "Compile"}
-              </button>
+              <div className='flex gap-3'>
+                <Select
+                  placeholder="Pilih Port"
+                  options={optionPort}
+                  onChange={(selectedOption: any) => setPortInput({ text: selectedOption.value })}
+                />
+                <button
+                onClick={handleCompile}
+                disabled={!code}
+                value={code}
+                className={classnames(
+                    "block w-56 bg-[#00726B] py-2 rounded-lg duration-500 text-white font-semibold md:col-span-1",
+                    !code ? "opacity-50" : ""
+                )}
+                >
+                {processing ? "Processing..." : "Compile"}
+                </button>
+              </div>
             </div>
             <div>
               <CodeEditorWindow
