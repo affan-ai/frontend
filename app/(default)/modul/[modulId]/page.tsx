@@ -87,6 +87,7 @@ export default function DetailPage() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const [urlShiny, setUrlShiny] = useState('');
+  const [selectedPort, setSelectedPort] = useState<{ value: string; label: string } | null>(null);
 
   useEffect(() => {
     // Pastikan detailModul dan datanya sudah tersedia
@@ -116,6 +117,7 @@ export default function DetailPage() {
         .then((data) => {
           setDetailModul(data); // Menyimpan data detail modul dalam state
           setPdfUrl(data.data.pdfPath); // Set URL PDF
+          setUrlShiny(data.data.urlShiny)
         })
         .catch((error) => {
           console.error('Gagal mengambil data detail modul:', error);
@@ -193,14 +195,18 @@ export default function DetailPage() {
     router.push(`/modul/${selectedOption.value}`);
   }
 
-
-  const handlePortChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setPortInput({
-      ...portInput,
-      [name]: value,
-    });
+  const handlePortChange = (selectedOption: any) => {
+    setSelectedPort(selectedOption);
   };
+
+
+  // const handlePortChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = event.target;
+  //   setPortInput({
+  //     ...portInput,
+  //     [name]: value,
+  //   });
+  // };
 
   const handleCodeChange = (action: any, data: string) => {
     switch (action) {
@@ -219,7 +225,7 @@ export default function DetailPage() {
   const handleCompile = async () => {
     try {
       
-      const port = portInput.text;
+      const port = selectedPort?.value;
 
       // Mendapatkan token dari localStorage atau sumber lainnya
       const storedToken = localStorage.getItem('customToken');
@@ -280,7 +286,6 @@ export default function DetailPage() {
     }
   };
 
-
   return (
     <div className='px-8'>
       {detailModul ? (
@@ -338,8 +343,10 @@ export default function DetailPage() {
                 <Select
                   placeholder="Pilih Port"
                   options={optionPort}
-                  onChange={(selectedOption: any) => setPortInput({ text: selectedOption.value })}
+                  value={selectedPort}
+                  onChange={handlePortChange}
                 />
+                {errorMessage && <p>{errorMessage}</p>}
                 <button
                 onClick={handleCompile}
                 disabled={!code}
