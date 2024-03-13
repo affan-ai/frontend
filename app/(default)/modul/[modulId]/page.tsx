@@ -337,7 +337,13 @@ export default function DetailPage() {
             <h1 className="font-bold text-xl mb-2 text-[#00726B]">
                 Output
             </h1>
-            <div className='grid grid-cols-2 gap-3 h-96'>
+            <iframe
+                className='w-full h-[700px]'
+                src={urlShiny}
+                width="100%"
+                height="100%"
+              />
+            {/* <div className='grid grid-cols-2 gap-3 h-96'>
               <iframe
                 src={urlShiny}
                 width="100%"
@@ -346,7 +352,7 @@ export default function DetailPage() {
               <div className="w-full bg-[#1e293b] text-green-500 font-normal text-sm overflow-y-auto">
                 <pre className="p-5">{response}</pre>
               </div>
-            </div>
+            </div> */}
           </div>
 
         </div>

@@ -18,6 +18,11 @@ import { MdVerified } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import config from "@/config.js";
+import Snackbar from '@mui/joy/Snackbar';
+import { Button, Typography } from '@mui/joy';
+import StarIcon from '@mui/icons-material/Star';
+import LinkButton from '@/components/LinkButton';
+
 
 
 
@@ -78,6 +83,7 @@ const ForumComponent: React.FC = () => {
   
 
   const [open, setOpen] = React.useState<boolean>(false);
+  const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(true);
   const {user} = UserAuth();
   const [forumData, setForumData] = useState<ForumData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -218,6 +224,33 @@ const ForumComponent: React.FC = () => {
   return (
     <div className='w-full md:w-3/4 items-center justify-center mx-auto px-3'>
       <div className='w-full shadow-md bg-white rounded-lg border mb-3'>
+        <React.Fragment>
+          {/* <Button variant="outlined" color="neutral" onClick={() => setOpenSnackbar(true)}>
+            Show Snackbar
+          </Button> */}
+          <Snackbar
+            variant="soft"
+            color="success"
+            open={openSnackbar}
+            onClose={() => setOpenSnackbar(false)}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            startDecorator={<StarIcon />}
+            endDecorator={
+              <Button
+                onClick={() => setOpenSnackbar(false)}
+                size="sm"
+                variant="soft"
+                color="success"
+              >
+                Mengerti
+              </Button>
+            }
+          >
+          <Typography level="title-sm">
+            Dapatkan 5 Poin untuk setiap pertanyaan, atau dapatkan 10 Poin untuk setiap jawaban yang membantu!
+          </Typography>
+          </Snackbar>
+        </React.Fragment>
       <Link href={'/forum/search'}>
         <div
           className=" flex items-center md:py-2 mx-7 my-4 bg-gray-100 hover:bg-gray-200 rounded-lg"
@@ -431,30 +464,9 @@ const ForumComponent: React.FC = () => {
             <div className="flex  text-gray-700 text-sm mr-3">
               <Bookmark itemId={item.id} />
             </div>
-            <div className="flex  text-gray-700 text-sm mr-3">
-                <BiLink size='20'
-                  onClick={() => {
-                  const linkElement = document.querySelector(`a[href="/forum/${item.id}"]`);
-                  const link = (linkElement as HTMLAnchorElement).href;                  
-                  if (link) {
-                      navigator.clipboard.writeText(link);
-                  };
-                  notify;
-                }}
-                />
-                <ToastContainer
-                  position="bottom-right"
-                  autoClose={3000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="light"
-                />
-                
+            <div className="flex  text-gray-700 text-sm mr-3 hover:text-[#00726B]">
+              <LinkButton itemId={item.id}                
+              />
             </div>
          </div>
    </div>

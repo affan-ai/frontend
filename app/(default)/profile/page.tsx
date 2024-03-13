@@ -21,6 +21,7 @@ import Pagination from '@/components/Pagination';
 import { MdVerified } from 'react-icons/md';
 import StarRating from '@/components/StarRating';
 import config from "@/config.js";
+import LinkButton from '@/components/LinkButton';
 
 interface ForumData {
     id: string;
@@ -301,17 +302,8 @@ const Page = () => {
                                     <div className="flex  text-gray-700 text-sm mr-3">
                                     <Bookmark itemId={post.id} />
                                     </div>
-                                    <div className="flex  text-gray-700 text-sm mr-3">
-                                        <BiLink size='20'
-                                        onClick={() => {
-                                        const linkElement = document.querySelector(`a[href="/forum/${post.id}"]`);
-                                        const link = (linkElement as HTMLAnchorElement).href;                  
-                                        if (link) {
-                                            navigator.clipboard.writeText(link);
-                                        }
-                                        }}
-                                        
-                                        />
+                                    <div className="flex  text-gray-700 text-sm mr-3 hover:text-[#00726B]">
+                                        <LinkButton itemId={post.id}     />
                                     </div>
                                 </div>
                             </div>
@@ -375,17 +367,8 @@ const Page = () => {
                                     <div className="flex  text-gray-700 text-sm mr-3">
                                     <Bookmark itemId={bookmark.id} />
                                     </div>
-                                    <div className="flex  text-gray-700 text-sm mr-3">
-                                        <BiLink size='20'
-                                        onClick={() => {
-                                        const linkElement = document.querySelector(`a[href="/forum/${bookmark.id}"]`);
-                                        const link = (linkElement as HTMLAnchorElement).href;                  
-                                        if (link) {
-                                            navigator.clipboard.writeText(link);
-                                        }
-                                        }}
-                                        
-                                        />
+                                    <div className="flex  text-gray-700 text-sm mr-3 hover:text-[#00726B]">
+                                        <LinkButton itemId={bookmark.id}     />
                                     </div>
                                 </div>
                             </div>

@@ -3,9 +3,11 @@ import axios from 'axios';
 import { auth } from '../app/firebase';
 import { BiSolidLike, BiLike } from "react-icons/bi";
 import config from "@/config.js";
+import { on } from 'events';
+
 
 const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const [likedButton, setLikedButton] = React.useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
         });
   
         if (response.status === 200) {
-            setIsLiked(response.data.isLiked);
+            setLikedButton(response.data.isLiked);
             // console.log(response.data.isLiked);
             setIsLoading(false); 
         }
@@ -68,7 +70,7 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
 
         if (response.status === 200) {
             // Set state dan simpan status like di sesi penyimpanan lokal
-            setIsLiked(true);
+            setLikedButton(true);
             sessionStorage.setItem(`liked_${itemId}`, 'true');
         }
       } else {
@@ -100,7 +102,7 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
 
         if (response.status === 200) {
             // Set state dan simpan status unlike di sesi penyimpanan lokal
-            setIsLiked(false);
+            setLikedButton(false);
             sessionStorage.setItem(`liked_${itemId}`, 'false');
         }
       } else {
@@ -111,14 +113,22 @@ const LikeButton: React.FC<{ itemId: string }> = ({ itemId }) => {
     }
   };
 
+  const onPressHandler = likedButton ? handleUnlike : handleLike;
+
   return (
-    <>
-      {isLiked ? (
-        <BiSolidLike id={itemId} onClick={() => handleUnlike(itemId)} size='20' className="text-[#00726B]" />
-      ) : (
-        <BiLike id={itemId} onClick={() => handleLike(itemId)} size='20' />
-      )}
-    </>
+  <button
+    onClick={() => onPressHandler(itemId)}
+    id={itemId}
+    >
+      {likedButton ? (<BiSolidLike size='20' color='#00726B' /> ) : (<BiLike size='20' color='black' />)}
+  </button>
+  // <BiSolidLike
+  //   id={itemId}
+  //   onClick={() => onPressHandler(itemId)}
+  //   size='20'
+  //   color={likedButton ? '#00726B' : 'black'}
+  //   name="SolidLike"
+  // />
   );
 };
 

@@ -13,6 +13,7 @@ import LikeButton from '@/components/LikeButton';
 import { MdVerified } from 'react-icons/md';
 import Link from 'next/link';
 import config from "@/config.js";
+import Bookmark from '@/components/Bookmark';
 
 export default function DetailPage() {
 
@@ -187,8 +188,7 @@ export default function DetailPage() {
                         <span>{detailForum.commentCount}</span>
                       </div>
                       <div className="flex  text-gray-700 text-sm mr-3">
-                        <BiBookmark itemId={detailForum.id}
-                        />
+                        <Bookmark itemId={detailForum.id} />
                       </div>
                   </div>
                 <hr className='mt-3' />
