@@ -20,6 +20,7 @@ import  { BiSolidBookmark } from "react-icons/bi";
 import Link from 'next/link';
 import StarRating from '@/components/StarRating';
 import config from "@/config.js";
+import LinkButton from '@/components/LinkButton';
 
 interface UserData {
   id: number;
@@ -274,17 +275,8 @@ export default function Page() {
                                     <div className="flex  text-gray-700 text-sm mr-3">
                                     <Bookmark itemId={post.id} />
                                     </div>
-                                    <div className="flex  text-gray-700 text-sm mr-3">
-                                        <BiLink size='20'
-                                        onClick={() => {
-                                        const linkElement = document.querySelector(`a[href="/forum/${post.id}"]`);
-                                        const link = (linkElement as HTMLAnchorElement).href;                  
-                                        if (link) {
-                                            navigator.clipboard.writeText(link);
-                                        }
-                                        }}
-                                        
-                                        />
+                                    <div className="flex  text-gray-700 text-sm mr-3 hover:text-[#00726B]">
+                                        <LinkButton itemId={post.id}     />
                                     </div>
                                 </div>
                             </div>

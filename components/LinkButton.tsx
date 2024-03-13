@@ -12,7 +12,7 @@ import Snackbar from '@mui/joy/Snackbar';
 const LinkButton: React.FC<{ itemId: string }> = ({ itemId }) => {
 
     const [open, setOpen] = React.useState(false);
-    const [duration, setDuration] = React.useState<undefined | number>(5000);
+    const [duration, setDuration] = React.useState<undefined | number>(3000);
     const [left, setLeft] = React.useState<undefined | number>();
     const timer = React.useRef<undefined | number>();
     const countdown = () => {
