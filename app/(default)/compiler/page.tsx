@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 import React, { useEffect, useState } from "react";
 import CodeEditorWindow from "@/components/compiler/CodeEditorWindows";
 import axios from "axios";
@@ -49,6 +49,7 @@ const CodeEditor = () => {
   const [defaultValue, setDefaultValue] = useState('');
   const [option, setOption] = useState("string");
   const [open, setOpen] = React.useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
 
 useEffect(() => {
@@ -132,6 +133,7 @@ const handleCompile = async () => {
   const handelSimpan = async () => {
     if (imageData) {
       saveImageToDatabase(imageData);
+      
     }
   }
 
@@ -147,7 +149,7 @@ const handleCompile = async () => {
         formData.append('uid',user?.uid);
         }
       formData.append('image', blob, 'compiled_image.png');
-      
+      setLoading(true);
   
       const response = await fetch(`${config.API_URL}/api/history`, {
         method: 'POST',
@@ -169,6 +171,7 @@ const handleCompile = async () => {
       }
   
       console.log('Image saved to database successfully');
+      setLoading(false);
     } catch (error) {
       console.error('Error saving image to database:', error);
     }
@@ -227,7 +230,7 @@ return (
             onChange={onChange}
             language="r"
             theme="vs-dark"
-            defaultValue="#write the code bellow"
+            defaultValue=""
           />
           )}
           {option === "graph" && (
@@ -280,6 +283,7 @@ return (
                           >
                             Masukan Nama yang ingin kamu simpan
                           </label>
+                          {loading ? (<p className="text-green-400">Gambar Berhasil disimpan</p>):("")}
                           <input
                             type="text"
                             name="title"
@@ -317,3 +321,8 @@ return (
 );
 };
 export default CodeEditor;
+
+
+
+
+

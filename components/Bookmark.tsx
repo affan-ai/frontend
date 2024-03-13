@@ -6,7 +6,7 @@ import config from "@/config.js";
 
 
 const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
-  const [isBookmarked, setIsBookmarked] = useState(true);
+  const [bookmarkButton, setBookmarkButton] = React.useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
         });
   
         if (response.status === 200) {
-            setIsBookmarked(response.data.isBookmarked);
+            setBookmarkButton(response.data.isBookmarked);
             // console.log(response.data.isLiked);
             setIsLoading(false); 
         }
@@ -71,7 +71,7 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
 
         if (response.status === 200) {
             // Set state dan simpan status like di sesi penyimpanan lokal
-            setIsBookmarked(true);
+            setBookmarkButton(true);
             sessionStorage.setItem(`bookmarked_${itemId}`, 'true');
         }
       } else {
@@ -103,7 +103,7 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
 
         if (response.status === 200) {
             // Set state dan simpan status unlike di sesi penyimpanan lokal
-            setIsBookmarked(false);
+            setBookmarkButton(false);
             sessionStorage.setItem(`bookmarked_${itemId}`, 'false');
         }
       } else {
@@ -114,14 +114,21 @@ const Bookmark: React.FC<{ itemId: string }> = ({ itemId }) => {
     }
   };
 
+  const onPressHandler = bookmarkButton ? handleUnbookmark : handleBookmark;
+
   return (
-    <>
-      {isBookmarked ? (
-        <BiSolidBookmark id={itemId} onClick={() => handleUnbookmark(itemId)} size='20' />
-      ) : (
-        <BiBookmark  id={itemId} onClick={() => handleBookmark(itemId)} size='20' />
-      )}
-    </>
+    <button
+      onClick={() => onPressHandler(itemId)}
+      id={itemId}
+    >
+      {bookmarkButton ? <BiSolidBookmark size='20' color='#00726B' /> : <BiBookmark size='20' color='black' />}
+    </button>
+    // <BiSolidBookmark
+    //   id={itemId}
+    //   onClick={() => onPressHandler(itemId)}
+    //   size='20'
+    //   color={bookmarkButton ? '#00726B' : 'black'}
+    // />
   );
 };
 
