@@ -464,7 +464,7 @@ const ForumComponent: React.FC = () => {
             <div className="flex  text-gray-700 text-sm mr-3">
               <Bookmark itemId={item.id} />
             </div>
-            <div className="flex  text-gray-700 text-sm mr-3">
+            <div className="flex  text-gray-700 text-sm mr-3 hover:text-[#00726B]">
               <LinkButton itemId={item.id}                
               />
             </div>
