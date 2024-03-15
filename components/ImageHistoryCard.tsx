@@ -60,6 +60,7 @@ const VeriviedCard = ({
             link.click();
             // Hapus URL objek setelah unduhan selesai
             window.URL.revokeObjectURL(url);
+            setOpen(false);
           } else {
             // Tangani jika ada kesalahan dalam permintaan
             console.error('Failed to download image:', response.statusText);
@@ -80,12 +81,14 @@ const VeriviedCard = ({
               // Jika Anda membutuhkan otentikasi, tambahkan header token di sini
               // 'Authorization': `Bearer ${yourAuthToken}`,
             },
+            
           });
     
           // Periksa apakah respon adalah sukses (status kode 200)
           if (response.ok) {
             // Tambahkan logika untuk menangani jika gambar berhasil dihapus
             console.log('Image deleted successfully');
+            setOpen(false);
             // Tambahkan logika untuk memperbarui tampilan setelah gambar dihapus
           } else {
             // Tangani jika ada kesalahan dalam permintaan
@@ -116,7 +119,10 @@ const VeriviedCard = ({
                         boxShadow: 'lg',
                         }}
                     >
-                        <ModalClose variant="plain" sx={{ m: 1 }} onClick={() => setOpen(false)} />
+                        <ModalClose
+                          variant="plain" sx={{ m: 1 }}
+                          onClick={() => setOpen(false)}
+                        />
                         <div className="px-4 py-2 mt-10  mx-auto">
                             <div className="mb-5">
                             <p className='text-base text-[#00726B]'>{imageName}</p>
