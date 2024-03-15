@@ -339,14 +339,15 @@ export default function DetailPage() {
               </div> */}
             <div className='flex p-5 justify-between items-center'>
             <h1 className=' font-bold text-base md:text-2xl text-[#00726B]'>Compiler {detailModul.data.namaModul}</h1>
-              <div className='flex gap-3'>
+              <div className='flex gap-3 items-center'>
+                {errorMessage && <p className='text-red-600 text-sm'>{errorMessage}</p>}
+                {/* <p className='text-red-600 text-sm'>This Port Already Used</p> */}
                 <Select
                   placeholder="Pilih Port"
                   options={optionPort}
                   value={selectedPort}
                   onChange={handlePortChange}
                 />
-                {errorMessage && <p>{errorMessage}</p>}
                 <button
                 onClick={handleCompile}
                 disabled={!code}
