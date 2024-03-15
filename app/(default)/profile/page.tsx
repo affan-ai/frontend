@@ -44,6 +44,11 @@ interface ForumData {
     commentCount: number;
   }
 
+interface userData {
+    uid: string;
+    email: string
+}
+
 const Page = () => {
 
     useEffect(() => {
@@ -66,6 +71,7 @@ const Page = () => {
     const [totalBookmarkPages, setTotalBookmarkPages] = useState(0);
     const [totalBookmarks, setTotalBookmarks] = useState(0);
     const [score, setScore] = useState(null);
+    const [detailUser, setDetailUser] = useState<userData[]>();
 
     useEffect(() => {
         const checkUser = async() => {
@@ -103,6 +109,37 @@ const Page = () => {
         fetchScore();
         
       }, [user]);
+
+    const fetchUser = async () => {
+        if (user) {
+            const id = user.uid;
+            console.log('id dalam',id)
+            const storedToken = localStorage.getItem('customToken');
+            // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
+            fetch(`${config.API_URL}/api/user/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${storedToken}`,
+                },
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Gagal mengambil data user.');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    setDetailUser(data); // Menyimpan data detail modul dalam state
+                    console.log('datauser',data)
+                })
+                .catch((error) => {
+                    console.error('There was an error!', error);
+                });
+        }
+    }
+    useEffect(() => {
+        // Memanggil fetchData untuk mengambil data awal
+        fetchUser();
+    }, [user]);
 
     const fetchBookmark = async (page:number | undefined) => {
         try {
@@ -196,7 +233,7 @@ const Page = () => {
 
                         <div className="flex flex-col items-center mt-4">
                             <h3 className="text-xl font-semibold text-center text-gray-800 sm:text-3xl ">{user.displayName}</h3>
-                            <h5 className="text-lg text-center text-gray-500 ">{user.uid}</h5>   
+                            <h5 className="text-lg text-center text-gray-500 ">{detailUser?.email}</h5>   
                             <div className="flex items-center justify-center mt-4 space-x-2">
                             {score !== null ? (
                                 <div>
