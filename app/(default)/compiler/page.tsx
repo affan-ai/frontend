@@ -126,9 +126,15 @@ const handleCompile = async () => {
     }
   };
 
+  const generateDefaultName = () => {
+    const currentTime = new Date();
+    const timestamp = `${currentTime.getFullYear()}${currentTime.getMonth() + 1}${currentTime.getDate()}${currentTime.getHours()}${currentTime.getMinutes()}${currentTime.getSeconds()}`;
+    return `plot_${timestamp}`;
+  };
+
   const imageName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFileName(e.target.value);
-};
+  };
 
   const handelSimpan = async () => {
     if (imageData) {
@@ -144,7 +150,7 @@ const handleCompile = async () => {
 
       const formData = new FormData();
       const user = auth.currentUser;
-      formData.append('fileName',fileName);
+      formData.append('fileName', fileName || generateDefaultName());
       if (user) {
         formData.append('uid',user?.uid);
         }
@@ -290,7 +296,7 @@ return (
                             value={fileName}
                             onChange={imageName}
                             required
-                            placeholder="contoh : gambar-plot-01"
+                            placeholder={`${generateDefaultName()}`}
                             className="w-full rounded-md border border-[#e0e0e0] bg-white  p-3 text-sm text-gray-800 outline-none "
                           />
                           <button type="submit" onClick={handelSimpan} className=" mt-2 bg-[#00726B] py-2 px-8 rounded-lg  text-white font-semibold mb-2">Simpan</button>

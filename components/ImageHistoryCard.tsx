@@ -34,6 +34,69 @@ const VeriviedCard = ({
 
     const url= `${config.API_URL}${imageUrl}`;
 
+    const handleDownload = async () => {
+        try {
+          // Kirim permintaan GET ke endpoint download
+          const response = await fetch(`${config.API_URL}/api/history/download/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              // Jika Anda membutuhkan otentikasi, tambahkan header token di sini
+              // 'Authorization': `Bearer ${yourAuthToken}`,
+            },
+          });
+    
+          // Periksa apakah respon adalah sukses (status kode 200)
+          if (response.ok) {
+            // Ubah respons ke blob untuk mendownload file
+            const blob = await response.blob();
+            // Buat URL objek dari blob
+            const url = window.URL.createObjectURL(blob);
+            // Buat link <a> untuk mengunduh file
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = imageName; // Nama file yang diunduh
+            // Klik pada link untuk memulai unduhan
+            link.click();
+            // Hapus URL objek setelah unduhan selesai
+            window.URL.revokeObjectURL(url);
+          } else {
+            // Tangani jika ada kesalahan dalam permintaan
+            console.error('Failed to download image:', response.statusText);
+          }
+        } catch (error) {
+          // Tangani jika terjadi kesalahan saat melakukan permintaan
+          console.error('Error downloading image:', error);
+        }
+      };
+
+      const handleDelete = async () => {
+        try {
+          // Kirim permintaan DELETE ke endpoint hapus gambar
+          const response = await fetch(`${config.API_URL}/api/history/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              // Jika Anda membutuhkan otentikasi, tambahkan header token di sini
+              // 'Authorization': `Bearer ${yourAuthToken}`,
+            },
+          });
+    
+          // Periksa apakah respon adalah sukses (status kode 200)
+          if (response.ok) {
+            // Tambahkan logika untuk menangani jika gambar berhasil dihapus
+            console.log('Image deleted successfully');
+            // Tambahkan logika untuk memperbarui tampilan setelah gambar dihapus
+          } else {
+            // Tangani jika ada kesalahan dalam permintaan
+            console.error('Failed to delete image:', response.statusText);
+          }
+        } catch (error) {
+          // Tangani jika terjadi kesalahan saat melakukan permintaan
+          console.error('Error deleting image:', error);
+        }
+      };
+
     return (
         <div className='p-3 shadow-sm flex justify-between bg-white rounded-md border items-center hover:bg-gray-50  cursor-pointer' onClick={() => setOpen(true)}>
             <p className='text-base text-[#00726B]'>{imageName}</p>
@@ -65,8 +128,8 @@ const VeriviedCard = ({
                                     />
                             </div>
                             <div className="flex flex-row gap-3 items-end">
-                                <button type="submit" className=" bg-[#00726B] py-2 px-10 rounded-lg hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2"><FaDownload size={16}/></button>
-                                <button type="submit" className=" bg-red-600 py-2 px-10 rounded-lg hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2"><MdDeleteForever size={16} /></button>
+                                <button onClick={handleDownload} className=" bg-[#00726B] py-2 px-10 rounded-lg hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2"><FaDownload size={16}/></button>
+                                <button onClick={handleDelete} className=" bg-red-600 py-2 px-10 rounded-lg hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2"><MdDeleteForever size={16} /></button>
                             </div>
                         </div>
                     </Sheet>

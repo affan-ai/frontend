@@ -83,7 +83,7 @@ const LoginForm = () => {
                   id="password"
                   type="password"
                   placeholder="Masukan Password" 
-                  autoComplete="current-password"
+                  autoComplete="off"
                   value={password}
                   onChange={handlePasswordChange}
                   className=" pl-2 w-full outline-none border-none" />
