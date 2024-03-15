@@ -71,7 +71,7 @@ const Page = () => {
     const [totalBookmarkPages, setTotalBookmarkPages] = useState(0);
     const [totalBookmarks, setTotalBookmarks] = useState(0);
     const [score, setScore] = useState(null);
-    const [detailUser, setDetailUser] = useState<userData[]>();
+    const [detailUser, setDetailUser] = useState<any>(null);
 
     useEffect(() => {
         const checkUser = async() => {
