@@ -113,7 +113,6 @@ const Page = () => {
     const fetchUser = async () => {
         if (user) {
             const id = user.uid;
-            console.log('id dalam',id)
             const storedToken = localStorage.getItem('customToken');
             // Lakukan permintaan ke API untuk mendapatkan data detail modul berdasarkan ID
             fetch(`${config.API_URL}/api/user/${id}`, {
