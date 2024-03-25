@@ -258,7 +258,7 @@ return (
                 <h1 className="font-bold text-xl mb-2">
                     Output
                 </h1>
-                {option === "graph" && (
+                {option === "graph" && imageUrl &&(
                   <button type="submit" className=" text -[#00726B] py-2 px-8 rounded-lg  bg-white font-semibold mb-2" onClick={() => setOpen(true)}>Simpan</button>
                 )}
                 <React.Fragment>
