@@ -18,6 +18,7 @@ import testImage from "@/public/mipa.jpeg"
 import { FaDownload } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import config from "@/config.js";
+import { Typography } from "@mui/joy";
 
 interface VeriviedData {
     id: number;
@@ -100,11 +101,15 @@ const VeriviedCard = ({
         }
       };
 
+
     return (
-        <div className='p-3 shadow-sm flex justify-between bg-white rounded-md border items-center hover:bg-gray-50  cursor-pointer' onClick={() => setOpen(true)}>
+        <div className='p-3 shadow-sm flex justify-between bg-white rounded-md border items-center ' >
             <p className='text-base text-[#00726B]'>{imageName}</p>
             <div>
                 <React.Fragment>
+                  <Button variant="outlined" color="neutral" onClick={() => setOpen(true)}>
+                    Lihat
+                  </Button>
                     <Modal
                         open={open}
                         onClose={() => setOpen(false)}
@@ -141,6 +146,45 @@ const VeriviedCard = ({
                     </Sheet>
                     </Modal>
                 </React.Fragment>
+                {/* <React.Fragment>
+                  <Button variant="outlined" color="neutral" onClick={() => setOpen(true)}>
+                    Open modal
+                  </Button>
+                  <Modal
+                    aria-labelledby="modal-title"
+                    aria-describedby="modal-desc"
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                  >
+                    <Sheet
+                      variant="outlined"
+                      sx={{
+                        maxWidth: 500,
+                        borderRadius: 'md',
+                        p: 3,
+                        boxShadow: 'lg',
+                      }}
+                    >
+                      <ModalClose variant="plain" sx={{ m: 1 }} />
+                      <Typography
+                        component="h2"
+                        id="modal-title"
+                        level="h4"
+                        textColor="inherit"
+                        fontWeight="lg"
+                        mb={1}
+                      >
+                        This is the modal title
+                      </Typography>
+                      <Typography id="modal-desc" textColor="text.tertiary">
+                        Make sure to use <code>aria-labelledby</code> on the modal dialog with an
+                        optional <code>aria-describedby</code> attribute.
+                      </Typography>
+                    </Sheet>
+                  </Modal>
+                </React.Fragment> */}
+
             </div>
         </div>
     )
