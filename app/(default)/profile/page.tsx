@@ -232,7 +232,13 @@ const Page = () => {
                         </div>
 
                         <div className="flex flex-col items-center mt-4">
-                            <h3 className="text-xl font-semibold text-center text-gray-800 sm:text-3xl ">{user.displayName}</h3>
+                            <div className='flex-row '>
+                                <h3 className="text-xl font-semibold text-center text-gray-800 sm:text-3xl ">{user.displayName}</h3>
+                                {detailUser?.verified && (
+                                    <MdVerified size={24} className="mb-1 ml-1 text-[#00726B]" />
+                                )}
+                            </div>
+                            
                             <h5 className="text-lg text-center text-gray-500 ">{detailUser?.email}</h5>   
                             <div className="flex items-center justify-center mt-4 space-x-2">
                             {score !== null ? (

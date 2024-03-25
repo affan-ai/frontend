@@ -40,6 +40,7 @@ import HistoryIcon from '@mui/icons-material/History';
 
 import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '@/components/utils';
+import { MdVerified } from 'react-icons/md';
 
 function Toggler({
 defaultExpanded = false,
@@ -339,26 +340,19 @@ return (
     </Box>
     <Divider />
     {loading ? null : !user ? (
-    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <Avatar
-        variant="outlined"
-        size="sm"
-        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-        />
-        <Box sx={{ minWidth: 0, flex: 1 }}>
-        <Typography level="title-sm">Siriwat K.</Typography>
-        <Typography level="body-xs">siriwatk@test.com</Typography>
-        </Box>
-        <IconButton size="sm" variant="plain" color="neutral">
-        <LogoutRoundedIcon />
-        </IconButton>
-    </Box>
+    ""
     ) : (
     <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
         
         <Image src={photoURL} alt="profile" width={30} height={30} className="rounded-full" />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-        <Typography level="title-sm">{user.displayName}</Typography>
+            {/* <Typography level="title-sm">{user.displayName}</Typography>
+            <Typography level="title-sm">V</Typography> */}
+            <div className='flex items-center'>
+                        <p className="text-base font-medium  text-gray-900 -mt-1">{user.displayName}</p>
+                        <MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />
+                        {/* {verified ? (<MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />) : ("")  } */}
+                    </div>
         <Typography level="body-xs">{user.email}</Typography>
         {/* <Typography level="body-xs">{isAdmin}</Typography> */}
         </Box>
