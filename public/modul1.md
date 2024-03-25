@@ -23,13 +23,11 @@ Kelebihan dari R :
 
 Sampai saat ini software R dikembangkan oleh semua penggunanya yang terhimpun dalam naungan R core team yang merupakan pekerja keras dan sukarelawan (voulentir). R merupakan sebuah lingkungan interaktif untuk komputasi secara statistik dan grafik-grafik, R dapat di download pada [R-Project](https://cran.r-project.org). Gambar 1 menunjukkan tampilan jendela pada software R.
 
-![Tampilan jendela pada software R.](https://github.com/lifeofrifai/rwikistat-image-dir/blob/main/modul1-1.png)
-Gambar 1. Tampilan jendela pada software R.
+![Tampilan jendela pada software R.](http://api-rwikistat.usk.ac.id:8080/uploads/modul1-1.png)
 
 Dalam perkembangannya, R-Studio memungkinkan pengguna menjalankan R dengan lebih mudah, produk ini tersedia pada http://www.rstudio.com/. R-Studio hanya bisa diinstall jika pengguna sudah memiliki software R didalamnya. R-Studio memiliki empat jendela dalam satu frame, hal ini memudahkan pengguna dalam melihat tampilan output yang dihasilkan.
 
-![Tampilan jendela pada software R-Studio](https://github.com/lifeofrifai/rwikistat-image-dir/blob/main/modul1-2.png)
-Gambar 2. Tampilan jendela pada software R-Studio
+![Tampilan jendela pada software R-Studio](http://api-rwikistat.usk.ac.id:8080/uploads/modul1-2.png)
 
 Dengan data yang besar, akan sangat sulit untuk mengentry ulang data yang dimiliki jika waktu dan energi, selain itu kesalahan sangat mungkin terjadi. Untuk memudahkan mengolah data, ada beberapa cara import data dari Excel ke R, salah satunya adalah dengan mengubah format excel (*.xls, *.xlsx) ke dalam format .csv (misalnya read.csv).
 
@@ -136,8 +134,7 @@ Jika ada 1000 pengamatan dari distribusi normal N(0,1) maka dapat disimulasikan 
 ```
 Perintah ini menarik 1000 angka secara acak dari distribusi normal (rnorm = random normal) dan memplotnya dalam grafik. Hasil dapat dilihat pada Gambar 3.
 
-![Output R untuk distribusi normal dari 1000 angka acak](https://github.com/lifeofrifai/rwikistat-image-dir/blob/main/modul1-3.png)
-Gambar 3. Output R untuk distribusi normal dari 1000 angka acak
+![Output R untuk distribusi normal dari 1000 angka acak](http://api-rwikistat.usk.ac.id:8080/uploads/modul1-1.png)
 
 Dua karakter “< ̶ “ harus dibaca sebagai satu simbol: panah yang menunjuk ke variabel yang diberi nilai, ini dikenal sebagai operator penugasan. Spasi di sekitar operator umumnya diabaikan oleh R. R memiliki case sensitive, b dan B adalah berbeda. Sehingga pengetikan yang salah akan menampilkan pesan error. Sebagai contoh:
 
@@ -200,6 +197,3 @@ Gunakan R-Studio untuk menentukan :
 *Dalgaard, P. (2008) Introductory Statistics with R. second. Denmark: Springer.*
 *J Horton, N. and Kleinman, K. (2015) Using R and RStudio for Data anagement, Statistical Analysis ,and Graphics. second. Boca Raton, Florida: CRC Press, Taylor & Francis Group.*
 *Verzani, J. (2011) Getting started with Rstudio. United States of America: O’Reilly Media, Inc.*
-
-
-![Javatpoint](https://media-exp1.licdn.com/dms/image/C4D0BAQEwg5FK93uumQ/company-logo_200_200/0/1519923012279?e=2147483647&v=beta&t=63CNoS8OTR4lHjPhHSO7eFFqwLGwYunWfyDBV3tdc0c)  
