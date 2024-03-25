@@ -249,8 +249,11 @@ export default function DetailPage() {
 
       if (status === 'false') {
         if (port) {
-          shinyUrl = `http://10.38.0.2:${port}`;
-          setUrlShiny(shinyUrl);
+          // Menunggu 1 detik sebelum mengatur urlShiny
+          setTimeout(() => {
+            const shinyUrl = `http://rwikistat.usk.ac.id:${port}`;
+            setUrlShiny(shinyUrl);
+          }, 2000); // Waktu penundaan dalam milidetik (di sini, 1000 milidetik = 1 detik)
         }
         const response = await fetch(`${config.API_URL}/api/compiler/shiny/`, {
           method: 'POST',
