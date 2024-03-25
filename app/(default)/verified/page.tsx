@@ -26,7 +26,7 @@ interface UserData {
   data: {
     photoURL: string;
     displayName: string;
-    uid: string;
+    email: string;
     verified: boolean;
   };
 }
@@ -73,7 +73,7 @@ useEffect(() => {
   return (
     <div className='px-4 md:px-7'>
         <div className='flex justify-between items-center h-16 mb-5'>
-        <h2 className='font-bold text-2xl text-[#00726B] '>Verivied User</h2>
+        <h2 className='font-bold text-2xl text-[#00726B] '>Verified User</h2>
                 <form className=" w-3/4 p-4 flex space-x-4" onSubmit={undefined}>
                     <input
                     type="text"
@@ -95,7 +95,7 @@ useEffect(() => {
                 key={item.id}
                 profileImage={item.data.photoURL}
                 name={item.data.displayName}
-                uid={item.data.uid}
+                email={item.data.email}
                 verified={item.data.verified}
                 link={`userId/${item.id}`}
                 id={item.id}

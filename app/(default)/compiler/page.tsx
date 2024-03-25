@@ -311,6 +311,7 @@ return (
                 {/* Conditional rendering based on content type */}
                 {imageUrl ? (
                     <img src={imageUrl} alt="Output" className="h-full p-5" />
+                    
                     // <p> {imageUrl}</p>
                 ) : (
                     <pre className="p-5">{response}</pre>

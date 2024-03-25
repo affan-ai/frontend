@@ -17,7 +17,7 @@ import config from "@/config.js";
 interface VeriviedData {
     profileImage: any;
     name: string;
-    uid: string;
+    email: string;
     verified: boolean;
     link: string;
     id: number;
@@ -27,7 +27,7 @@ interface VeriviedData {
 const VeriviedCard = ({
     profileImage,
     name,   
-    uid,
+    email,
     verified,
     link,
     id,
@@ -64,7 +64,7 @@ const VeriviedCard = ({
                         <p className="text-lg font-semibold text-gray-900 -mt-1">{name}</p>
                         {verified ? (<MdVerified size={18} className="mb-1 ml-1 text-[#00726B]" />) : ("")  }
                     </div>
-                    <p className="text-gray-700 text-sm">{uid}</p>
+                    <p className="text-gray-700 text-sm">{email}</p>
                 </div>
             </Link>
                 <div>

@@ -16,7 +16,7 @@ const nextConfig = {
             hostname: 'localhost',
           },
           {
-            protocol: 'https',
+            protocol: 'http',
             hostname: 'api-rwikistat.usk.ac.id',
           }
         ],

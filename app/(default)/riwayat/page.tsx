@@ -86,8 +86,6 @@ function History() {
         
         <div className='grid grid-cols-1 md:grid-cols-3 mx-auto w-full gap-3 '>
         {testData.map((item) => (
-          
-          
             <ImageHistoryCard
               key={item.id}
               id={item.id}
