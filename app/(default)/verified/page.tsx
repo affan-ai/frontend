@@ -74,7 +74,7 @@ useEffect(() => {
     <div className='px-4 md:px-7'>
         <div className='flex justify-between items-center h-16 mb-5'>
         <h2 className='font-bold text-2xl text-[#00726B] '>Verified User</h2>
-                <form className=" w-3/4 p-4 flex space-x-4" onSubmit={undefined}>
+                {/* <form className=" w-3/4 p-4 flex space-x-4" onSubmit={undefined}>
                     <input
                     type="text"
                     name="text"
@@ -83,8 +83,8 @@ useEffect(() => {
                     placeholder="Cari User...."
                     required
                     />
-                    {/* <button type="submit" className="bg-[#00726B] text-white px-4 py-2 rounded-md text-sm">Search</button> */}
-                </form>
+                    <button type="submit" className="bg-[#00726B] text-white px-4 py-2 rounded-md text-sm">Search</button> 
+                </form> */}
         </div>
 
         
